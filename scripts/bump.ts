@@ -135,7 +135,7 @@ async function main() {
   for (const pkg of workspace.packages.filter(p => !p.data.private)) {
     workspace.setVersion(pkg.data.name, release)
     if (pkg.data.name !== 'vue-i18n-routing') {
-      workspace.rename(pkg.data.name, pkg.data.name + '-edge')
+      workspace.rename(pkg.data.name, pkg.data.name)
     }
   }
 
