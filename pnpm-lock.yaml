@@ -18,6 +18,7 @@ importers:
       jiti: ^1.12.9
       js-yaml: ^4.1.0
       lint-staged: ^12.1.2
+      node-actionlint: ^1.2.1
       npm-run-all: ^4.1.5
       pathe: ^0.2.0
       prettier: ^2.5.0
@@ -39,6 +40,7 @@ importers:
       jiti: 1.12.9
       js-yaml: 4.1.0
       lint-staged: 12.1.2
+      node-actionlint: 1.2.1
       npm-run-all: 4.1.5
       pathe: 0.2.0
       prettier: 2.5.0
@@ -2270,6 +2272,15 @@ packages:
 
   /nice-try/1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
+    dev: true
+
+  /node-actionlint/1.2.1:
+    resolution: {integrity: sha512-X7fvwzx5dQx2/ElgLiAfdn+5f9UadpyeQt6Mwsct/UQ3Ysk4vQ91AVNXFQOu5c12ob7kD5VpZx8AM86xGsFHvg==}
+    hasBin: true
+    dependencies:
+      '@babel/code-frame': 7.16.0
+      chalk: 4.1.2
+      fast-glob: 3.2.7
     dev: true
 
   /node-forge/0.10.0:

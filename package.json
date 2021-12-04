@@ -38,6 +38,7 @@
     "jiti": "^1.12.9",
     "js-yaml": "^4.1.0",
     "lint-staged": "^12.1.2",
+    "node-actionlint": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "pathe": "^0.2.0",
     "prettier": "^2.5.0",
@@ -81,10 +82,12 @@
     "fix": "run-p lint:fix format:fix",
     "format:fix": "run-p \"format:prettier -- --write\"",
     "format:prettier": "prettier --config .prettierrc --ignore-path .prettierignore '**/*.{js,json,html}'",
-    "lint": "run-p lint:secret lint:codes",
+    "lint": "run-p lint:secret lint:action lint:codes",
     "lint:codes": "eslint ./packages --ext .js,.mjs,.ts,.vue",
     "lint:fix": "run-p \"lint:codes -- --fix\"",
+    "lint:action": "node-actionlint",
     "lint:secret": "npx secretlint \"**/*\"",
+    "test": "echo 'test!'",
     "preinstall": "node ./scripts/preinstall.mjs"
   },
   "workspaces": [

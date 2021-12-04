@@ -6,7 +6,6 @@ set -xe
 git restore -s@ -SW  -- packages
 
 pnpm install
-
 pnpm build
 
 # Release packages
