@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
+import { execSync } from 'child_process'
 import { resolve, dirname } from 'pathe'
 import { globby } from 'globby'
-import semver from 'semver'
 import yaml from 'js-yaml'
 
 const _dirname = dirname(new URL(import.meta.url).pathname)
@@ -129,16 +129,13 @@ async function loadWorkspace(dir: string, workspaces: string[] = []) {
 async function main() {
   const workspace = await loadWorkspace(process.cwd())
 
-  const release = semver.inc(workspace.workspacePkg.data.version, 'patch')
-  if (!release) {
-    throw new Error('Invalid version: ' + workspace.workspacePkg.data.version)
-  }
+  const commit = execSync('git rev-parse --short HEAD').toString('utf-8').trim()
+  const release = `${workspace.workspacePkg.data.version}-${commit}`
 
-  workspace.workspacePkg.data.version = release
   for (const pkg of workspace.packages.filter(p => !p.data.private)) {
     workspace.setVersion(pkg.data.name, release)
     if (pkg.data.name !== 'vue-i18n-routing') {
-      workspace.rename(pkg.data.name, pkg.data.name)
+      workspace.rename(pkg.data.name, pkg.data.name + '-edge')
     }
   }
 

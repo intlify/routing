@@ -7,7 +7,6 @@ importers:
       '@secretlint/secretlint-rule-preset-recommend': ^4.1.3
       '@types/js-yaml': ^4.0.5
       '@types/node': ^16.11.11
-      '@types/semver': ^7.3.9
       '@typescript-eslint/eslint-plugin': ^5.5.0
       '@typescript-eslint/parser': ^5.5.0
       eslint: ^8.4.0
@@ -29,7 +28,6 @@ importers:
       '@secretlint/secretlint-rule-preset-recommend': 4.1.3
       '@types/js-yaml': 4.0.5
       '@types/node': 16.11.11
-      '@types/semver': 7.3.9
       '@typescript-eslint/eslint-plugin': 5.5.0_b885794d89d00e0b80d68a1b7275fb2c
       '@typescript-eslint/parser': 5.5.0_eslint@8.4.0+typescript@4.5.2
       eslint: 8.4.0
@@ -403,10 +401,6 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-    dev: true
-
-  /@types/semver/7.3.9:
-    resolution: {integrity: sha512-L/TMpyURfBkf+o/526Zb6kd/tchUP3iBDEPjqjb+U2MAJhVRxxrmr2fwpe08E7QsV7YLcpq0tUaQ9O9x97ZIxQ==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.5.0_b885794d89d00e0b80d68a1b7275fb2c:
