@@ -1,14 +1,17 @@
-dist
-temp
-coverage
-node_modules
+*~
+*.local
+*.log
+*.swp
+
+.env
+.nuxt
+.output
 .DS_Store
 .idea
 .vscode
 
-*.log
-*.swp
-*~
-.env
-.nuxt
-.output
+dist
+dist-ssr
+temp
+coverage
+node_modules
