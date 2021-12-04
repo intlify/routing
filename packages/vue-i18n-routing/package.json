@@ -20,7 +20,9 @@
     "intlify",
     "routing"
   ],
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/vue-i18n-routing.umd.js",
   "module": "./dist/vue-i18n-routing.es.js",
   "exports": {
