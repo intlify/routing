@@ -1,0 +1,19 @@
+{
+  "name": "@intlify/routing",
+  "description": "The i18n routing libraries",
+  "private": true,
+  "scripts": {
+  },
+  "author": {
+    "name": "kazuya kawaguchi",
+    "email": "kawakazu80@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intlify/routing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inlitify/routing/issues"
+  },
+  "license": "MIT"
+}
