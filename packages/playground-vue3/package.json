@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "vue": "^3.2.16",
+    "vue-router": "^4.0.12",
     "vue-i18n-routing": "edge"
   },
   "devDependencies": {

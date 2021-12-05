@@ -87,10 +87,12 @@ importers:
       vite: ^2.6.4
       vue: ^3.2.16
       vue-i18n-routing: workspace:*
+      vue-router: ^4.0.12
       vue-tsc: ^0.3.0
     dependencies:
       vue: 3.2.23
       vue-i18n-routing: link:../vue-i18n-routing
+      vue-router: 4.0.12_vue@3.2.23
     devDependencies:
       '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
       typescript: 4.5.2
@@ -1252,7 +1254,6 @@ packages:
 
   /@vue/devtools-api/6.0.0-beta.20.1:
     resolution: {integrity: sha512-R2rfiRY+kZugzWh9ZyITaovx+jpU4vgivAEAiz80kvh3yviiTU3CBuGuyWpSwGz9/C7TkSWVM/FtQRGlZ16n8Q==}
-    dev: true
 
   /@vue/reactivity/3.2.23:
     resolution: {integrity: sha512-8RGVr/5Kpgb/EkCjgHXqttgA5IMc6n0lIXFY4TVbMkzdXrvaIhzBd7Te44oIDsTSYVKZLpfHd6/wEnuDqE8vFw==}
@@ -5237,7 +5238,6 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.20.1
       vue: 3.2.23
-    dev: true
 
   /vue-template-compiler/2.6.14:
     resolution: {integrity: sha512-ODQS1SyMbjKoO1JBJZojSw6FE4qnh9rIpUZn2EUT86FKizx9uH5z6uXiIrm4/Nb/gwxTi/o17ZDEGWAXHvtC7g==}
