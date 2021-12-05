@@ -4,7 +4,7 @@ export interface VueI18nRoutingOptions {
   routes: []
 }
 
-export const VueI18nRoutingPlugin: Plugin = function (
+export const VueI18nRoutingPlugin = function (
   VueOrApp: any, // eslint-disable-line @typescript-eslint/no-explicit-any
   options: any = {} // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
