@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "vue": "^3.2.16",
-    "vue-i18n-routing": "workspace:../vue-i18n-routing"
+    "vue-i18n-routing": "edge"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
