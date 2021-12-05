@@ -7,12 +7,21 @@
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "next",
-    "vue-router": "next"
+    "vue-demi": "*"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.9.3",
-    "vite": "^2.6.4"
+    "vite": "^2.6.4",
+    "vite-plugin-dts": "^0.9.6",
+    "vue": "^3.2.23",
+    "vue-router": "^4.0.12",
+    "vue2": "npm:vue@2",
+    "vue-router3": "npm:vue-router@latest",
+    "rimraf": "^3.0.2",
+    "@microsoft/api-extractor": "^7.18.20"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.14 || ^3.2.0",
+    "vue-router": "^3.5.3 || ^4.0.0"
   },
   "keywords": [
     "i18n",
@@ -21,14 +30,23 @@
     "routing"
   ],
   "files": [
-    "dist"
+    "dist",
+    "index.mjs",
+    "LICENSE",
+    "README.md"
   ],
-  "main": "./dist/vue-i18n-routing.umd.js",
+  "main": "./dist/vue-i18n-routing.cjs.js",
   "module": "./dist/vue-i18n-routing.es.js",
+  "unpkg": "dist/vue-i18n-routing.iife.js",
+  "jsdelivr": "dist/vue-i18n-routing.iife.js",
+  "types": "dist/vue-i18n-routing.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-i18n-routing.es.js",
-      "require": "./dist/vue-i18n-routing.umd.js"
+      "import": {
+        "node": "./index.mjs",
+        "default": "./dist/vue-i18n-routing.es.js"
+      },
+      "require": "./dist/vue-i18n-routing.cjs.js"
     }
   },
   "license": "MIT",
