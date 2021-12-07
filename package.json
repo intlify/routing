@@ -1,7 +1,7 @@
 {
   "name": "@intlify/routing",
-  "version": "0.0.0",
   "description": "The i18n routing libraries",
+  "version": "0.0.0",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
@@ -25,20 +25,26 @@
   },
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "^4.1.3",
+    "@types/chai": "^4.2.22",
     "@types/js-yaml": "^4.0.5",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
+    "chai": "^4.3.4",
     "eslint": "^8.4.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-mocha": "^9.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.1.1",
     "globby": "^12.0.2",
     "jiti": "^1.12.9",
     "js-yaml": "^4.1.0",
     "lint-staged": "^12.1.2",
+    "mocha": "^9.1.3",
     "node-actionlint": "^1.2.1",
     "npm-run-all": "^4.1.5",
+    "nyc": "^15.1.0",
     "pathe": "^0.2.0",
     "prettier": "^2.5.0",
     "secretlint": "^4.1.3",
@@ -67,37 +73,41 @@
       "secretlint"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "vite": "^2.6.4",
+      "typescript": "^4.5.2"
+    }
+  },
   "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git"
   },
   "scripts": {
-    "dev": "pnpm dev --filter vue-i18n-routing",
     "build": "pnpm build --filter vue-i18n-routing",
     "build:docs": "pnpm build:docs --filter vue-i18n-routing",
-    "play:vue3": "pnpm dev --filter playground-vue3",
-    "play:vue2": "pnpm dev --filter playground-vue2",
     "bump": "./scripts/bump.sh",
-    "release": "./scripts/release.sh",
+    "dev": "pnpm dev --filter vue-i18n-routing",
     "fix": "run-p lint:fix format:fix",
     "format:fix": "run-p \"format:prettier -- --write\"",
     "format:prettier": "prettier --config .prettierrc --ignore-path .prettierignore '**/*.{js,json,html}'",
     "lint": "run-p lint:secret lint:action lint:codes",
+    "lint:action": "node-actionlint",
     "lint:codes": "eslint ./packages --ext .js,.mjs,.ts,.vue",
     "lint:fix": "run-p \"lint:codes -- --fix\"",
-    "lint:action": "node-actionlint",
     "lint:secret": "npx secretlint \"**/*\"",
-    "test": "echo 'test!'",
-    "preinstall": "node ./scripts/preinstall.mjs"
+    "play:vue2": "pnpm dev --filter playground-vue2",
+    "play:vue3": "pnpm dev --filter playground-vue3",
+    "preinstall": "node ./scripts/preinstall.mjs",
+    "release": "./scripts/release.sh",
+    "typecheck": "pnpm typecheck --filter vue-i18n-routing",
+    "test": "pnpm typecheck && pnpm test:cover",
+    "test:cover": "nyc mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'",
+    "test:unit": "mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'",
+    "test:snap": "UPDATE_SNAPSHOT=* mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'"
   },
   "workspaces": [
     "packages/*"
-  ],
-  "pnpm": {
-    "overrides": {
-      "vite": "^2.6.4",
-      "typescript": "^4.5.2"
-    }
-  }
+  ]
 }

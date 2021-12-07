@@ -1,3 +1,4 @@
 dist
 dist_ssr
 docsgen.config.js
+.nyc_output

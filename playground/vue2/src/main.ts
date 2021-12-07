@@ -8,6 +8,7 @@ Vue.use(VueCompositionAPI)
 Vue.use(VueI18nRoutingPlugin, { router })
 
 const app = new Vue({
+  // @ts-ignore TODO:
   router,
   render: h => h(App)
 })

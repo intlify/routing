@@ -5,3 +5,4 @@ coverage
 test
 temp
 scripts
+.nyc_output
