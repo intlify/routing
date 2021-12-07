@@ -75,6 +75,7 @@
   "scripts": {
     "dev": "pnpm dev --filter vue-i18n-routing",
     "build": "pnpm build --filter vue-i18n-routing",
+    "build:docs": "pnpm build:docs --filter vue-i18n-routing",
     "play:vue3": "pnpm dev --filter playground-vue3",
     "play:vue2": "pnpm dev --filter playground-vue2",
     "bump": "./scripts/bump.sh",

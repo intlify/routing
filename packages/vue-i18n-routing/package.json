@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "build:docs": "api-docs-gen ./temp/vue-i18n-routing.api.json -c ./docsgen.config.js -o ./ -g noprefix"
   },
   "dependencies": {
     "vue-demi": "*"
@@ -17,7 +18,8 @@
     "vue2": "npm:vue@2",
     "vue-router3": "npm:vue-router@latest",
     "rimraf": "^3.0.2",
-    "@microsoft/api-extractor": "^7.18.20"
+    "@microsoft/api-extractor": "^7.18.20",
+    "api-docs-gen": "^0.4.0"
   },
   "peerDependencies": {
     "vue": "^2.6.14 || ^3.2.0",

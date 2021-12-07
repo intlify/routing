@@ -52,6 +52,7 @@ importers:
   packages/vue-i18n-routing:
     specifiers:
       '@microsoft/api-extractor': ^7.18.20
+      api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
       vite: ^2.6.4
       vite-plugin-dts: ^0.9.6
@@ -64,6 +65,7 @@ importers:
       vue-demi: 0.12.1_vue@3.2.23
     devDependencies:
       '@microsoft/api-extractor': 7.18.20
+      api-docs-gen: 0.4.0
       rimraf: 3.0.2
       vite: 2.6.14
       vite-plugin-dts: 0.9.6_vite@2.6.14
@@ -503,6 +505,11 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@intlify/shared/9.1.9:
+    resolution: {integrity: sha512-xKGM1d0EAxdDFCWedcYXOm6V5Pfw/TMudd6/qCdEb4tv0hk9EKeg7lwQF1azE0dP2phvx0yXxrt7UQK+IZjNdw==}
+    engines: {node: '>= 10'}
     dev: true
 
   /@microsoft/api-extractor-model/7.13.17:
@@ -1389,6 +1396,22 @@ packages:
   /ansi-styles/6.1.0:
     resolution: {integrity: sha512-VbqNsoz55SYGczauuup0MFUyXNQviSpFTj1RQtFzmQLk18qbVSpTFFGMT293rmDaQuKCT6InmbuEyUne4mTuxQ==}
     engines: {node: '>=12'}
+    dev: true
+
+  /api-docs-gen/0.4.0:
+    resolution: {integrity: sha512-l+uccoeHfoHVSvVDXeOFy3YmxKbHM8s/fjgq1RxGLfbrspq16Igswn1oT+plk4y2qVuF/31KN5pJZV6Nleworw==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dependencies:
+      '@intlify/shared': 9.1.9
+      '@microsoft/api-extractor-model': 7.13.17
+      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc-config': 0.15.2
+      chalk: 4.1.2
+      debug: 4.3.3
+      meow: 9.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /argparse/1.0.10:
