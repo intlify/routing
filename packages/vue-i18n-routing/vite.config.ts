@@ -22,8 +22,7 @@ export default defineConfig({
     dts({
       afterBuild: () => {
         const extractorConfigPath = resolve(__dirname, `api-extractor.json`)
-        const extractorConfig =
-          ExtractorConfig.loadFileAndPrepare(extractorConfigPath)
+        const extractorConfig = ExtractorConfig.loadFileAndPrepare(extractorConfigPath)
         const extractorResult = Extractor.invoke(extractorConfig, {
           localBuild: true,
           showVerboseMessages: true

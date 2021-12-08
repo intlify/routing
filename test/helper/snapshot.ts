@@ -25,9 +25,7 @@ function writeSnap(file: string, name: string, data: any) {
     fs.mkdirSync(path.dirname(file))
   }
 
-  const snapShotCountsBefore = fileCache[file]
-    ? Object.keys(fileCache[file]).length
-    : 0
+  const snapShotCountsBefore = fileCache[file] ? Object.keys(fileCache[file]).length : 0
 
   if (snapShotCountsBefore === 0) {
     fileCache[file] = { [name]: data }
@@ -37,11 +35,8 @@ function writeSnap(file: string, name: string, data: any) {
 
   let snap
   const snapShotCountsAfter = Object.keys(fileCache[file]).length
-  if (
-    snapShotCountsBefore === 0 ||
-    snapShotCountsBefore !== snapShotCountsAfter
-  ) {
-    snap = `exports[\`${name}\`] = \`${data}\`;\n\n`
+  if (snapShotCountsBefore === 0 || snapShotCountsBefore !== snapShotCountsAfter) {
+    snap = `exports[\`${name}\`] = \`${JSON.stringify(data)}\`;\n\n`
     fs.appendFileSync(file, snap, { encoding: 'utf8' })
     return true
   }
@@ -56,17 +51,14 @@ function writeSnap(file: string, name: string, data: any) {
   return true
 }
 
-export function chatSnaptshotPlugin(
-  chai: Chai.ChaiStatic,
-  utils: Chai.ChaiUtils
-): void {
+export function chatSnaptshotPlugin(chai: Chai.ChaiStatic, utils: Chai.ChaiUtils): void {
   utils.addProperty(chai.Assertion.prototype, 'force', function () {
     utils.flag(this, 'updateSnapshot', true)
   })
 
   const UPDATE_SNAPSHOT = process.env.UPDATE_SNAPSHOT
 
-  function matchSnapshot(passedContext) {
+  function matchSnapshot(passedContext: Record<string, any>) {
     const actual = utils.flag(this, 'object')
     const isForced = UPDATE_SNAPSHOT || utils.flag(this, 'updateSnapshot')
     const context = passedContext.test ? passedContext.test : passedContext
@@ -74,12 +66,8 @@ export function chatSnaptshotPlugin(
     const filename = path.basename(context.file)
     const snapshotFile = path.join(dir, '__snapshots__', filename + '.snap')
 
-    const prepareTitle = chain => {
-      if (
-        chain.parent &&
-        chain.parent.file &&
-        path.basename(chain.parent.file) === filename
-      ) {
+    const prepareTitle = (chain: Record<string, any>): string => {
+      if (chain.parent && chain.parent.file && path.basename(chain.parent.file) === filename) {
         return `${prepareTitle(chain.parent)} : ${chain.title}`
       }
       return chain.title

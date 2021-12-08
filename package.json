@@ -103,9 +103,9 @@
     "release": "./scripts/release.sh",
     "typecheck": "pnpm typecheck --filter vue-i18n-routing",
     "test": "pnpm typecheck && pnpm test:cover",
-    "test:cover": "nyc mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'",
-    "test:unit": "mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'",
-    "test:snap": "UPDATE_SNAPSHOT=* mocha -r jiti/register -r ./test/hooks/chai.ts 'test/**/*.test.ts'"
+    "test:cover": "nyc mocha -r jiti/register -r ./test/hooks/chai.ts './**/test/**/*.test.ts'",
+    "test:unit": "mocha -r jiti/register -r ./test/hooks/chai.ts './**/test/**/*.test.ts'",
+    "test:snap": "UPDATE_SNAPSHOT=* mocha -r jiti/register -r ./test/hooks/chai.ts './**/test/**/*.test.ts'"
   },
   "workspaces": [
     "packages/*"
