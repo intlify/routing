@@ -16,7 +16,10 @@ export function localizeRoutes(
     routesNameSeparator = VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator,
     defaultLocaleRouteNameSuffix = VUE_I18N_ROUTING_DEFAULTS.defaultLocaleRouteNameSuffix,
     localeCodes = []
-  }: VueI18nRoutingOptions = {}
+  }: Pick<
+    VueI18nRoutingOptions,
+    'defaultLocale' | 'localeCodes' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
+  > = {}
 ): VueI18nRoute[] {
   function makeLocalizedRoutes(
     route: VueI18nRoute,

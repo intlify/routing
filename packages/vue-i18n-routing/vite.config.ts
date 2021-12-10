@@ -16,6 +16,9 @@ export default defineConfig({
       entry: resolve(__dirname, './src/index.ts'),
       name: 'VueI18nRouting',
       formats: ['es', 'cjs', 'iife']
+    },
+    rollupOptions: {
+      external: ['vue-demi']
     }
   },
   plugins: [

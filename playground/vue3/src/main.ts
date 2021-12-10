@@ -6,6 +6,6 @@ import router from './router'
 const app = createApp(App)
 
 app.use(router)
-app.use(VueI18nRoutingPlugin, { router })
+app.use(VueI18nRoutingPlugin, { router, localeCodes: ['en'] })
 
 app.mount('#app')
