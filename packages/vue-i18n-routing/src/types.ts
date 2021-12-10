@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { RouteConfig as __Route } from 'vue-router'
+import type { RouteConfig as __Route } from 'vue-router3'
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer U) => void ? U : never
 type _Route = UnionToIntersection<__Route>

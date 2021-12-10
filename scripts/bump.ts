@@ -21,12 +21,7 @@ async function loadPackage(dir: string) {
   //   console.log(`package: ${dir}`, JSON.stringify(data, null, 2))
 
   const updateDeps = (reviver: DepsReviver) => {
-    for (const type of [
-      'dependencies',
-      'devDependencies',
-      'optionalDependencies',
-      'peerDependencies'
-    ]) {
+    for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
       if (!data[type]) {
         continue
       }
@@ -59,17 +54,12 @@ async function loadWorkspaceData(path: string): Promise<string[]> {
 
 async function loadWorkspace(dir: string, workspaces: string[] = []) {
   const workspacePkg = await loadPackage(dir)
-  const workspacesYaml = await loadWorkspaceData(
-    resolve(_dirname, '../pnpm-workspace.yaml')
-  )
+  const workspacesYaml = await loadWorkspaceData(resolve(_dirname, '../pnpm-workspace.yaml'))
   workspacePkg.data.workspaces = [...workspaces, ...workspacesYaml]
 
-  const pkgDirs = await globby(
-    [...(workspacePkg.data.workspaces || []), ...workspaces],
-    {
-      onlyDirectories: true
-    }
-  )
+  const pkgDirs = await globby([...(workspacePkg.data.workspaces || []), ...workspaces], {
+    onlyDirectories: true
+  })
 
   const packages: Package[] = []
 
