@@ -75,7 +75,7 @@
   },
   "pnpm": {
     "overrides": {
-      "vite": "^2.6.4",
+      "vite": "^2.7.1",
       "typescript": "^4.5.2"
     }
   },
@@ -110,6 +110,7 @@
     "test:snap": "UPDATE_SNAPSHOT=* mocha -r jiti/register -r ./test/hooks/chai.ts './**/test/**/*.test.ts'"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "playground/*"
   ]
 }

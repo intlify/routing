@@ -18,7 +18,12 @@ export default defineConfig({
       formats: ['es', 'cjs', 'iife']
     },
     rollupOptions: {
-      external: ['vue-demi']
+      external: ['vue-demi'],
+      output: {
+        globals: {
+          'vue-demi': 'VueDemi'
+        }
+      }
     }
   },
   plugins: [

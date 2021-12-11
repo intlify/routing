@@ -1,3 +1,4 @@
+import VueRouter from 'vue-router'
 import { isVue2 } from 'vue-demi'
 import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
 import { localizeRoutes } from './resolve'
@@ -7,18 +8,15 @@ import type { Router, RouteRecordRaw } from 'vue-router'
 
 export { localizeRoutes, VueI18nRoutingOptions, VueI18nRoute }
 
-export const VueI18nRoutingPlugin = function (
-  vueApp: any, // eslint-disable-line @typescript-eslint/no-explicit-any
-  {
-    router,
-    i18n,
-    defaultLocale = VUE_I18N_ROUTING_DEFAULTS.defaultLocale,
-    trailingSlash = VUE_I18N_ROUTING_DEFAULTS.trailingSlash,
-    routesNameSeparator = VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator,
-    defaultLocaleRouteNameSuffix = VUE_I18N_ROUTING_DEFAULTS.defaultLocaleRouteNameSuffix,
-    localeCodes = []
-  }: VueI18nRoutingOptions = {}
-) {
+export function setupRouting<TRouter extends typeof VueRouter | Router>({
+  router,
+  i18n,
+  defaultLocale = VUE_I18N_ROUTING_DEFAULTS.defaultLocale,
+  trailingSlash = VUE_I18N_ROUTING_DEFAULTS.trailingSlash,
+  routesNameSeparator = VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator,
+  defaultLocaleRouteNameSuffix = VUE_I18N_ROUTING_DEFAULTS.defaultLocaleRouteNameSuffix,
+  localeCodes = []
+}: VueI18nRoutingOptions = {}): TRouter {
   if (router == null) {
     throw new Error('TODO')
   }
@@ -34,12 +32,9 @@ export const VueI18nRoutingPlugin = function (
       routesNameSeparator,
       defaultLocaleRouteNameSuffix
     })
-    const newRouter = new VueRouter({ mode: 'history', routes: [] })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(_router as any).matcher = (newRouter as any).matcher
-    localizedRoutes.forEach(route => {
-      _router.addRoute(route)
-    })
+    console.log('vue2 routes', routes, localizedRoutes)
+    const newRouter = new VueRouter({ mode: 'history', base: _router.options.base, routes: localizedRoutes })
+    return newRouter
   } else {
     const _router = router as Router
     const routes = _router.options.routes || []
@@ -53,19 +48,8 @@ export const VueI18nRoutingPlugin = function (
     console.log('vue3 routes', routes, localizedRoutes)
     routes.forEach(r => _router.removeRoute(r.name!))
     localizedRoutes.forEach(route => _router.addRoute(route as RouteRecordRaw))
+    return _router as any // eslint-disable-line @typescript-eslint/no-explicit-any
   }
-
-  // TODO:
-  console.log(
-    'install vue-i18n-rouging!',
-    router,
-    i18n,
-    defaultLocale,
-    trailingSlash,
-    routesNameSeparator,
-    defaultLocaleRouteNameSuffix,
-    localeCodes
-  )
 }
 
 /**

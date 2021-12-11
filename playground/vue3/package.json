@@ -11,7 +11,12 @@
   "dependencies": {
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
-    "vue-i18n-routing": "edge"
+    "vue-i18n-routing": "workspace:*"
+  },
+  "dependenciesMeta": {
+    "vue-i18n-routing": {
+      "injected": true
+    }
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",

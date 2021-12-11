@@ -12,15 +12,15 @@
     "vue-demi": "*"
   },
   "devDependencies": {
-    "vite": "^2.6.4",
+    "@microsoft/api-extractor": "^7.18.20",
+    "api-docs-gen": "^0.4.0",
+    "rimraf": "^3.0.2",
+    "vite": "^2.7.1",
     "vite-plugin-dts": "^0.9.6",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12",
-    "vue2": "npm:vue@2",
     "vue-router3": "npm:vue-router@latest",
-    "rimraf": "^3.0.2",
-    "@microsoft/api-extractor": "^7.18.20",
-    "api-docs-gen": "^0.4.0"
+    "vue2": "npm:vue@2"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.4.0",
