@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import VueRouter from 'vue-router3'
+import VueI18n from 'vue-i18n-legacy'
 
 import type { RouteConfig as __Route } from 'vue-router3'
 import type { Router } from 'vue-router'
+import type { I18n } from 'vue-i18n'
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer U) => void ? U : never
 type _Route = UnionToIntersection<__Route>
@@ -44,7 +46,7 @@ export interface VueI18nRoutingOptions {
   /**
    * Vue I18n instance
    */
-  i18n?: unknown
+  i18n?: VueI18n | I18n
   defaultLocale?: string
   localeCodes?: string[]
   trailingSlash?: boolean

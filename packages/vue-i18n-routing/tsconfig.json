@@ -8,7 +8,10 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "vue-router3": ["./node_modules/vue-router3/types/index.d.ts"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }

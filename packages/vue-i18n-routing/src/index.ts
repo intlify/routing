@@ -1,12 +1,9 @@
 import VueRouter from 'vue-router3'
-import { isVue2 } from 'vue-demi'
 import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
-import { localizeRoutes } from './resolve'
+import { extendRouter } from './extends'
 
-import type { VueI18nRoute, VueI18nRoutingOptions } from './types'
-import type { Router, RouteRecordRaw } from 'vue-router'
-
-export { localizeRoutes, VueI18nRoutingOptions, VueI18nRoute }
+import type { VueI18nRoutingOptions } from './types'
+import type { Router } from 'vue-router'
 
 export function extendRouting<TRouter extends VueRouter | Router>({
   router,
@@ -21,35 +18,15 @@ export function extendRouting<TRouter extends VueRouter | Router>({
     throw new Error('TODO')
   }
 
-  if (isVue2) {
-    const _router = router as VueRouter
-    const _VueRouter = _router.constructor as any // eslint-disable-line @typescript-eslint/no-explicit-any
-    const routes = _router.options.routes || []
-    const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
-      localeCodes,
-      defaultLocale,
-      trailingSlash,
-      routesNameSeparator,
-      defaultLocaleRouteNameSuffix
-    })
-    console.log('vue2 routes', routes, localizedRoutes)
-    const newRouter = new _VueRouter({ mode: 'history', base: _router.options.base, routes: localizedRoutes })
-    return newRouter as TRouter
-  } else {
-    const _router = router as Router
-    const routes = _router.options.routes || []
-    const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
-      localeCodes,
-      defaultLocale,
-      trailingSlash,
-      routesNameSeparator,
-      defaultLocaleRouteNameSuffix
-    })
-    console.log('vue3 routes', routes, localizedRoutes)
-    routes.forEach(r => _router.removeRoute(r.name!))
-    localizedRoutes.forEach(route => _router.addRoute(route as RouteRecordRaw))
-    return _router as TRouter
-  }
+  return extendRouter({
+    router,
+    i18n,
+    defaultLocale,
+    trailingSlash,
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix,
+    localeCodes
+  })
 }
 
 /**
