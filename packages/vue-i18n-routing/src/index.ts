@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router3'
 import { isVue2 } from 'vue-demi'
 import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
 import { localizeRoutes } from './resolve'
@@ -8,7 +8,7 @@ import type { Router, RouteRecordRaw } from 'vue-router'
 
 export { localizeRoutes, VueI18nRoutingOptions, VueI18nRoute }
 
-export function setupRouting<TRouter extends typeof VueRouter | Router>({
+export function extendRouting<TRouter extends VueRouter | Router>({
   router,
   i18n,
   defaultLocale = VUE_I18N_ROUTING_DEFAULTS.defaultLocale,
@@ -22,8 +22,8 @@ export function setupRouting<TRouter extends typeof VueRouter | Router>({
   }
 
   if (isVue2) {
-    const _router = router as any // eslint-disable-line @typescript-eslint/no-explicit-any
-    const VueRouter = _router.constructor
+    const _router = router as VueRouter
+    const _VueRouter = _router.constructor as any // eslint-disable-line @typescript-eslint/no-explicit-any
     const routes = _router.options.routes || []
     const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
       localeCodes,
@@ -33,8 +33,8 @@ export function setupRouting<TRouter extends typeof VueRouter | Router>({
       defaultLocaleRouteNameSuffix
     })
     console.log('vue2 routes', routes, localizedRoutes)
-    const newRouter = new VueRouter({ mode: 'history', base: _router.options.base, routes: localizedRoutes })
-    return newRouter
+    const newRouter = new _VueRouter({ mode: 'history', base: _router.options.base, routes: localizedRoutes })
+    return newRouter as TRouter
   } else {
     const _router = router as Router
     const routes = _router.options.routes || []
@@ -48,7 +48,7 @@ export function setupRouting<TRouter extends typeof VueRouter | Router>({
     console.log('vue3 routes', routes, localizedRoutes)
     routes.forEach(r => _router.removeRoute(r.name!))
     localizedRoutes.forEach(route => _router.addRoute(route as RouteRecordRaw))
-    return _router as any // eslint-disable-line @typescript-eslint/no-explicit-any
+    return _router as TRouter
   }
 }
 
