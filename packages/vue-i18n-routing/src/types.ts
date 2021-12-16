@@ -2,6 +2,7 @@
 
 import VueRouter from 'vue-router3'
 import VueI18n from 'vue-i18n-legacy'
+import { STRATEGIES } from './constants'
 
 import type { RouteConfig as __Route } from 'vue-router3'
 import type { Router } from 'vue-router'
@@ -36,6 +37,11 @@ export interface Route {
 export type VueI18nRoute = Route & RouteLegacy & { redirect?: string }
 
 /**
+ * Routing strategy
+ */
+export type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES]
+
+/**
  * Vue I18n routing options
  */
 export interface VueI18nRoutingOptions {
@@ -49,6 +55,7 @@ export interface VueI18nRoutingOptions {
   i18n?: VueI18n | I18n
   defaultLocale?: string
   localeCodes?: string[]
+  strategy?: Strategies
   trailingSlash?: boolean
   routesNameSeparator?: string
   defaultLocaleRouteNameSuffix?: string

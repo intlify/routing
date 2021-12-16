@@ -1,0 +1,161 @@
+exports[`localizeRoutes : basic : should be localized routing 1`] = `[
+  {
+    "path": "/en",
+    "name": "home___en"
+  },
+  {
+    "path": "/ja",
+    "name": "home___ja"
+  },
+  {
+    "path": "/en/about",
+    "name": "about___en"
+  },
+  {
+    "path": "/ja/about",
+    "name": "about___ja"
+  }
+]`;
+
+exports[`localizeRoutes : has children : should be localized routing 1`] = `[
+  {
+    "path": "/en/user/:id",
+    "name": "user___en",
+    "children": [
+      {
+        "path": "profile",
+        "name": "user-profile___en"
+      },
+      {
+        "path": "posts",
+        "name": "user-posts___en"
+      }
+    ]
+  },
+  {
+    "path": "/ja/user/:id",
+    "name": "user___ja",
+    "children": [
+      {
+        "path": "profile",
+        "name": "user-profile___ja"
+      },
+      {
+        "path": "posts",
+        "name": "user-posts___ja"
+      }
+    ]
+  }
+]`;
+
+exports[`localizeRoutes : trailing slash : should be localized routing 1`] = `[
+  {
+    "path": "/en/",
+    "name": "home___en"
+  },
+  {
+    "path": "/ja/",
+    "name": "home___ja"
+  },
+  {
+    "path": "/en/about/",
+    "name": "about___en"
+  },
+  {
+    "path": "/ja/about/",
+    "name": "about___ja"
+  }
+]`;
+
+exports[`localizeRoutes : route name separator : should be localized routing 1`] = `[
+  {
+    "path": "/en",
+    "name": "home__en"
+  },
+  {
+    "path": "/ja",
+    "name": "home__ja"
+  },
+  {
+    "path": "/en/about",
+    "name": "about__en"
+  },
+  {
+    "path": "/ja/about",
+    "name": "about__ja"
+  }
+]`;
+
+exports[`localizeRoutes : strategy: "prefix_and_default" : should be localized routing 1`] = `[
+  {
+    "path": "/",
+    "name": "home___en___default"
+  },
+  {
+    "path": "/en",
+    "name": "home___en"
+  },
+  {
+    "path": "/ja",
+    "name": "home___ja"
+  },
+  {
+    "path": "/about",
+    "name": "about___en___default"
+  },
+  {
+    "path": "/en/about",
+    "name": "about___en"
+  },
+  {
+    "path": "/ja/about",
+    "name": "about___ja"
+  }
+]`;
+
+exports[`localizeRoutes : strategy: "prefix" : should be localized routing 1`] = `[
+  {
+    "path": "/",
+    "name": "home"
+  },
+  {
+    "path": "/en",
+    "name": "home___en"
+  },
+  {
+    "path": "/ja",
+    "name": "home___ja"
+  },
+  {
+    "path": "/about",
+    "name": "about"
+  },
+  {
+    "path": "/en/about",
+    "name": "about___en"
+  },
+  {
+    "path": "/ja/about",
+    "name": "about___ja"
+  }
+]`;
+
+exports[`localizeRoutes : strategy: "no_prefix" : should be localized routing 1`] = `[
+  {
+    "path": "/en",
+    "name": "home___en"
+  },
+  {
+    "path": "/ja",
+    "name": "home___ja"
+  },
+  {
+    "path": "/en/about",
+    "name": "about___en"
+  },
+  {
+    "path": "/ja/about",
+    "name": "about___ja"
+  }
+]`;
+

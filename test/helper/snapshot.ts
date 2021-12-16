@@ -3,8 +3,16 @@
 import fs from 'fs'
 import path from 'pathe'
 
+function toText(data: any): string {
+  return JSON.stringify(data, null, 2)
+}
+
+function isString(val: unknown): val is string {
+  return typeof val === 'string'
+}
+
 type FileCache = {
-  [key: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any
 }
 
 const fileCache: FileCache = {}
@@ -19,7 +27,6 @@ function readSnap(file: string, name: string) {
   return fileCache[file][name]
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function writeSnap(file: string, name: string, data: any) {
   if (!fs.existsSync(path.dirname(file))) {
     fs.mkdirSync(path.dirname(file))
@@ -36,14 +43,14 @@ function writeSnap(file: string, name: string, data: any) {
   let snap
   const snapShotCountsAfter = Object.keys(fileCache[file]).length
   if (snapShotCountsBefore === 0 || snapShotCountsBefore !== snapShotCountsAfter) {
-    snap = `exports[\`${name}\`] = \`${JSON.stringify(data)}\`;\n\n`
+    snap = `exports[\`${name}\`] = \`${toText(data)}\`;\n\n`
     fs.appendFileSync(file, snap, { encoding: 'utf8' })
     return true
   }
 
   snap = ''
   for (const snapshot in fileCache[file]) {
-    snap = `${snap}exports[\`${snapshot}\`] = \`${fileCache[file][snapshot]}\`;\n\n`
+    snap = `${snap}exports[\`${snapshot}\`] = \`${toText(fileCache[file][snapshot])}\`;\n\n`
   }
 
   fs.writeFileSync(file, snap, { encoding: 'utf8' })
@@ -92,7 +99,7 @@ export function chatSnaptshotPlugin(chai: Chai.ChaiStatic, utils: Chai.ChaiUtils
     }
 
     if (actual !== null && typeof actual === 'object') {
-      chai.assert.deepEqual(actual, expected)
+      chai.assert.deepEqual(actual, expected != null && isString(expected) ? JSON.parse(expected) : expected)
     } else {
       chai.assert.equal(actual, expected)
     }

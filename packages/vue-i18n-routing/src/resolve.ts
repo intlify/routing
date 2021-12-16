@@ -1,7 +1,7 @@
 import { adjustRoutePathForTrailingSlash } from './utils'
 import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
 
-import type { VueI18nRoute, VueI18nRoutingOptions } from './types'
+import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from './types'
 
 // type RouteOptions = {
 //   locales: string[]
@@ -12,14 +12,21 @@ export function localizeRoutes(
   routes: VueI18nRoute[],
   {
     defaultLocale = VUE_I18N_ROUTING_DEFAULTS.defaultLocale,
+    strategy = VUE_I18N_ROUTING_DEFAULTS.strategy as Strategies,
     trailingSlash = VUE_I18N_ROUTING_DEFAULTS.trailingSlash,
     routesNameSeparator = VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator,
     defaultLocaleRouteNameSuffix = VUE_I18N_ROUTING_DEFAULTS.defaultLocaleRouteNameSuffix,
+    includeUprefixedFallback = false,
     localeCodes = []
   }: Pick<
     VueI18nRoutingOptions,
-    'defaultLocale' | 'localeCodes' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
-  > = {}
+    | 'defaultLocale'
+    | 'strategy'
+    | 'localeCodes'
+    | 'routesNameSeparator'
+    | 'trailingSlash'
+    | 'defaultLocaleRouteNameSuffix'
+  > & { includeUprefixedFallback?: boolean } = {}
 ): VueI18nRoute[] {
   function makeLocalizedRoutes(
     route: VueI18nRoute,
@@ -58,8 +65,11 @@ export function localizeRoutes(
 
       // TODO: custom paths
 
+      // For 'prefix_and_default' strategy and default locale:
+      // - if it's a parent page, add it with default locale suffix added (no suffix if page has children)
+      // - if it's a child page of that extra parent page, append default suffix to it
       const isDefaultLocale = locale === defaultLocale
-      if (isDefaultLocale) {
+      if (isDefaultLocale && strategy === 'prefix_and_default') {
         if (!isChild) {
           const defaultRoute = { ...localizedRoute, path }
 
@@ -71,6 +81,7 @@ export function localizeRoutes(
             // recreate child routes with default suffix added
             defaultRoute.children = []
             for (const childRoute of route.children) {
+              // isExtraRouteTree argument is true to indicate that this is extra route added for 'prefix_and_default' strategy
               defaultRoute.children = defaultRoute.children.concat(
                 makeLocalizedRoutes(childRoute as VueI18nRoute, [locale], true, true)
               )
@@ -86,13 +97,22 @@ export function localizeRoutes(
       const isChildWithRelativePath = isChild && !path.startsWith('/')
 
       // add route prefix
-      const shouldAddPrefix = !isChildWithRelativePath && !isDefaultLocale
+      const shouldAddPrefix =
+        // no need to add prefix if child's path is relative
+        !isChildWithRelativePath &&
+        // skip default locale if strategy is 'prefix_except_default'
+        !(isDefaultLocale && strategy === 'prefix_except_default')
+
       if (shouldAddPrefix) {
         path = `/${locale}${path}`
       }
 
       if (path) {
         path = adjustRoutePathForTrailingSlash(path, trailingSlash, isChildWithRelativePath)
+      }
+
+      if (shouldAddPrefix && isDefaultLocale && strategy === 'prefix' && includeUprefixedFallback) {
+        _routes.push({ ...route })
       }
 
       localizedRoute.path = path
