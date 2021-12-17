@@ -9,7 +9,8 @@
     "build:docs": "api-docs-gen ./temp/vue-i18n-routing.api.json -c ./docsgen.config.js -o ./ -g noprefix"
   },
   "dependencies": {
-    "vue-demi": "*"
+    "vue-demi": "*",
+    "@intlify/shared": "beta"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.18.20",

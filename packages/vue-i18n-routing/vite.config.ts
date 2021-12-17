@@ -18,10 +18,12 @@ export default defineConfig({
       formats: ['es', 'cjs', 'iife']
     },
     rollupOptions: {
-      external: ['vue-demi'],
+      external: ['vue-demi', 'vue-router', 'vue-i18n'],
       output: {
         globals: {
-          'vue-demi': 'VueDemi'
+          'vue-demi': 'VueDemi',
+          'vue-router': 'VueRouter',
+          'vue-i18n': 'VueI18n'
         }
       }
     }

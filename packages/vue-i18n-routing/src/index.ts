@@ -36,3 +36,5 @@ export function extendRouting<TRouter extends VueRouter | Router>({
  * Semver format. Same format as the package.json `version` field.
  */
 export const VERSION = __VERSION__
+
+export * from './composables'

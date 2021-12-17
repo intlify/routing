@@ -85,10 +85,15 @@
     "url": "git+https://github.com/intlify/routing.git"
   },
   "scripts": {
+    "force": "run-s clean build && pnpm i --force",
     "build": "pnpm build --filter vue-i18n-routing",
     "build:vue2": "pnpm build --filter playground-vue2",
     "build:vue3": "pnpm build --filter playground-vue3",
     "build:docs": "pnpm build:docs --filter vue-i18n-routing",
+    "clean": "run-p clean:*",
+    "clean:lib": "rm -rf packages/vue-i18n-routing/dist",
+    "clean:vue2": "rm -rf playground-vue2/node_modules playground-vue2/dist",
+    "clean:vue3": "rm -rf playground-vue3/node_modules playground-vue3/dist",
     "bump": "./scripts/bump.sh",
     "dev": "pnpm dev --filter vue-i18n-routing",
     "fix": "run-p lint:fix format:fix",
