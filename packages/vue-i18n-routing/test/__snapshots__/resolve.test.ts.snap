@@ -142,20 +142,12 @@ exports[`localizeRoutes : strategy: "prefix" : should be localized routing 1`] =
 
 exports[`localizeRoutes : strategy: "no_prefix" : should be localized routing 1`] = `[
   {
-    "path": "/en",
-    "name": "home___en"
+    "path": "/",
+    "name": "home"
   },
   {
-    "path": "/ja",
-    "name": "home___ja"
-  },
-  {
-    "path": "/en/about",
-    "name": "about___en"
-  },
-  {
-    "path": "/ja/about",
-    "name": "about___ja"
+    "path": "/about",
+    "name": "about"
   }
 ]`;
 

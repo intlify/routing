@@ -28,6 +28,10 @@ export function localizeRoutes(
     | 'defaultLocaleRouteNameSuffix'
   > & { includeUprefixedFallback?: boolean } = {}
 ): VueI18nRoute[] {
+  if (strategy === 'no_prefix') {
+    return routes
+  }
+
   function makeLocalizedRoutes(
     route: VueI18nRoute,
     allowedLocaleCodes: string[],
