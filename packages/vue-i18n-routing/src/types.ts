@@ -6,7 +6,7 @@ import { STRATEGIES } from './constants'
 
 import type { RouteConfig as __Route } from 'vue-router3'
 import type { Router } from 'vue-router'
-import type { I18n } from 'vue-i18n'
+import type { I18n, Locale } from 'vue-i18n'
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer U) => void ? U : never
 type _Route = UnionToIntersection<__Route>
@@ -42,6 +42,23 @@ export type VueI18nRoute = Route & RouteLegacy & { redirect?: string }
 export type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES]
 
 /**
+ * Direction
+ */
+export type Directions = 'ltr' | 'rtl' | 'auto'
+
+/**
+ * Locale object
+ */
+export interface LocaleObject extends Record<string, any> {
+  code: Locale
+  dir?: Directions
+  domain?: string
+  file?: string
+  isCatchallLocale?: boolean
+  iso?: string
+}
+
+/**
  * Vue I18n routing options
  */
 export interface VueI18nRoutingOptions {
@@ -54,7 +71,7 @@ export interface VueI18nRoutingOptions {
    */
   i18n?: VueI18n | I18n
   defaultLocale?: string
-  localeCodes?: string[]
+  localeCodes?: string[] | LocaleObject[]
   strategy?: Strategies
   trailingSlash?: boolean
   routesNameSeparator?: string

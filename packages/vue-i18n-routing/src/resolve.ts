@@ -1,3 +1,4 @@
+import { isString } from '@intlify/shared'
 import { adjustRoutePathForTrailingSlash } from './utils'
 import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
 
@@ -31,6 +32,9 @@ export function localizeRoutes(
   if (strategy === 'no_prefix') {
     return routes
   }
+
+  // normalize localeCodes
+  const _localeCodes = localeCodes.map(locale => (isString(locale) ? locale : locale.code))
 
   function makeLocalizedRoutes(
     route: VueI18nRoute,
@@ -127,7 +131,7 @@ export function localizeRoutes(
   }
 
   return routes.reduce(
-    (localized, route) => [...localized, ...makeLocalizedRoutes(route, localeCodes || [])],
+    (localized, route) => [...localized, ...makeLocalizedRoutes(route, _localeCodes || [])],
     [] as VueI18nRoute[]
   )
 }

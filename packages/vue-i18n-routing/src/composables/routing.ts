@@ -3,6 +3,7 @@ import { isRef, isVue2 } from 'vue-demi'
 import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from './router'
 import { useI18n } from './i18n'
+import { isComposer } from '../utils'
 // import VueRouter from 'vue-router3'
 
 import type { ComputedRef } from 'vue-demi'
@@ -200,10 +201,6 @@ function getRouteName(routeName?: string | symbol | null) {
 
 function isI18nInstance(i18n: I18n | Composer): i18n is I18n {
   return 'global' in i18n && 'mode' in i18n
-}
-
-function isComposer(target: any, mode: I18nMode): target is Composer {
-  return isRef(target.locale) && mode === 'composition'
 }
 
 function getLocale(i18n: I18n | Composer): Locale {
