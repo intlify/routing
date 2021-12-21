@@ -1,8 +1,6 @@
-/// <reference path="../../../test/chai.shim.d.ts"/>
-
-import { expect } from 'chai'
-import { localizeRoutes } from '../src/resolve'
-import { VUE_I18N_ROUTING_DEFAULTS } from '../src/constants'
+import { describe, it, expect } from 'vitest'
+import { localizeRoutes } from '../src/index'
+import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../src/constants'
 
 import type { VueI18nRoute } from '../src/types'
 
@@ -22,13 +20,13 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { localeCodes })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
           })
         })
       })
@@ -58,16 +56,16 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { localeCodes })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(2)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`,
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`,
             children: children.map(child => ({
               path: child.path,
-              name: `${child.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+              name: `${child.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
             }))
           })
         })
@@ -90,13 +88,13 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { localeCodes, trailingSlash: true })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}/`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
           })
         })
       })
@@ -118,7 +116,7 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { localeCodes, routesNameSeparator: '__' })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
@@ -150,7 +148,7 @@ describe('localizeRoutes', function () {
         localeCodes
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 
@@ -174,7 +172,7 @@ describe('localizeRoutes', function () {
         includeUprefixedFallback: true
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 
@@ -197,7 +195,7 @@ describe('localizeRoutes', function () {
         localeCodes
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 })

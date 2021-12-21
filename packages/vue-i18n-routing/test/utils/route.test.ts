@@ -1,4 +1,4 @@
-import { assert } from 'chai'
+import { assert, describe, it } from 'vitest'
 import { adjustRoutePathForTrailingSlash } from '../../src/utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {
