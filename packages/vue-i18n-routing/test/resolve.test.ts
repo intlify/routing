@@ -2,7 +2,7 @@
 
 import { expect } from 'chai'
 import { localizeRoutes } from '../src/resolve'
-import { VUE_I18N_ROUTING_DEFAULTS } from '../src/constants'
+import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../src/constants'
 
 import type { VueI18nRoute } from '../src/types'
 
@@ -28,7 +28,7 @@ describe('localizeRoutes', function () {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
           })
         })
       })
@@ -64,10 +64,10 @@ describe('localizeRoutes', function () {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`,
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`,
             children: children.map(child => ({
               path: child.path,
-              name: `${child.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+              name: `${child.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
             }))
           })
         })
@@ -96,7 +96,7 @@ describe('localizeRoutes', function () {
         routes.forEach(route => {
           expect(localizedRoutes).to.deep.include({
             path: `/${locale}${route.path === '/' ? '' : route.path}/`,
-            name: `${route.name}${VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator}${locale}`
+            name: `${route.name}${DEFAULT_ROUTES_NAME_SEPARATOR}${locale}`
           })
         })
       })

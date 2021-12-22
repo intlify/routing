@@ -1,6 +1,12 @@
 import { isString } from '@intlify/shared'
 import { adjustRoutePathForTrailingSlash } from './utils'
-import { VUE_I18N_ROUTING_DEFAULTS } from './constants'
+import {
+  DEFAULT_LOCALE,
+  DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
+  DEFAULT_ROUTES_NAME_SEPARATOR,
+  DEFAULT_STRATEGY,
+  DEFAULT_TRAILING_SLASH
+} from './constants'
 
 import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from './types'
 
@@ -12,11 +18,11 @@ import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from './types'
 export function localizeRoutes(
   routes: VueI18nRoute[],
   {
-    defaultLocale = VUE_I18N_ROUTING_DEFAULTS.defaultLocale,
-    strategy = VUE_I18N_ROUTING_DEFAULTS.strategy as Strategies,
-    trailingSlash = VUE_I18N_ROUTING_DEFAULTS.trailingSlash,
-    routesNameSeparator = VUE_I18N_ROUTING_DEFAULTS.routesNameSeparator,
-    defaultLocaleRouteNameSuffix = VUE_I18N_ROUTING_DEFAULTS.defaultLocaleRouteNameSuffix,
+    defaultLocale = DEFAULT_LOCALE,
+    strategy = DEFAULT_STRATEGY as Strategies,
+    trailingSlash = DEFAULT_TRAILING_SLASH,
+    routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
+    defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
     includeUprefixedFallback = false,
     localeCodes = []
   }: Pick<
