@@ -9,22 +9,22 @@
     "build:docs": "api-docs-gen ./temp/vue-i18n-routing.api.json -c ./docsgen.config.js -o ./ -g noprefix"
   },
   "dependencies": {
-    "vue-demi": "*",
-    "@intlify/shared": "beta"
+    "@intlify/shared": "beta",
+    "vue-demi": "*"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.18.20",
     "api-docs-gen": "^0.4.0",
     "rimraf": "^3.0.2",
-    "vite": "^2.7.1",
+    "vite": "^2.7.4",
     "vite-plugin-dts": "^0.9.6",
     "vue": "^3.2.23",
-    "vue-router": "^4.0.12",
-    "vue-router3": "npm:vue-router@latest",
-    "vue2": "npm:vue@2",
     "vue-i18n": "npm:vue-i18n@next",
     "vue-i18n-bridge": "beta",
-    "vue-i18n-legacy": "npm:vue-i18n@latest"
+    "vue-i18n-legacy": "npm:vue-i18n@latest",
+    "vue-router": "^4.0.12",
+    "vue-router3": "npm:vue-router@latest",
+    "vue2": "npm:vue@2"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.4.0",

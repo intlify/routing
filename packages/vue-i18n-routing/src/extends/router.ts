@@ -1,8 +1,9 @@
 import VueRouter from 'vue-router3'
-import { isVue2 } from 'vue-demi'
+import { isString } from '@intlify/shared'
+import { isVue2, watch } from 'vue-demi'
 import { extendI18n } from './i18n'
 import { localizeRoutes } from '../resolve'
-import { getNormalizedLocales } from '../utils'
+import { getLocale, setLocale, getNormalizedLocales } from '../utils'
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -11,7 +12,8 @@ import {
   DEFAULT_TRAILING_SLASH
 } from '../constants'
 
-import type { Router, RouteRecordRaw } from 'vue-router'
+import type { Route } from 'vue-router3'
+import type { Router, RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { I18n } from 'vue-i18n'
 import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from '../types'
 
@@ -35,6 +37,47 @@ declare module 'vue-router' {
   }
 }
 
+function getLocalesRegex(localeCodes: string[]) {
+  return new RegExp(`^/(${localeCodes.join('|')})(?:/|$)`, 'i')
+}
+
+function createLocaleFromRouteGetter(
+  localeCodes: string[],
+  routesNameSeparator: string,
+  defaultLocaleRouteNameSuffix: string
+) {
+  const localesPattern = `(${localeCodes.join('|')})`
+  const defaultSuffixPattern = `(?:${routesNameSeparator}${defaultLocaleRouteNameSuffix})?`
+  const regexpName = new RegExp(`${routesNameSeparator}${localesPattern}${defaultSuffixPattern}$`, 'i')
+  const regexpPath = getLocalesRegex(localeCodes)
+
+  /**
+   * extract locale code from given route:
+   * - if route has a name, try to extract locale from it
+   * - otherwise, fall back to using the routes'path
+   */
+  const getLocaleFromRoute = (route: Route | RouteLocationNormalizedLoaded): string => {
+    // extract from route name
+    if (route.name) {
+      const name = isString(route.name) ? route.name : route.name.toString()
+      const matches = name.match(regexpName)
+      if (matches && matches.length > 1) {
+        return matches[1]
+      }
+    } else if (route.path) {
+      // Extract from path
+      const matches = route.path.match(regexpPath)
+      if (matches && matches.length > 1) {
+        return matches[1]
+      }
+    }
+
+    return ''
+  }
+
+  return getLocaleFromRoute
+}
+
 export function extendRouter<TRouter extends VueRouter | Router>({
   router,
   i18n,
@@ -49,7 +92,14 @@ export function extendRouter<TRouter extends VueRouter | Router>({
     throw new Error('TODO')
   }
 
-  extendI18n(i18n as I18n, { localeCodes: getNormalizedLocales(localeCodes) })
+  const normalizedLocaleCodes = getNormalizedLocales(localeCodes)
+  const getLocaleFromRoute = createLocaleFromRouteGetter(
+    normalizedLocaleCodes.map(l => l.code),
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix
+  )
+
+  extendI18n(i18n as I18n, { localeCodes: normalizedLocaleCodes })
 
   if (isVue2) {
     const _router = router as VueRouter
@@ -91,6 +141,31 @@ export function extendRouter<TRouter extends VueRouter | Router>({
     _router.__trailingSlash = trailingSlash
     _router.__routesNameSeparator = routesNameSeparator
     _router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
+
+    watch(
+      () => _router.currentRoute.value.path,
+      async (val: string) => {
+        if (val == null) {
+          return
+        }
+        const nextRoute = _router.currentRoute.value
+
+        const currentLocale = getLocale(i18n as I18n)
+        const finalLocale = getLocaleFromRoute(nextRoute) || currentLocale || defaultLocale || ''
+        if (currentLocale === finalLocale) {
+          return
+        }
+
+        setLocale(i18n as I18n, finalLocale)
+        // const [status, redirectPath, preserveQuery] = await onNavigate(nextRoute)
+        // if (status && redirectPath) {
+        //   const query = preserveQuery ? maybeNextRoute.query : undefined
+        //   // TODO: should be more implementation
+        //   console.log(`redirect to ${query}`)
+        // }
+      }
+    )
+
     return _router as TRouter
   }
 }

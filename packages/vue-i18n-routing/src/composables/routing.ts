@@ -3,14 +3,14 @@ import { isRef, isVue2 } from 'vue-demi'
 import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from './router'
 import { useI18n } from './i18n'
-import { isComposer } from '../utils'
+import { getLocale } from '../utils'
 // import VueRouter from 'vue-router3'
 
 import type { ComputedRef } from 'vue-demi'
 import type { VueI18nRoutingOptions, Strategies } from '../types'
 import type { Route, RawLocation } from 'vue-router3'
 import type { RouteLocationNormalizedLoaded, RouteLocationRaw, Router } from 'vue-router'
-import type { Locale, I18n, Composer, I18nMode } from 'vue-i18n'
+import { Locale, I18n, Composer, I18nMode, I18nInjectionKey } from 'vue-i18n'
 
 export type I18nRoutingOptions = Pick<
   VueI18nRoutingOptions,
@@ -177,6 +177,7 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
     })
     const path = localePath(baseRoute, locale)
 
+    console.log('switchLocalePath', $i18n.locale.value, locale, path)
     // TODO: for domainDifference
 
     return path
@@ -197,21 +198,6 @@ function getRouteName(routeName?: string | symbol | null) {
     : isSymbol(routeName)
       ? routeName.toString()
       : ''
-}
-
-function isI18nInstance(i18n: I18n | Composer): i18n is I18n {
-  return 'global' in i18n && 'mode' in i18n
-}
-
-function getLocale(i18n: I18n | Composer): Locale {
-  // prettier-ignore
-  return isI18nInstance(i18n)
-    ? isComposer(i18n.global, i18n.mode)
-      ? i18n.global.locale.value
-      : i18n.global.locale
-    : isRef(i18n.locale)
-      ? i18n.locale.value
-      : i18n.locale
 }
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

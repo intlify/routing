@@ -44,3 +44,4 @@ export const VERSION = '' // TODO: we want to avoid with vite (rollup) option ..
 
 export * from './composables'
 export * from './resolve'
+export * from './types'
