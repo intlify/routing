@@ -4,18 +4,20 @@ var isVueRouter3 = true
 var isVueRouter4 = false
 
 const useRouter = () => {
-  const vm = getCurrentInstance()
-  if (vm == null) {
+  const instance = getCurrentInstance()
+  if (instance == null) {
     throw new Error(`should be used in setup`)
   }
+  const vm = instance.proxy || instance
   return vm.$router
 }
 
 const useRoute = () => {
-  const vm = getCurrentInstance()
-  if (vm == null) {
+  const instance = getCurrentInstance()
+  if (instance == null) {
     throw new Error(`should be used in setup`)
   }
+  const vm = instance.proxy || instance
   return computed(() => vm.$route)
 }
 
