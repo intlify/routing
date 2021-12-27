@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router3'
 import { isString } from '@intlify/shared'
-import { isVue2, watch } from 'vue-demi'
+import { isVue2 } from 'vue-demi'
 import { extendI18n } from './i18n'
 import { localizeRoutes } from '../resolve'
 import { getLocale, setLocale, getNormalizedLocales } from '../utils'
@@ -13,7 +13,7 @@ import {
 } from '../constants'
 
 import type { Route } from 'vue-router3'
-import type { Router, RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router'
 import type { I18n } from 'vue-i18n'
 import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from '../types'
 
@@ -56,7 +56,7 @@ function createLocaleFromRouteGetter(
    * - if route has a name, try to extract locale from it
    * - otherwise, fall back to using the routes'path
    */
-  const getLocaleFromRoute = (route: Route | RouteLocationNormalizedLoaded): string => {
+  const getLocaleFromRoute = (route: Route | RouteLocationNormalizedLoaded | RouteLocationNormalized): string => {
     // extract from route name
     if (route.name) {
       const name = isString(route.name) ? route.name : route.name.toString()
@@ -88,10 +88,6 @@ export function extendRouter<TRouter extends VueRouter | Router>({
   defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
   localeCodes = []
 }: VueI18nRoutingOptions = {}): TRouter {
-  if (router == null) {
-    throw new Error('TODO')
-  }
-
   const normalizedLocaleCodes = getNormalizedLocales(localeCodes)
   const getLocaleFromRoute = createLocaleFromRouteGetter(
     normalizedLocaleCodes.map(l => l.code),
@@ -115,12 +111,28 @@ export function extendRouter<TRouter extends VueRouter | Router>({
     })
     console.log('vue2 routes', routes, localizedRoutes)
     // TODO: we need to copy the options from original vue-router
-    const newRouter = new _VueRouter({ mode: 'history', base: _router.options.base, routes: localizedRoutes })
+    const newRouter = new _VueRouter({
+      mode: 'history',
+      base: _router.options.base,
+      routes: localizedRoutes
+    }) as VueRouter
     newRouter.__defaultLocale = defaultLocale
     newRouter.__strategy = strategy
     newRouter.__trailingSlash = trailingSlash
     newRouter.__routesNameSeparator = routesNameSeparator
     newRouter.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
+
+    const removableGuardListener = newRouter.beforeEach((to, from, next) => {
+      console.log('beforeEach', to, from)
+      const currentLocale = getLocale(i18n as I18n)
+      const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
+      console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
+      if (currentLocale !== finalLocale) {
+        setLocale(i18n as I18n, finalLocale)
+      }
+      next()
+    })
+
     return newRouter as TRouter
   } else {
     const _router = router as Router
@@ -142,29 +154,16 @@ export function extendRouter<TRouter extends VueRouter | Router>({
     _router.__routesNameSeparator = routesNameSeparator
     _router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
 
-    watch(
-      () => _router.currentRoute.value.path,
-      async (val: string) => {
-        if (val == null) {
-          return
-        }
-        const nextRoute = _router.currentRoute.value
-
-        const currentLocale = getLocale(i18n as I18n)
-        const finalLocale = getLocaleFromRoute(nextRoute) || currentLocale || defaultLocale || ''
-        if (currentLocale === finalLocale) {
-          return
-        }
-
+    const removableGuardListener = _router.beforeEach((to, from, next) => {
+      console.log('beforeEach', to, from)
+      const currentLocale = getLocale(i18n as I18n)
+      const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
+      console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
+      if (currentLocale !== finalLocale) {
         setLocale(i18n as I18n, finalLocale)
-        // const [status, redirectPath, preserveQuery] = await onNavigate(nextRoute)
-        // if (status && redirectPath) {
-        //   const query = preserveQuery ? maybeNextRoute.query : undefined
-        //   // TODO: should be more implementation
-        //   console.log(`redirect to ${query}`)
-        // }
       }
-    )
+      next()
+    })
 
     return _router as TRouter
   }
