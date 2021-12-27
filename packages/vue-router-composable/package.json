@@ -1,6 +1,5 @@
 {
-  "name": "vue-router-composable",
-  "private": true,
+  "name": "@intlify/vue-router-composable",
   "version": "0.0.0",
   "description": "The universal composable for Vue Router",
   "scripts": {
@@ -60,5 +59,8 @@
   },
   "engines": {
     "node": ">= 12"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

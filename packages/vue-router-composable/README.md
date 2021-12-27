@@ -1,4 +1,4 @@
-# vue-router-composable
+# @intlify/vue-router-composable
 
 The universal composable for Vue Router
 
