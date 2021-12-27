@@ -11,6 +11,7 @@
   "dependencies": {
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
+    "vue-i18n": "next",
     "vue-i18n-routing": "workspace:*"
   },
   "dependenciesMeta": {
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
+    "@intlify/vite-plugin-vue-i18n": "next",
     "typescript": "^4.4.3",
     "vite": "^2.6.4",
     "vue-tsc": "^0.3.0"

@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useI18nRouting } from 'vue-i18n-routing'
+
+import type { LocaleObject } from 'vue-i18n-routing'
+
+const { t, locale, locales } = useI18n()
+const { localePath, switchLocalePath } = useI18nRouting()
+const switchableLocale = computed(() => {
+  const _locales = (locales.value as LocaleObject[]).filter(i => i.code !== locale.value)
+  return _locales.length !== 0 ? _locales[0] : { code: 'ja', name: '日本語' }
+})
 </script>
 
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <HelloWorld :msg="t('App.msg')" />
       <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
+        <router-link :to="localePath('/')">{{ t('App.home') }}</router-link>
+        <router-link :to="localePath('/about')">{{ t('App.about') }}</router-link>
+        <router-link :to="switchLocalePath(switchableLocale.code)">{{ switchableLocale.name }}</router-link>
       </nav>
     </div>
   </header>

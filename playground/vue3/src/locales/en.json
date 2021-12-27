@@ -1,0 +1,38 @@
+{
+  "App": {
+    "msg": "You did it!",
+    "home": "Home",
+    "about": "About"
+  },
+  "views": {
+    "AboutView": "This is an about page"
+  },
+  "components": {
+    "HelloWorld": "You've successfully created a project with {vite} + {vue}. What's next?",
+    "TheWelcome": {
+      "documentation": {
+        "title": "Documentation",
+        "official": "official documentation",
+        "message": "Vue's {official} provides you with all information you need to get started."
+      },
+      "tooling": {
+        "title": "tooling",
+        "message": "This project is served and bundled with {vite}. The recommended IDE setup is {vscode} + {volar}. If you need to test your components and web pages, check out {cypress} and {testing}.{newline} More instructions are available in {readme}."
+      },
+      "ecosystem": {
+        "title": "Ecosystem",
+        "message": "Get official tools and libraries for your project: {state}, {router}, {test}, and {devtools}. If you need more resources, we suggest paying {awesome} a visit."
+      },
+      "community": {
+        "title": "Community",
+        "mailing": "our mailing list",
+        "message": "Got stuck? Ask your question on {discord}, our official Discord server, or {stackoverflow}. You should also subscribe to {news} and follow the official {twitter} twitter account for latest news in the Vue world."
+      },
+      "support": {
+        "title": "Support Vue",
+        "sponsor": "becoming a sponsor",
+        "message": "As an independent project, Vue relies on community backing for its sustainability. You can help us by {sponsor}."
+      }
+    }
+  }
+}
