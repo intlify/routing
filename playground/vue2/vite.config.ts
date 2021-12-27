@@ -19,7 +19,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'vue-i18n': fileURLToPath(
+        new URL('./node_modules/vue-i18n-bridge/dist/vue-i18n-bridge.esm-bundler.js', import.meta.url)
+      )
     },
     dedupe: ['vue']
   }

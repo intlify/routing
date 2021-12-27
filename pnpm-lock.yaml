@@ -99,6 +99,28 @@ importers:
       vue-router3: /vue-router/3.5.3
       vue2: /vue/2.6.14
 
+  packages/vue-router-composable:
+    specifiers: {}
+
+  playground/vue-router-composable-test4:
+    specifiers:
+      '@vitejs/plugin-vue': ^2.0.0
+      typescript: ^4.5.4
+      vite: ^2.7.4
+      vue: ^3.2.25
+      vue-router: ^4.0.12
+      vue-router-composable: workspace:*
+      vue-tsc: ^0.29.8
+    dependencies:
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
+      vue-router-composable: link:../../packages/vue-router-composable
+    devDependencies:
+      '@vitejs/plugin-vue': 2.0.1_vite@2.7.6+vue@3.2.26
+      typescript: 4.5.4
+      vite: 2.7.6
+      vue-tsc: 0.29.8_typescript@4.5.4
+
   playground/vue2:
     specifiers:
       '@types/node': ^16.11.10
@@ -110,6 +132,7 @@ importers:
       vite: ^2.7.4
       vite-plugin-vue2: ^1.9.0
       vue: ^2.6.14
+      vue-i18n-bridge: beta
       vue-i18n-routing: workspace:*
       vue-router: ^3.5.3
       vue-template-compiler: ^2.6.14
@@ -117,6 +140,7 @@ importers:
     dependencies:
       '@vue/composition-api': 1.4.2_vue@2.6.14
       vue: 2.6.14
+      vue-i18n-bridge: 9.2.0-beta.25_vue@2.6.14
       vue-i18n-routing: file:packages/vue-i18n-routing_36c669e6ba3cb0c18257742584ed7209
       vue-router: 3.5.3
     devDependencies:
@@ -1197,6 +1221,17 @@ packages:
       vite: ^2.5.10
     dependencies:
       vite: 2.7.6
+    dev: true
+
+  /@vitejs/plugin-vue/2.0.1_vite@2.7.6+vue@3.2.26:
+    resolution: {integrity: sha512-wtdMnGVvys9K8tg+DxowU1ytTrdVveXr3LzdhaKakysgGXyrsfaeds2cDywtvujEASjWOwWL/OgWM+qoeM8Plg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      vite: ^2.5.10
+      vue: ^3.2.25
+    dependencies:
+      vite: 2.7.6
+      vue: 3.2.26
     dev: true
 
   /@volar/code-gen/0.27.24:
@@ -6144,6 +6179,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-i18n-bridge/9.2.0-beta.25_vue@2.6.14:
+    resolution: {integrity: sha512-d3JlNQkGaSe6lSCYWV4uJaXKbBCw+ELWMf0FcpCbq8cZj5jwxlFqPNIHk8cMAH9Jak63L4tCQ5fwfXnTHPeS8g==}
+    engines: {node: '>= 12'}
+    dependencies:
+      '@intlify/core-base': 9.2.0-beta.25
+      '@intlify/shared': 9.2.0-beta.25
+      '@intlify/vue-devtools': 9.2.0-beta.25
+      '@vue/composition-api': 1.4.2_vue@2.6.14
+      '@vue/devtools-api': 6.0.0-beta.21.1
+    transitivePeerDependencies:
+      - vue
+    dev: false
 
   /vue-i18n-bridge/9.2.0-beta.25_vue@3.2.26:
     resolution: {integrity: sha512-d3JlNQkGaSe6lSCYWV4uJaXKbBCw+ELWMf0FcpCbq8cZj5jwxlFqPNIHk8cMAH9Jak63L4tCQ5fwfXnTHPeS8g==}

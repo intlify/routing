@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --minify false",
     "serve": "vite preview",
     "typecheck": "vue-tsc --noEmit"
   },
