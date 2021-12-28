@@ -1,7 +1,7 @@
 {
-  "name": "@intlify/vue-router-composable",
+  "name": "@intlify/vue-router-bridge",
   "version": "0.0.0",
-  "description": "The universal composable for Vue Router",
+  "description": "The vue-router bridging for Vue 2 & Vue 3",
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js"
   },
@@ -50,11 +50,11 @@
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
   },
-  "homepage": "https://github.com/intlify/routing/tree/main/packages/vue-router-composable#readme",
+  "homepage": "https://github.com/intlify/routing/tree/main/packages/vue-router-bridge#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git",
-    "directory": "packages/vue-router-composable"
+    "directory": "packages/vue-router-bridge"
   },
   "bugs": {
     "url": "https://github.com/intlify/routing/issues"

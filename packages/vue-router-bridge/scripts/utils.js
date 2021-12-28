@@ -12,11 +12,11 @@ function loadModule(name) {
 }
 
 function warn(...args) {
-  console.warn(`[vue-router-composable] `, ...args)
+  console.warn(`[vue-router-bridge] `, ...args)
 }
 
 function log(...args) {
-  console.log(`[vue-router-composable] `, ...args)
+  console.log(`[vue-router-bridge] `, ...args)
 }
 
 function copy(name, version, router) {

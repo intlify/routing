@@ -1,6 +1,6 @@
-# @intlify/vue-router-composable
+# @intlify/vue-router-bridge
 
-The universal composable APIs for Vue Router
+The vue-router bridging for Vue 2 & Vue 3
 
 > This library is inspired by [vue-demi](https://github.com/vueuse/vue-demi)
 
@@ -14,13 +14,13 @@ The universal composable APIs for Vue Router
 
 ```sh
 # npm
-npm install @intlify/vue-router-composable
+npm install @intlify/vue-router-bridge
 
 # yarn
-yarn add @intlify/vue-router-composable
+yarn add @intlify/vue-router-bridge
 
 # pnpm
-pnpm add @intlify/vue-router-composable
+pnpm add @intlify/vue-router-bridge
 ```
 
 ## ⛓️ Dependencies
@@ -30,7 +30,7 @@ You need to add `vue-router` and `@vue/composition-api` to your plugin's peer de
 ```js
 {
   "dependencies": {
-    "@intlify/vue-router-composable": "latest"
+    "@intlify/vue-router-bridge": "latest"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
@@ -50,28 +50,28 @@ You need to add `vue-router` and `@vue/composition-api` to your plugin's peer de
 Import everything related to Vue Router from it, it will redirect to `vue-router@3` + `@vue/composition-api` or `vue-router@4` based on users' environments.
 
 ```js
-import { useRouter, useRoute } from '@intlify/vue-router-composable'
+import { useRouter, useRoute } from '@intlify/vue-router-bridge'
 ```
 
-When using with [Vite](https://vitejs.dev), you will need to opt-out the pre-bundling to get `@intlify/vue-router-composable` work properly by
+When using with [Vite](https://vitejs.dev), you will need to opt-out the pre-bundling to get `@intlify/vue-router-bridge` work properly by
 
 ```js
 // vite.config.js
 export default defineConfig({
   optimizeDeps: {
-    exclude: ['@intlify/vue-router-composable']
+    exclude: ['@intlify/vue-router-bridge']
  }
 })
 ```
 
 ## 🤝 Extra APIs
 
-`@intlify/vue-router-composable` provides extra APIs to help distinguish users' environments and to do some version-specific logic.
+`@intlify/vue-router-bridge` provides extra APIs to help distinguish users' environments and to do some version-specific logic.
 
 ### `isVueRouter3` / `isVueRouter4`
 
 ```js
-import { isVueRouter3, isVueRouter4 } from '@intlify/vue-router-composable'
+import { isVueRouter3, isVueRouter4 } from '@intlify/vue-router-bridge'
 
 if (isVueRouter3) {
   // Vue Router 3 only
