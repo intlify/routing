@@ -43,8 +43,8 @@
     "README.md"
   ],
   "bin": {
-    "vue-router-fix": "bin/fix.js",
-    "vue-router-switch": "bin/switch.js"
+    "vue-i18n-fix": "bin/fix.js",
+    "vue-i18n-switch": "bin/switch.js"
   },
   "license": "MIT",
   "author": {
