@@ -18,7 +18,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'vue-i18n': fileURLToPath(new URL(modulePath, import.meta.url))
-    }
-  },
-  dedupe: ['vue-i18n'] // TODO: should be resolved with none vite setting
+    },
+    dedupe: ['vue-i18n'] // TODO: should be resolved with none vite setting
+  }
 })
