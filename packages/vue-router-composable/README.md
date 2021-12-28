@@ -12,7 +12,7 @@ The universal composable APIs for Vue Router
 - Manual switch versions
 ## 💿 Installation
 
-```
+```sh
 # npm
 npm install @intlify/vue-router-composable
 
@@ -25,7 +25,7 @@ pnpm add @intlify/vue-router-composable
 
 ## ⛓️ Dependencies
 
-Add `vue-router` and `@vue/composition-api` to your plugin's peer dependencies to specify what versions you support.
+You need to add `vue-router` and `@vue/composition-api` to your plugin's peer dependencies to specify what versions you support.
 
 ```js
 {
@@ -34,7 +34,7 @@ Add `vue-router` and `@vue/composition-api` to your plugin's peer dependencies t
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
-    "vue-router": "^3.0.0 || ^4.0.0"
+    "vue-router": "^3.0.0" // or "^4.0.0" base on your preferred working environment
   },
   "peerDependenciesMeta": {
     "@vue/composition-api": {
@@ -47,7 +47,7 @@ Add `vue-router` and `@vue/composition-api` to your plugin's peer dependencies t
 }
 ```
 
-Import everything related to Vue from it, it will redirect to `vue-router@3` + `@vue/composition-api` or `vue-router@4` based on users' environments.
+Import everything related to Vue Router from it, it will redirect to `vue-router@3` + `@vue/composition-api` or `vue-router@4` based on users' environments.
 
 ```js
 import { useRouter, useRoute } from '@intlify/vue-router-composable'
@@ -66,7 +66,7 @@ export default defineConfig({
 
 ## 🤝 Extra APIs
 
-Vue Router Composable provides extra APIs to help distinguish users' environments and to do some version-specific logic.
+`@intlify/vue-router-composable` provides extra APIs to help distinguish users' environments and to do some version-specific logic.
 
 ### `isVueRouter3` / `isVueRouter4`
 
