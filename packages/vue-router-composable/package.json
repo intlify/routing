@@ -29,6 +29,8 @@
     "vuejs",
     "vue-router",
     "router",
+    "bridge",
+    "bridging",
     "stub",
     "routing"
   ],
