@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isRef, isVue2 } from 'vue-demi'
 import { isString, isSymbol, assign } from '@intlify/shared'
-import { useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { useRoute, useRouter } from './router'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getLocale } from '../utils'
 import VueRouter from 'vue-router3'
