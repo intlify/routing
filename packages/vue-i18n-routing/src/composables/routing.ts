@@ -2,11 +2,10 @@
 import { isRef, isVue2 } from 'vue-demi'
 import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from '@intlify/vue-router-composable'
-import { useI18n } from './i18n'
+import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getLocale } from '../utils'
 import VueRouter from 'vue-router3'
 
-import type { ComputedRef } from 'vue-demi'
 import type { VueI18nRoutingOptions, Strategies } from '../types'
 import type { Route, RawLocation } from 'vue-router3'
 import type { RouteLocationNormalizedLoaded, RouteLocationRaw, Router } from 'vue-router'

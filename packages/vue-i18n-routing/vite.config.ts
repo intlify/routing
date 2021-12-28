@@ -18,13 +18,12 @@ export default defineConfig({
       formats: ['es', 'cjs', 'iife']
     },
     rollupOptions: {
-      external: ['vue-demi', '@intlify/vue-router-composable', 'vue-router', 'vue-i18n'],
+      external: ['vue-demi', '@intlify/vue-router-composable', '@intlify/vue-i18n-bridge'],
       output: {
         globals: {
           'vue-demi': 'VueDemi',
-          '@intlify/vue-router-composable': 'VueRouterComposable',
-          'vue-router': 'VueRouter',
-          'vue-i18n': 'VueI18n'
+          '@intlify/vue-i18n-bridge': 'VueI18n',
+          '@intlify/vue-router-composable': 'VueRouter'
         }
       }
     }
