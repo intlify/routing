@@ -7,11 +7,16 @@ defineProps<{
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a target="_blank" href="https://vitejs.dev/">Vite</a> +
-      <a target="_blank" href="https://vuejs.org/">Vue 2</a>. What's next?
-    </h3>
+    <i18n-t tag="h3" keypath="components.HelloWorld">
+      <template #vite>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+        <a target="_blank" href="https://vitejs.dev/">Vite</a>
+      </template>
+      <template #vue>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+        <a target="_blank" href="https://v3.vuejs.org/">Vue 2</a>
+      </template>
+    </i18n-t>
   </div>
 </template>
 

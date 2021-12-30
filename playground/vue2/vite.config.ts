@@ -19,12 +19,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-      /*
-      'vue-i18n': fileURLToPath(
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // TODO: why? when we try to call `getCurrentInstance` in `@intlify/vue-i18n-bridge`, it return `null` ...
+      '@intlify/vue-i18n-bridge': fileURLToPath(
         new URL('./node_modules/vue-i18n-bridge/dist/vue-i18n-bridge.esm-bundler.js', import.meta.url)
       )
-      */
     },
     dedupe: ['vue']
   }

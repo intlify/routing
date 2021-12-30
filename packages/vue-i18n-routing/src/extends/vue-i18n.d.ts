@@ -6,3 +6,8 @@ declare module 'vue-i18n' {
     locales: ComputedRef<string[] | LocaleObject[]>
   }
 }
+declare module 'vue-i18n-bridge' {
+  export interface ComposerCustom {
+    locales: ComputedRef<string[] | LocaleObject[]>
+  }
+}

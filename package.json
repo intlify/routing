@@ -51,6 +51,8 @@
     "prettier": "^2.5.0",
     "rimraf": "^3.0.2",
     "secretlint": "^4.1.3",
+    "typescript": "^4.5.4",
+    "vue-eslint-parser": "^8.0.1",
     "yorkie": "^2.0.0"
   },
   "engines": {
@@ -106,8 +108,9 @@
     "lint": "run-p lint:action lint:codes lint:i18n:*",
     "lint:action": "node-actionlint",
     "lint:codes": "eslint --config .eslintrc.js --ext .js,.mjs,.ts,.vue ./packages",
+    "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
     "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
-    "lint:fix": "run-p \"lint:codes -- --fix\" \"lint:i18n:vue3 -- --fix\"",
+    "lint:fix": "run-p \"lint:codes -- --fix\" \"lint:i18n:vue3 -- --fix\" \"lint:i18n:vue2 -- --fix\"",
     "lint:secret": "npx secretlint \"**/*\"",
     "play:vue2": "pnpm switch:vue2 && pnpm dev --filter playground-vue2",
     "play:vue3": "pnpm switch:vue3 && pnpm dev --filter playground-vue3",
