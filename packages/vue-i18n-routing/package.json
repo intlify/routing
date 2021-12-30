@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@intlify/shared": "beta",
-    "@intlify/vue-router-bridge": "edge",
-    "@intlify/vue-i18n-bridge": "edge",
+    "@intlify/vue-router-bridge": "latest",
+    "@intlify/vue-i18n-bridge": "latest",
     "vue-demi": "*"
   },
   "devDependencies": {
