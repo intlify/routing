@@ -1,4 +1,4 @@
-import { isRef } from 'vue'
+import { isRef } from 'vue-demi'
 import { isString } from '@intlify/shared'
 
 import type { I18n, Composer, I18nMode, Locale } from 'vue-i18n'
@@ -36,9 +36,7 @@ export function getLocale(i18n: I18n | Composer): Locale {
     ? isComposer(i18n.global, i18n.mode)
       ? i18n.global.locale.value
       : i18n.global.locale
-    : isRef(i18n.locale)
-      ? i18n.locale.value
-      : i18n.locale
+    : i18n.locale.value
 }
 
 export function setLocale(i18n: I18n | Composer, locale: Locale): void {
