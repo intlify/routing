@@ -78,8 +78,9 @@
   },
   "pnpm": {
     "overrides": {
-      "vite": "^2.7.4",
-      "typescript": "^4.5.4"
+      "vue-demi": "^0.12.1",
+      "@intlify/vue-i18n-bridge": "^0.1.0",
+      "@intlify/vue-router-bridge": "^0.1.0"
     }
   },
   "private": true,
@@ -90,8 +91,8 @@
   "scripts": {
     "force": "run-s clean build && pnpm i --force",
     "build": "./scripts/build.sh",
-    "build:vue2": "pnpm build --filter playground-vue2",
-    "build:vue3": "pnpm build --filter playground-vue3",
+    "build:vue2": "npx vue-i18n-switch 8 && npx vue-router-switch 3 && pnpm build --filter playground-vue2",
+    "build:vue3": "npx vue-i18n-switch 9 && npx vue-router-switch 4 && pnpm build --filter playground-vue3",
     "build:docs": "pnpm build:docs --filter vue-i18n-routing",
     "clean": "run-p clean:*",
     "clean:lib": "rimraf packages/vue-i18n-routing/dist",
@@ -108,8 +109,8 @@
     "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
     "lint:fix": "run-p \"lint:codes -- --fix\" \"lint:i18n:vue3 -- --fix\"",
     "lint:secret": "npx secretlint \"**/*\"",
-    "play:vue2": "pnpm dev --filter playground-vue2",
-    "play:vue3": "pnpm dev --filter playground-vue3",
+    "play:vue2": "npx vue-i18n-switch 8 && npx vue-router-switch 3 && pnpm dev --filter playground-vue2",
+    "play:vue3": "npx vue-i18n-switch 9 && npx vue-router-switch 4 && pnpm dev --filter playground-vue3",
     "preinstall": "node ./scripts/preinstall.mjs",
     "release": "./scripts/release.sh",
     "typecheck": "pnpm typecheck --filter vue-i18n-routing",
