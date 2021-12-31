@@ -19,7 +19,7 @@ export type I18nRoutingOptions = Pick<
 }
 
 // TODO: should be implemented useful type API
-export interface I18nRoutingReturn {
+export interface I18nRouting {
   getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded): string
   localePath(route: any, locale?: Locale): string
   localeRoute(route: any, locale?: Locale): any
@@ -28,7 +28,7 @@ export interface I18nRoutingReturn {
 }
 
 // TODO: should be implemented useful type API
-export function useI18nRouting<Legacy extends boolean = false>(options?: I18nRoutingOptions): I18nRoutingReturn
+export function useI18nRouting<Legacy extends boolean = false>(options?: I18nRoutingOptions): I18nRouting
 
 export function useI18nRouting(options: I18nRoutingOptions = {}) {
   const $i18n = useI18n()
@@ -69,7 +69,7 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
 
   function resolveRoute(route: any, locale?: Locale): any {
     // TODO:
-    const _locale = locale || getLocale($i18n)
+    const _locale = locale || getLocale($i18n as unknown as Composer)
 
     // if route parameter is a string, check if it's a path or name of route.
     let _route = route
@@ -183,6 +183,7 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
   }
 
   return {
+    getRouteBaseName,
     localePath,
     localeRoute,
     localeLocation,
@@ -196,7 +197,7 @@ function getRouteName(routeName?: string | symbol | null) {
     ? routeName
     : isSymbol(routeName)
       ? routeName.toString()
-      : ''
+      : '(null)'
 }
 
 /* eslint-enable @typescript-eslint/no-explicit-any */
