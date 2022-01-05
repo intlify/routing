@@ -1,5 +1,5 @@
-import type { LocaleObject } from '../types'
 import type { ComputedRef } from 'vue-demi'
+import type { LocaleObject } from '../types'
 
 declare module 'vue-i18n' {
   export interface ComposerCustom {

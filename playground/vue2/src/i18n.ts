@@ -6,20 +6,18 @@ import ja from './locales/ja.json'
 
 Vue.use(VueI18n, { bridge: true })
 
-const i18n = castToVueI18n(
-  createI18n(
-    {
-      legacy: false,
-      locale: 'en',
-      messages: {
-        en,
-        ja
-      }
-    },
-    VueI18n
-  )
+const i18n = createI18n(
+  {
+    legacy: false,
+    locale: 'en',
+    messages: {
+      en,
+      ja
+    }
+  },
+  VueI18n
 )
 
-Vue.use(i18n)
+Vue.use(castToVueI18n(i18n))
 
 export default i18n

@@ -1,13 +1,9 @@
 import { isRef } from 'vue-demi'
 import { isString } from '@intlify/shared'
 
-import type { I18n, Composer, I18nMode, Locale } from 'vue-i18n'
+import type { I18n, Composer, I18nMode, Locale } from '@intlify/vue-i18n-bridge'
 import type { LocaleObject } from './types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-/*#__PURE__*/ export function _isVue2(vueApp: any) {
-  return vueApp.version && Number(vueApp.version.split('.')[0]) === 2
-}
 export function getNormalizedLocales(locales: string[] | LocaleObject[]): LocaleObject[] {
   locales = locales || []
   const normalized: LocaleObject[] = []

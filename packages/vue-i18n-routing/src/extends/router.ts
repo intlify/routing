@@ -1,4 +1,3 @@
-import VueRouter from 'vue-router3'
 import { isString } from '@intlify/shared'
 import { isVue2 } from 'vue-demi'
 import { extendI18n } from './i18n'
@@ -12,30 +11,16 @@ import {
   DEFAULT_TRAILING_SLASH
 } from '../constants'
 
-import type { Route } from 'vue-router3'
-import type { Router, RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router'
-import type { I18n } from 'vue-i18n'
+import type {
+  Route,
+  Router,
+  VueRouter,
+  RouteRecordRaw,
+  RouteLocationNormalizedLoaded,
+  RouteLocationNormalized
+} from '@intlify/vue-router-bridge'
+import type { I18n } from '@intlify/vue-i18n-bridge'
 import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from '../types'
-
-declare module 'vue-router3' {
-  export default class VueRouter {
-    __defaultLocale?: string
-    __strategy?: Strategies
-    __trailingSlash?: boolean
-    __routesNameSeparator?: string
-    __defaultLocaleRouteNameSuffix?: string
-  }
-}
-
-declare module 'vue-router' {
-  interface Router {
-    __defaultLocale?: string
-    __strategy?: Strategies
-    __trailingSlash?: boolean
-    __routesNameSeparator?: string
-    __defaultLocaleRouteNameSuffix?: string
-  }
-}
 
 function getLocalesRegex(localeCodes: string[]) {
   return new RegExp(`^/(${localeCodes.join('|')})(?:/|$)`, 'i')
@@ -122,7 +107,7 @@ export function extendRouter<TRouter extends VueRouter | Router>({
     newRouter.__routesNameSeparator = routesNameSeparator
     newRouter.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
 
-    const removableGuardListener = newRouter.beforeEach((to, from, next) => {
+    const removableGuardListener = newRouter.beforeEach((to: any, from: any, next: any) => {
       console.log('beforeEach', to, from)
       const currentLocale = getLocale(i18n as I18n)
       const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''

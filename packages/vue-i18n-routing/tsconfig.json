@@ -10,8 +10,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "@intlify/vue-i18n-bridge": ["./node_modules/@intlify/vue-i18n-bridge/lib/index.d.ts"],
-      "vue-router3": ["./node_modules/vue-router3/types/index.d.ts"]
+      "@intlify/vue-router-bridge": ["./node_modules/@intlify/vue-router-bridge/lib/index.d.ts"],
+      "@intlify/vue-i18n-bridge": ["./node_modules/@intlify/vue-i18n-bridge/lib/index.d.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"]

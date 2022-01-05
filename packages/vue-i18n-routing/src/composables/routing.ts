@@ -4,12 +4,17 @@ import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getLocale } from '../utils'
-import VueRouter from 'vue-router3'
 
+import type {
+  RouteLocationNormalizedLoaded,
+  RouteLocationRaw,
+  VueRouter,
+  Router,
+  Route,
+  RawLocation
+} from '@intlify/vue-router-bridge'
+import { Locale, I18n, Composer, I18nMode, I18nInjectionKey } from '@intlify/vue-i18n-bridge'
 import type { VueI18nRoutingOptions, Strategies } from '../types'
-import type { Route, RawLocation } from 'vue-router3'
-import type { RouteLocationNormalizedLoaded, RouteLocationRaw, Router } from 'vue-router'
-import { Locale, I18n, Composer, I18nMode, I18nInjectionKey } from 'vue-i18n'
 
 export type I18nRoutingOptions = Pick<
   VueI18nRoutingOptions,

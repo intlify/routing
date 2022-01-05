@@ -81,8 +81,8 @@
   "pnpm": {
     "overrides": {
       "vue-demi": "^0.12.1",
-      "@intlify/vue-i18n-bridge": "^0.1.0",
-      "@intlify/vue-router-bridge": "^0.1.0"
+      "@intlify/vue-i18n-bridge": "^0.3.2",
+      "@intlify/vue-router-bridge": "^0.3.2"
     }
   },
   "private": true,

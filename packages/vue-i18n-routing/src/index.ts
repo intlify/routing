@@ -1,4 +1,3 @@
-import VueRouter from 'vue-router3'
 import { extendRouter } from './extends'
 import {
   DEFAULT_LOCALE,
@@ -7,8 +6,8 @@ import {
   DEFAULT_TRAILING_SLASH
 } from './constants'
 
+import type { Router, VueRouter } from '@intlify/vue-router-bridge'
 import type { VueI18nRoutingOptions } from './types'
-import type { Router } from 'vue-router'
 
 export function extendRouting<TRouter extends VueRouter | Router>({
   router,

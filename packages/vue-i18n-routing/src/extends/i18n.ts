@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue-demi'
 import { isComposer } from '../utils'
 
+import type { I18n } from '@intlify/vue-i18n-bridge'
 import type { VueI18nRoutingOptions, LocaleObject } from '../types'
-import type { I18n } from 'vue-i18n'
 
 type VueI18nExtendOptions = Pick<VueI18nRoutingOptions, 'localeCodes'>
 
