@@ -112,6 +112,8 @@ importers:
 
   playground/vue2:
     specifiers:
+      '@intlify/vue-i18n-bridge': ^0.3.4
+      '@intlify/vue-router-bridge': ^0.3.4
       '@types/node': ^16.11.10
       '@vitejs/plugin-legacy': ^1.6.3
       '@vue/composition-api': ^1.4.0
@@ -128,6 +130,8 @@ importers:
       vue-template-compiler: ^2.6.14
       vue-tsc: ^0.29.6
     dependencies:
+      '@intlify/vue-i18n-bridge': 0.3.4_57025ff3200bfd41dded232f40a7f0c8
+      '@intlify/vue-router-bridge': 0.3.4_11201cbde3b833de46ca62b5455e3270
       '@vue/composition-api': 1.4.3_vue@2.6.14
       vue: 2.6.14
       vue-i18n: 8.26.8
@@ -151,6 +155,8 @@ importers:
   playground/vue3:
     specifiers:
       '@intlify/vite-plugin-vue-i18n': next
+      '@intlify/vue-i18n-bridge': ^0.3.4
+      '@intlify/vue-router-bridge': ^0.3.4
       '@vitejs/plugin-vue': ^1.9.3
       typescript: ^4.4.3
       vite: ^2.6.4
@@ -160,6 +166,8 @@ importers:
       vue-router: ^4.0.12
       vue-tsc: ^0.3.0
     dependencies:
+      '@intlify/vue-i18n-bridge': 0.3.4_vue-i18n@9.2.0-beta.26
+      '@intlify/vue-router-bridge': 0.3.4_vue-router@4.0.12
       vue: 3.2.26
       vue-i18n: 9.2.0-beta.26_vue@3.2.26
       vue-i18n-routing: file:packages/vue-i18n-routing_d5a2d57846a45fc5b757644104163b5b

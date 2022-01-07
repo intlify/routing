@@ -1,29 +1,44 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import VueRouter from '@intlify/vue-router-bridge'
+import { createRouter as _createRouter } from 'vue-i18n-routing'
+
 import HomeView from '../views/HomeView.vue'
+
+import type { I18n } from '@intlify/vue-i18n-bridge'
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
-  mode: 'history',
-  base: import.meta.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
-})
-
-console.log(router.getRoutes(), router.constructor)
-
-export default router
+export function createRouter(i18n: I18n) {
+  return _createRouter(i18n, {
+    version: 3,
+    defaultLocale: 'en',
+    locales: [
+      {
+        code: 'en',
+        name: 'English'
+      },
+      {
+        code: 'ja',
+        name: '日本語'
+      }
+    ],
+    // @ts-ignore TODO:
+    mode: 'history',
+    base: import.meta.env.BASE_URL,
+    routes: [
+      {
+        path: '/',
+        name: 'home',
+        component: HomeView
+      },
+      {
+        path: '/about',
+        name: 'about',
+        // route level code-splitting
+        // this generates a separate chunk (About.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/AboutView.vue')
+      }
+    ]
+  })
+}
