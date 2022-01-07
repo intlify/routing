@@ -20,7 +20,7 @@ describe('localizeRoutes', function () {
         }
       ]
       const localeCodes = ['en', 'ja']
-      const localizedRoutes = localizeRoutes(routes, { localeCodes })
+      const localizedRoutes = localizeRoutes(routes, { locales: localeCodes })
 
       expect(localizedRoutes).to.matchSnapshot(this)
       expect(localizedRoutes.length).to.equal(4)
@@ -56,7 +56,7 @@ describe('localizeRoutes', function () {
       const children: VueI18nRoute[] = routes[0].children as VueI18nRoute[]
 
       const localeCodes = ['en', 'ja']
-      const localizedRoutes = localizeRoutes(routes, { localeCodes })
+      const localizedRoutes = localizeRoutes(routes, { locales: localeCodes })
 
       expect(localizedRoutes).to.matchSnapshot(this)
       expect(localizedRoutes.length).to.equal(2)
@@ -88,7 +88,7 @@ describe('localizeRoutes', function () {
         }
       ]
       const localeCodes = ['en', 'ja']
-      const localizedRoutes = localizeRoutes(routes, { localeCodes, trailingSlash: true })
+      const localizedRoutes = localizeRoutes(routes, { locales: localeCodes, trailingSlash: true })
 
       expect(localizedRoutes).to.matchSnapshot(this)
       expect(localizedRoutes.length).to.equal(4)
@@ -116,7 +116,7 @@ describe('localizeRoutes', function () {
         }
       ]
       const localeCodes = ['en', 'ja']
-      const localizedRoutes = localizeRoutes(routes, { localeCodes, routesNameSeparator: '__' })
+      const localizedRoutes = localizeRoutes(routes, { locales: localeCodes, routesNameSeparator: '__' })
 
       expect(localizedRoutes).to.matchSnapshot(this)
       expect(localizedRoutes.length).to.equal(4)
@@ -147,7 +147,7 @@ describe('localizeRoutes', function () {
       const localizedRoutes = localizeRoutes(routes, {
         defaultLocale: 'en',
         strategy: 'prefix_and_default',
-        localeCodes
+        locales: localeCodes
       })
 
       expect(localizedRoutes).to.matchSnapshot(this)
@@ -170,7 +170,7 @@ describe('localizeRoutes', function () {
       const localizedRoutes = localizeRoutes(routes, {
         defaultLocale: 'en',
         strategy: 'prefix',
-        localeCodes,
+        locales: localeCodes,
         includeUprefixedFallback: true
       })
 
@@ -194,7 +194,7 @@ describe('localizeRoutes', function () {
       const localizedRoutes = localizeRoutes(routes, {
         defaultLocale: 'en',
         strategy: 'no_prefix',
-        localeCodes
+        locales: localeCodes
       })
 
       expect(localizedRoutes).to.matchSnapshot(this)
