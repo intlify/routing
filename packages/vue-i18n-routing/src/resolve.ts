@@ -24,15 +24,10 @@ export function localizeRoutes(
     routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
     defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
     includeUprefixedFallback = false,
-    localeCodes = []
+    locales = []
   }: Pick<
     VueI18nRoutingOptions,
-    | 'defaultLocale'
-    | 'strategy'
-    | 'localeCodes'
-    | 'routesNameSeparator'
-    | 'trailingSlash'
-    | 'defaultLocaleRouteNameSuffix'
+    'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
   > & { includeUprefixedFallback?: boolean } = {}
 ): VueI18nRoute[] {
   if (strategy === 'no_prefix') {
@@ -40,7 +35,7 @@ export function localizeRoutes(
   }
 
   // normalize localeCodes
-  const _localeCodes = localeCodes.map(locale => (isString(locale) ? locale : locale.code))
+  const _localeCodes = locales.map(locale => (isString(locale) ? locale : locale.code))
 
   function makeLocalizedRoutes(
     route: VueI18nRoute,

@@ -118,7 +118,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   extendI18n(i18n, { locales: normalizedLocaleCodes })
 
   const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
-    localeCodes: locales,
+    locales,
     defaultLocale,
     strategy,
     trailingSlash,
