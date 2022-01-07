@@ -18,7 +18,7 @@ import type { VueI18nRoutingOptions, Strategies } from '../types'
 
 export type I18nRoutingOptions = Pick<
   VueI18nRoutingOptions,
-  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'localeCodes'
+  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales'
 > & {
   routesNameSeparator?: string
 }

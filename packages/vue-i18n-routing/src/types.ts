@@ -2,8 +2,8 @@
 
 import { STRATEGIES } from './constants'
 
-import type { Router, RouteConfig as __Route, VueRouter } from '@intlify/vue-router-bridge'
-import type { VueI18n, I18n, Locale } from '@intlify/vue-i18n-bridge'
+import type { RouteConfig as __Route, RouterOptions } from '@intlify/vue-router-bridge'
+import type { Locale } from '@intlify/vue-i18n-bridge'
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer U) => void ? U : never
 type _Route = UnionToIntersection<__Route>
@@ -57,23 +57,77 @@ export interface LocaleObject extends Record<string, any> {
 }
 
 /**
- * Vue I18n routing options
+ * Options to initialize a VueRouter instance
+ *
+ * @remarks
+ * This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
  */
-export interface VueI18nRoutingOptions {
+export type VueI18nRoutingOptions = {
   /**
-   * Vue Router instance
+   * Vue Router version
+   *
+   * @remarks
+   * You can choice between vue-router v3 and v4.
+   *
+   * If you specify `3`, this function return Vue Router v3 instance, else specify `4`, this function return Vue Router v4 instance.
+   *
+   * @defaultValue 4
    */
-  router?: VueRouter | Router
+  version?: 3 | 4
   /**
-   * Vue I18n instance
+   * The app's default locale
+   *
+   * @remarks
+   * When using `prefix_except_default` strategy, URLs for locale specified here won't have a prefix.
+   *
+   * It's recommended to set this to some locale regardless of chosen strategy, as it will be used as a fallback locale when navigating to a non-existent route
+   *
+   * @defaultValue '' (emputy string)
    */
-  i18n?: I18n
   defaultLocale?: string
-  localeCodes?: string[] | LocaleObject[]
+  /**
+   * List of locales supported by your app
+   *
+   * @remarks TODO:
+   *
+   * @defaultValue []
+   */
+  locales?: string[] | LocaleObject[]
+  /**
+   * Routes strategy
+   *
+   * @remarks
+   * Can be set to one of the following:
+   *
+   * - `no_prefix`: routes won't have a locale prefix
+   * - `prefix_except_default`: locale prefix added for every locale except default
+   * - `prefix`: locale prefix added for every locale
+   * - `prefix_and_default`: locale prefix added for every locale and default
+   *
+   * @defaultValue 'prefix_except_default'
+   */
   strategy?: Strategies
+  /**
+   * Whether to use trailing slash
+   *
+   * @defaultValue false
+   */
   trailingSlash?: boolean
+  /**
+   * Internal separator used for generated route names for each locale. You shouldn't need to change this
+   *
+   * @defaultValue '___'
+   */
   routesNameSeparator?: string
+  /**
+   * Internal suffix added to generated route names for default locale
+   *
+   * @remarks
+   * if strategy is prefix_and_default. You shouldn't need to change this.
+   *
+   * @defaultValue 'default'
+   */
   defaultLocaleRouteNameSuffix?: string
-}
+} & RouterOptions
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

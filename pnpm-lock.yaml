@@ -2,8 +2,8 @@ lockfileVersion: 5.3
 
 overrides:
   vue-demi: ^0.12.1
-  '@intlify/vue-i18n-bridge': ^0.3.2
-  '@intlify/vue-router-bridge': ^0.3.2
+  '@intlify/vue-i18n-bridge': ^0.3.4
+  '@intlify/vue-router-bridge': ^0.3.4
 
 importers:
 
@@ -74,8 +74,8 @@ importers:
   packages/vue-i18n-routing:
     specifiers:
       '@intlify/shared': beta
-      '@intlify/vue-i18n-bridge': ^0.3.2
-      '@intlify/vue-router-bridge': ^0.3.2
+      '@intlify/vue-i18n-bridge': ^0.3.4
+      '@intlify/vue-router-bridge': ^0.3.4
       '@microsoft/api-extractor': ^7.18.20
       api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
@@ -92,11 +92,11 @@ importers:
       vue2: npm:vue@2
     dependencies:
       '@intlify/shared': 9.2.0-beta.26
-      '@intlify/vue-i18n-bridge': 0.3.2_vue-i18n@9.2.0-beta.26
-      '@intlify/vue-router-bridge': 0.3.2_vue-router@4.0.12
+      '@intlify/vue-i18n-bridge': 0.3.4_vue-i18n@9.2.0-beta.26
+      '@intlify/vue-router-bridge': 0.3.4_vue-router@4.0.12
       vue-demi: 0.12.1_vue@3.2.26
     devDependencies:
-      '@microsoft/api-extractor': 7.19.3
+      '@microsoft/api-extractor': 7.19.4
       api-docs-gen: 0.4.0
       rimraf: 3.0.2
       typescript: 4.5.4
@@ -689,8 +689,8 @@ packages:
       '@intlify/core-base': 9.2.0-beta.26
       '@intlify/shared': 9.2.0-beta.26
 
-  /@intlify/vue-i18n-bridge/0.3.2_57025ff3200bfd41dded232f40a7f0c8:
-    resolution: {integrity: sha512-cDOei4W3AEQZBOWJ9PJIIsCTMVTU0zUxQi6hWFtCcTj4f7ORaOAzkl6rfBQU2EO9ktBEAiskxtTfxmdzA5Uayw==}
+  /@intlify/vue-i18n-bridge/0.3.4_57025ff3200bfd41dded232f40a7f0c8:
+    resolution: {integrity: sha512-vezqLDVD3s1hiaU75NTyYFaeazLkHaBGhYcg3WZhwVhTu9rhfBxIe321V4b12BHYt3kpBPkFZgTDVSFcePYAgw==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
@@ -705,8 +705,8 @@ packages:
       vue-i18n: 8.26.8
     dev: false
 
-  /@intlify/vue-i18n-bridge/0.3.2_vue-i18n@9.2.0-beta.26:
-    resolution: {integrity: sha512-cDOei4W3AEQZBOWJ9PJIIsCTMVTU0zUxQi6hWFtCcTj4f7ORaOAzkl6rfBQU2EO9ktBEAiskxtTfxmdzA5Uayw==}
+  /@intlify/vue-i18n-bridge/0.3.4_vue-i18n@9.2.0-beta.26:
+    resolution: {integrity: sha512-vezqLDVD3s1hiaU75NTyYFaeazLkHaBGhYcg3WZhwVhTu9rhfBxIe321V4b12BHYt3kpBPkFZgTDVSFcePYAgw==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
@@ -720,8 +720,8 @@ packages:
       vue-i18n: 9.2.0-beta.26_vue@3.2.26
     dev: false
 
-  /@intlify/vue-router-bridge/0.3.2_11201cbde3b833de46ca62b5455e3270:
-    resolution: {integrity: sha512-IBS+8aBT2imbRfFPRHelzYIO6pGOgbthtVkNzwC0sDozEsRfdXIdYWZ0/xLZHr1amvtX7P/MzblWfriluLstQw==}
+  /@intlify/vue-router-bridge/0.3.4_11201cbde3b833de46ca62b5455e3270:
+    resolution: {integrity: sha512-vPaxuCxD6uWoN2SQjvOXH76GQZuvV0pLp7THn59mnb9Kly0EFYW3RKNek50NkXtK+u8M2ol44mZvs/KprkW9Ig==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
@@ -736,8 +736,8 @@ packages:
       vue-router: 3.5.3
     dev: false
 
-  /@intlify/vue-router-bridge/0.3.2_vue-router@4.0.12:
-    resolution: {integrity: sha512-IBS+8aBT2imbRfFPRHelzYIO6pGOgbthtVkNzwC0sDozEsRfdXIdYWZ0/xLZHr1amvtX7P/MzblWfriluLstQw==}
+  /@intlify/vue-router-bridge/0.3.4_vue-router@4.0.12:
+    resolution: {integrity: sha512-vPaxuCxD6uWoN2SQjvOXH76GQZuvV0pLp7THn59mnb9Kly0EFYW3RKNek50NkXtK+u8M2ol44mZvs/KprkW9Ig==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
@@ -767,22 +767,22 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /@microsoft/api-extractor-model/7.15.2:
-    resolution: {integrity: sha512-qgxKX/s6vo3nCVLhP0Ds7555QrErhcYHEok5/KyEZ7iR8J5M5oldD1eJJQmtEdVF5IzmnPPbxx1nRvfgA674LQ==}
+  /@microsoft/api-extractor-model/7.15.3:
+    resolution: {integrity: sha512-NkSjolmSI7NGvbdz0Y7kjQfdpD+j9E5CwXTxEyjDqxd10MI7GXV8DnAsQ57GFJcgHKgTjf2aUnYfMJ9w3aMicw==}
     dependencies:
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.44.3
+      '@rushstack/node-core-library': 3.45.0
     dev: true
 
-  /@microsoft/api-extractor/7.19.3:
-    resolution: {integrity: sha512-GZe+R3K4kh2X425iOHkPbByysB7FN0592mPPA6vNj5IhyhlPHgdZS6m6AmOZOIxMS4euM+SBKzEJEp3oC+WsOQ==}
+  /@microsoft/api-extractor/7.19.4:
+    resolution: {integrity: sha512-iehC6YA3DGJvxTUaK7HUtQmP6hAQU07+Q/OR8TG4dVR6KpqCi9UPEVk8AgCvQkiK+6FbVEFQTx0qLuYk4EeuHg==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.15.2
+      '@microsoft/api-extractor-model': 7.15.3
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.44.3
+      '@rushstack/node-core-library': 3.45.0
       '@rushstack/rig-package': 0.3.7
       '@rushstack/ts-command-line': 4.10.6
       colors: 1.2.5
@@ -835,8 +835,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rushstack/node-core-library/3.44.3:
-    resolution: {integrity: sha512-Bt+R5LAnVr2BImTJqPpton5rvhJ2Wq8x4BaTqaCHQMmfxqtz5lb4nLYT9kneMJTCDuRMBvvLpSuz4MBj50PV3w==}
+  /@rushstack/node-core-library/3.45.0:
+    resolution: {integrity: sha512-YMuIJl19vQT1+g/OU9mLY6T5ZBT9uDlmeXExDQACpGuxTJW+LHNbk/lRX+eCApQI2eLBlaL4U68r3kZlqwbdmw==}
     dependencies:
       '@types/node': 12.20.24
       colors: 1.2.5
@@ -917,7 +917,7 @@ packages:
       debug: 4.3.3
       pluralize: 8.0.0
       strip-ansi: 6.0.1
-      table: 6.7.5
+      table: 6.8.0
       terminal-link: 2.1.1
       try-resolve: 1.0.1
     transitivePeerDependencies:
@@ -1064,7 +1064,7 @@ packages:
       pluralize: 2.0.0
       string-width: 1.0.2
       strip-ansi: 6.0.1
-      table: 6.7.5
+      table: 6.8.0
       text-table: 0.2.0
       try-resolve: 1.0.1
       xml-escape: 1.1.0
@@ -1742,7 +1742,7 @@ packages:
     hasBin: true
     dependencies:
       '@intlify/shared': 9.1.9
-      '@microsoft/api-extractor-model': 7.15.2
+      '@microsoft/api-extractor-model': 7.15.3
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
       chalk: 4.1.2
@@ -2270,7 +2270,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001296
-      electron-to-chromium: 1.4.35
+      electron-to-chromium: 1.4.37
     dev: true
 
   /browserslist/4.19.1:
@@ -2279,7 +2279,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001296
-      electron-to-chromium: 1.4.35
+      electron-to-chromium: 1.4.37
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -2782,8 +2782,8 @@ packages:
       domhandler: 4.3.0
     dev: true
 
-  /electron-to-chromium/1.4.35:
-    resolution: {integrity: sha512-wzTOMh6HGFWeALMI3bif0mzgRrVGyP1BdFRx7IvWukFrSC5QVQELENuy+Fm2dCrAdQH9T3nuqr07n94nPDFBWA==}
+  /electron-to-chromium/1.4.37:
+    resolution: {integrity: sha512-XIvFB1omSAxYgHYX48sC+HR8i/p7lx7R+0cX9faElg1g++h9IilCrJ12+bQuY+d96Wp7zkBiJwMOv+AhLtLrTg==}
     dev: true
 
   /emmet/2.3.5:
@@ -3645,8 +3645,8 @@ packages:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
 
-  /hosted-git-info/4.0.2:
-    resolution: {integrity: sha512-c9OGXbZ3guC/xOlCg1Ci/VgWlwsqDv1yMQL1CWqXDL0hDjXuNcq0zuR4xqPSuasI3kqFDhqSyTjREz5gzq0fXg==}
+  /hosted-git-info/4.1.0:
+    resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==}
     engines: {node: '>=10'}
     dependencies:
       lru-cache: 6.0.0
@@ -3796,8 +3796,8 @@ packages:
       ci-info: 1.6.0
     dev: true
 
-  /is-core-module/2.8.0:
-    resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
+  /is-core-module/2.8.1:
+    resolution: {integrity: sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA==}
     dependencies:
       has: 1.0.3
     dev: true
@@ -4600,8 +4600,8 @@ packages:
     resolution: {integrity: sha512-p2W1sgqij3zMMyRC067Dg16bfzVH+w7hyegmpIvZ4JNjqtGOVAIvLmjBx3yP7YTe9vKJgkoNOPjwQGogDoMXFA==}
     engines: {node: '>=10'}
     dependencies:
-      hosted-git-info: 4.0.2
-      is-core-module: 2.8.0
+      hosted-git-info: 4.1.0
+      is-core-module: 2.8.1
       semver: 7.3.5
       validate-npm-package-license: 3.0.4
     dev: true
@@ -5264,7 +5264,7 @@ packages:
   /resolve/1.19.0:
     resolution: {integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==}
     dependencies:
-      is-core-module: 2.8.0
+      is-core-module: 2.8.1
       path-parse: 1.0.7
     dev: true
 
@@ -5272,7 +5272,7 @@ packages:
     resolution: {integrity: sha512-3wCbTpk5WJlyE4mSOtDLhqQmGFi0/TD9VPwmiolnk8U0wRgMEktqCXd3vy5buTO3tljvalNvKrjHEfrd2WpEKA==}
     hasBin: true
     dependencies:
-      is-core-module: 2.8.0
+      is-core-module: 2.8.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
     dev: true
@@ -5704,8 +5704,8 @@ packages:
     resolution: {integrity: sha512-7YPIY44j+BoY+E6cGBSw0oCU8SNTTIHKZgftcBdwWkDzs/M86Fdlr21FrzAyph7Zo8r3CFGscyFe4rrBtixrBg==}
     dev: true
 
-  /table/6.7.5:
-    resolution: {integrity: sha512-LFNeryOqiQHqCVKzhkymKwt6ozeRhlm8IL1mE8rNUurkir4heF6PzMyRgaTa4tlyPTGGgXuvVOF/OLWiH09Lqw==}
+  /table/6.8.0:
+    resolution: {integrity: sha512-s/fitrbVeEyHKFa7mFdkuQMWlH1Wgw/yEXMt5xACT4ZpzWFluehAxRtUUQKPuWhaLAWhFcVx6w3oC8VKaUfPGA==}
     engines: {node: '>=10.0.0'}
     dependencies:
       ajv: 8.8.2
@@ -6574,8 +6574,8 @@ packages:
         optional: true
     dependencies:
       '@intlify/shared': 9.2.0-beta.26
-      '@intlify/vue-i18n-bridge': 0.3.2_57025ff3200bfd41dded232f40a7f0c8
-      '@intlify/vue-router-bridge': 0.3.2_11201cbde3b833de46ca62b5455e3270
+      '@intlify/vue-i18n-bridge': 0.3.4_57025ff3200bfd41dded232f40a7f0c8
+      '@intlify/vue-router-bridge': 0.3.4_11201cbde3b833de46ca62b5455e3270
       '@vue/composition-api': 1.4.3_vue@2.6.14
       vue: 2.6.14
       vue-demi: 0.12.1_e5303bfcb7b5c4dcf864c0d0a9aab3b4
@@ -6601,8 +6601,8 @@ packages:
         optional: true
     dependencies:
       '@intlify/shared': 9.2.0-beta.26
-      '@intlify/vue-i18n-bridge': 0.3.2_vue-i18n@9.2.0-beta.26
-      '@intlify/vue-router-bridge': 0.3.2_vue-router@4.0.12
+      '@intlify/vue-i18n-bridge': 0.3.4_vue-i18n@9.2.0-beta.26
+      '@intlify/vue-router-bridge': 0.3.4_vue-router@4.0.12
       vue: 3.2.26
       vue-demi: 0.12.1_vue@3.2.26
       vue-i18n: 9.2.0-beta.26_vue@3.2.26

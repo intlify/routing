@@ -81,8 +81,8 @@
   "pnpm": {
     "overrides": {
       "vue-demi": "^0.12.1",
-      "@intlify/vue-i18n-bridge": "^0.3.2",
-      "@intlify/vue-router-bridge": "^0.3.2"
+      "@intlify/vue-i18n-bridge": "^0.3.4",
+      "@intlify/vue-router-bridge": "^0.3.4"
     }
   },
   "private": true,
@@ -91,18 +91,16 @@
     "url": "git+https://github.com/intlify/routing.git"
   },
   "scripts": {
-    "force": "pnpm clean && pnpm i --force && pnpm build",
+    "force": "pnpm build && pnpm clean && pnpm i --force",
     "build": "./scripts/build.sh",
     "build:vue2": "pnpm switch:vue2 && pnpm build --filter playground-vue2",
     "build:vue3": "pnpm switch:vue3 && pnpm build --filter playground-vue3",
     "build:docs": "pnpm build:docs --filter vue-i18n-routing",
     "clean": "run-p clean:*",
     "clean:dist": "run-p clean:dist:* && rimraf node_modules/.pnpm",
-    "clean:dist:lib": "rimraf packages/vue-i18n-routing/dist",
     "clean:dist:vue2": "rimraf playground/vue2/dist",
     "clean:dist:vue3": "rimraf playground/vue3/dist",
     "clean:mod": "run-p clean:mod:*",
-    "clean:mod:lib": "rimraf packages/vue-i18n-routing/node_modules",
     "clean:mod:vue2": "rimraf playground/vue2/node_modules",
     "clean:mod:vue3": "rimraf playground/vue3/node_modules",
     "bump": "./scripts/bump.sh",

@@ -2,23 +2,56 @@
 
 ## Table Of Contents
 
+- [Function](#function)
+  - [createRouter](#createrouter)
+  - [localizeRoutes](#localizeroutes)
+  - [useI18nRouting](#usei18nrouting)
 - [TypeAlias](#typealias)
   - [Directions](#directions)
   - [I18nRoutingOptions](#i18nroutingoptions)
   - [Strategies](#strategies)
   - [VueI18nRoute](#vuei18nroute)
-- [Function](#function)
-  - [extendRouting](#extendrouting)
-  - [localizeRoutes](#localizeroutes)
-  - [useI18nRouting](#usei18nrouting)
+  - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Interface](#interface)
   - [I18nRouting](#i18nrouting)
   - [LocaleObject](#localeobject)
   - [Route](#route)
   - [RouteLegacy](#routelegacy)
-  - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Variable](#variable)
   - [VERSION](#version)
+
+## Function
+
+### createRouter
+
+Create a Vue Router instance
+
+**Signature:**
+```typescript
+export declare function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(i18n: I18n, options?: Options): Options['version'] extends 4 ? Router : VueRouter;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| i18n | I18n | A Vue I18n instance, see [Vue I18n API docs](https://vue-i18n.intlify.dev/api/general.html#i18n) |
+| options | Options | An options, see [VueI18nRoutingOptions](#vuei18nroutingoptions) |
+
+#### Returns
+
+ A Vue Router instance
+
+ You can create a vue router instance to be used by the Vue app.
+
+The routes of the created router instance are handled with i18n routing.
+
+At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+
+### localizeRoutes
+
+### useI18nRouting
+
 
 ## TypeAlias
 
@@ -53,14 +86,26 @@ export declare type VueI18nRoute = Route & RouteLegacy & {
 };
 ```
 
+### VueI18nRoutingOptions
 
-## Function
+Options to initialize a VueRouter instance
 
-### extendRouting
+**Signature:**
+```typescript
+export declare type VueI18nRoutingOptions = {
+    version?: 3 | 4;
+    defaultLocale?: string;
+    locales?: string[] | LocaleObject[];
+    strategy?: Strategies;
+    trailingSlash?: boolean;
+    routesNameSeparator?: string;
+    defaultLocaleRouteNameSuffix?: string;
+} & RouterOptions;
+```
 
-### localizeRoutes
+#### Remarks
 
-### useI18nRouting
+This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
 
 
 ## Interface
@@ -148,49 +193,6 @@ export interface RouteLegacy extends Pick<_Route, Exclude<keyof _Route, 'childre
 ##### chunkNames
 
 ##### component
-
-
-### VueI18nRoutingOptions
-
-Vue I18n routing options
-
-**Signature:**
-```typescript
-export interface VueI18nRoutingOptions 
-```
-
-
-#### Properties
-
-##### defaultLocale
-
-##### defaultLocaleRouteNameSuffix
-
-##### i18n
-
-Vue I18n instance
-
-**Signature:**
-```typescript
-i18n?: I18n;
-```
-
-##### localeCodes
-
-##### router
-
-Vue Router instance
-
-**Signature:**
-```typescript
-router?: VueRouter | Router;
-```
-
-##### routesNameSeparator
-
-##### strategy
-
-##### trailingSlash
 
 
 
