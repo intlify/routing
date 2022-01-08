@@ -4,10 +4,13 @@ import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getLocale } from '../utils'
+import { getLocaleRouteName, getRouteName } from './utils'
 
 import type {
   RouteLocationNormalizedLoaded,
   RouteLocationRaw,
+  Location,
+  RouteLocation,
   VueRouter,
   Router,
   Route,
@@ -19,30 +22,32 @@ import type { VueI18nRoutingOptions, Strategies } from '../types'
 export type I18nRoutingOptions = Pick<
   VueI18nRoutingOptions,
   'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
->
+> & { route?: ReturnType<typeof useRoute>; router?: ReturnType<typeof useRouter>; i18n?: ReturnType<typeof useI18n> }
 
 // TODO: should be implemented useful type API
 export interface I18nRouting {
-  getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded): string
-  localePath(route: any, locale?: Locale): string
-  localeRoute(route: any, locale?: Locale): any
-  localeLocation(route: any, locale?: Locale): any
+  getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded): string | null
+  localePath(route: RawLocation | RouteLocationRaw, locale?: Locale): string
+  localeRoute(route: RawLocation | RouteLocationRaw, locale?: Locale): Route | ReturnType<Router['resolve']>
+  localeLocation(route: RawLocation | RouteLocationRaw, locale?: Locale): Location | RouteLocation
   switchLocalePath(locale: Locale): void
 }
 
 // TODO: should be implemented useful type API
 export function useI18nRouting(options?: I18nRoutingOptions): I18nRouting
 
-export function useI18nRouting(options: I18nRoutingOptions = {}) {
-  const $i18n = useI18n()
-  const $router = useRouter<Router | VueRouter>()
-  const $route = useRoute<RouteLocationNormalizedLoaded | Route>()
+export function useI18nRouting(options: I18nRoutingOptions = {}): I18nRouting {
+  const $i18n = options.i18n ?? useI18n()
+  const $router = (options.router ?? useRouter<Router | VueRouter>()) as Router | VueRouter
+  const $route = (options.route ?? useRoute<RouteLocationNormalizedLoaded | Route>()) as
+    | RouteLocationNormalizedLoaded
+    | Route
 
   // if option values is undefined, initialize with default value at here
-  const defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix || $router.__defaultLocaleRouteNameSuffix
-  const defaultLocale = options.defaultLocale || $router.__defaultLocale
-  const routesNameSeparator = options.routesNameSeparator || $router.__routesNameSeparator!
-  const strategy = options.strategy || $router.__strategy
+  const defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix ?? $router.__defaultLocaleRouteNameSuffix!
+  const defaultLocale = options.defaultLocale ?? $router.__defaultLocale!
+  const routesNameSeparator = options.routesNameSeparator ?? $router.__routesNameSeparator!
+  const strategy = options.strategy ?? $router.__strategy!
 
   /**
    * define routing utilities with Composition API
@@ -56,18 +61,10 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
         ? $route.value
         : $route
     if (!route.name) {
-      return
+      return null
     }
     const name = getRouteName(route.name)
     return name.split(routesNameSeparator)[0]
-  }
-
-  function getLocaleRouteName(routeName: string | null, locale: Locale) {
-    let name = getRouteName(routeName) + (strategy === 'no_prefix' ? '' : routesNameSeparator + locale)
-    if (locale === defaultLocale && strategy === 'prefix_and_default') {
-      name += routesNameSeparator + defaultLocaleRouteNameSuffix
-    }
-    return name
   }
 
   function resolveRoute(route: any, locale?: Locale): any {
@@ -97,7 +94,12 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
       const resolvedRouteName = getRouteBaseName(resolvedRoute)
       if (isString(resolvedRouteName)) {
         localizedRoute = {
-          name: getLocaleRouteName(resolvedRouteName, _locale),
+          name: getLocaleRouteName(resolvedRouteName, _locale, {
+            defaultLocale,
+            strategy,
+            routesNameSeparator,
+            defaultLocaleRouteNameSuffix
+          }),
           params: resolvedRoute.params,
           query: resolvedRoute.query,
           hash: resolvedRoute.hash
@@ -106,7 +108,12 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
         // TODO
       }
     } else {
-      localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale)
+      localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale, {
+        defaultLocale,
+        strategy,
+        routesNameSeparator,
+        defaultLocaleRouteNameSuffix
+      })
 
       const { params } = localizedRoute
       if (params && params['0'] === undefined && params.pathMatch) {
@@ -154,7 +161,7 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
       ? undefined
         : isVue2
           ? resolved.location
-          : resolved.href
+          : resolved
   }
 
   function switchLocalePath(locale: Locale) {
@@ -192,15 +199,6 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
     localeLocation,
     switchLocalePath
   }
-}
-
-function getRouteName(routeName?: string | symbol | null) {
-  // prettier-ignore
-  return isString(routeName)
-    ? routeName
-    : isSymbol(routeName)
-      ? routeName.toString()
-      : '(null)'
 }
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

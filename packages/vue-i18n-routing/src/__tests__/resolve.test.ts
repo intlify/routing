@@ -1,8 +1,8 @@
 import { expect, describe, it } from 'vitest'
-import { localizeRoutes } from '../src/resolve'
-import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../src/constants'
+import { localizeRoutes } from '../resolve'
+import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../constants'
 
-import type { VueI18nRoute } from '../src/types'
+import type { VueI18nRoute } from '../types'
 
 describe('localizeRoutes', function () {
   describe('basic', function () {

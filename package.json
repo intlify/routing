@@ -36,6 +36,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.1.1",
     "globby": "^12.0.2",
+    "happy-dom": "^2.25.1",
     "jiti": "^1.12.9",
     "js-yaml": "^4.1.0",
     "lint-staged": "^12.1.2",
@@ -120,6 +121,7 @@
     "typecheck": "pnpm typecheck --filter vue-i18n-routing",
     "test": "pnpm typecheck && pnpm test:unit",
     "test:unit": "vitest run test",
+    "test:watch": "vitest watch test",
     "teest:cover": "vitest --coverage"
   },
   "workspaces": [

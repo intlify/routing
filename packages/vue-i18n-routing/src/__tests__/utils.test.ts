@@ -1,5 +1,5 @@
 import { assert, describe, it } from 'vitest'
-import { adjustRoutePathForTrailingSlash } from '../../src/utils'
+import { adjustRoutePathForTrailingSlash } from '../utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {
   describe('pagePath: /foo/bar', function () {
