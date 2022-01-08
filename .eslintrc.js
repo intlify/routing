@@ -12,7 +12,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier'
   ],
-  plugins: ['@typescript-eslint', 'mocha'],
+  plugins: ['@typescript-eslint'],
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -21,7 +21,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    'mocha/no-mocha-arrows': 'error'
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 }

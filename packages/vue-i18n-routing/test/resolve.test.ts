@@ -1,6 +1,4 @@
-/// <reference path="../../../test/chai.shim.d.ts"/>
-
-import { expect } from 'chai'
+import { expect, describe, it } from 'vitest'
 import { localizeRoutes } from '../src/resolve'
 import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../src/constants'
 
@@ -22,7 +20,7 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { locales: localeCodes })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
@@ -58,7 +56,7 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { locales: localeCodes })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(2)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
@@ -90,7 +88,7 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { locales: localeCodes, trailingSlash: true })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
@@ -118,7 +116,7 @@ describe('localizeRoutes', function () {
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { locales: localeCodes, routesNameSeparator: '__' })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
       expect(localizedRoutes.length).to.equal(4)
       localeCodes.forEach(locale => {
         routes.forEach(route => {
@@ -150,7 +148,7 @@ describe('localizeRoutes', function () {
         locales: localeCodes
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 
@@ -174,7 +172,7 @@ describe('localizeRoutes', function () {
         includeUprefixedFallback: true
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 
@@ -197,7 +195,7 @@ describe('localizeRoutes', function () {
         locales: localeCodes
       })
 
-      expect(localizedRoutes).to.matchSnapshot(this)
+      expect(localizedRoutes).toMatchSnapshot()
     })
   })
 })
