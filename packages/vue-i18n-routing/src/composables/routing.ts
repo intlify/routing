@@ -18,10 +18,8 @@ import type { VueI18nRoutingOptions, Strategies } from '../types'
 
 export type I18nRoutingOptions = Pick<
   VueI18nRoutingOptions,
-  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales'
-> & {
-  routesNameSeparator?: string
-}
+  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
+>
 
 // TODO: should be implemented useful type API
 export interface I18nRouting {
@@ -33,7 +31,7 @@ export interface I18nRouting {
 }
 
 // TODO: should be implemented useful type API
-export function useI18nRouting<Legacy extends boolean = false>(options?: I18nRoutingOptions): I18nRouting
+export function useI18nRouting(options?: I18nRoutingOptions): I18nRouting
 
 export function useI18nRouting(options: I18nRoutingOptions = {}) {
   const $i18n = useI18n()
@@ -41,8 +39,8 @@ export function useI18nRouting(options: I18nRoutingOptions = {}) {
   const $route = useRoute<RouteLocationNormalizedLoaded | Route>()
 
   // if option values is undefined, initialize with default value at here
-  const defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix || $router.__defaultLocaleRouteNameSuffix!
-  const defaultLocale = options.defaultLocale || $router.__defaultLocale!
+  const defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix || $router.__defaultLocaleRouteNameSuffix
+  const defaultLocale = options.defaultLocale || $router.__defaultLocale
   const routesNameSeparator = options.routesNameSeparator || $router.__routesNameSeparator!
   const strategy = options.strategy || $router.__strategy
 

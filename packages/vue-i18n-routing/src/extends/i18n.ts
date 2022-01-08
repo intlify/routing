@@ -8,7 +8,7 @@ type VueI18nExtendOptions = Pick<VueI18nRoutingOptions, 'locales'>
 
 export function extendI18n<TI18n extends I18n>(i18n: TI18n, { locales = [] }: VueI18nExtendOptions = {}): void {
   if (!isComposer(i18n.global, i18n.mode)) {
-    throw new Error('')
+    throw new Error('TODO:')
   }
 
   // TODO: release reactive resources with `effectSceope`

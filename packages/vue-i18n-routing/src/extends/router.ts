@@ -109,11 +109,8 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   } = asDefaultVueI18nRouterOptions(options)
 
   const normalizedLocaleCodes = getNormalizedLocales(locales)
-  const getLocaleFromRoute = createLocaleFromRouteGetter(
-    normalizedLocaleCodes.map(l => l.code),
-    routesNameSeparator,
-    defaultLocaleRouteNameSuffix
-  )
+  const localeCodes = normalizedLocaleCodes.map(l => l.code)
+  const getLocaleFromRoute = createLocaleFromRouteGetter(localeCodes, routesNameSeparator, defaultLocaleRouteNameSuffix)
 
   extendI18n(i18n, { locales: normalizedLocaleCodes })
 
@@ -138,6 +135,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   }
 
   router.__defaultLocale = defaultLocale
+  router.__localeCodes = localeCodes
   router.__strategy = strategy
   router.__trailingSlash = trailingSlash
   router.__routesNameSeparator = routesNameSeparator

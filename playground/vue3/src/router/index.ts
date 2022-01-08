@@ -3,7 +3,7 @@ import { createRouter as _createRouter } from 'vue-i18n-routing'
 
 import HomeView from '../views/HomeView.vue'
 
-import type { I18n } from 'vue-i18n'
+import type { I18n } from '@intlify/vue-i18n-bridge'
 
 export function createRouter(i18n: I18n) {
   return _createRouter(i18n, {

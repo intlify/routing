@@ -5,6 +5,7 @@ import type { Strategies } from '../types'
 declare module '@intlify/vue-router-bridge' {
   interface VueRouter {
     __defaultLocale?: string
+    __localeCodes?: string[]
     __strategy?: Strategies
     __trailingSlash?: boolean
     __routesNameSeparator?: string
@@ -12,6 +13,7 @@ declare module '@intlify/vue-router-bridge' {
   }
   interface Router {
     __defaultLocale?: string
+    __localeCodes?: string[]
     __strategy?: Strategies
     __trailingSlash?: boolean
     __routesNameSeparator?: string
