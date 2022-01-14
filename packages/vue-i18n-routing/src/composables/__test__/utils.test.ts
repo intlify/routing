@@ -1,4 +1,3 @@
-import { assert, describe, it } from 'vitest'
 import { getLocaleRouteName } from '../utils'
 
 describe('getLocaleRouteName', () => {

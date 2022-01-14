@@ -1,4 +1,3 @@
-import { assert, describe, it } from 'vitest'
 import { adjustRoutePathForTrailingSlash } from '../utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {

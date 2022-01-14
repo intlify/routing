@@ -48,7 +48,7 @@
     "secretlint": "^4.1.3",
     "typescript": "^4.5.4",
     "vite": "^2.7.10",
-    "vitest": "^0.0.139",
+    "vitest": "^0.1.0",
     "vue-eslint-parser": "^8.0.1",
     "yorkie": "^2.0.0"
   },
@@ -119,10 +119,11 @@
     "preinstall": "node ./scripts/preinstall.mjs",
     "release": "./scripts/release.sh",
     "typecheck": "pnpm typecheck --filter vue-i18n-routing",
-    "test": "pnpm typecheck && pnpm test:unit",
-    "test:unit": "vitest run test",
-    "test:watch": "vitest watch test",
-    "teest:cover": "vitest --coverage"
+    "test": "pnpm typecheck && run-s \"test:unit\" \"test:unit:vue2\"",
+    "test:unit": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 vitest run",
+    "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 vitest run",
+    "test:watch": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 vitest watch",
+    "teest:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && vitest --coverage"
   },
   "workspaces": [
     "packages/*",
