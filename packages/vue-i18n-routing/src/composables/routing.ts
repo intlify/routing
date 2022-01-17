@@ -4,7 +4,7 @@ import { isString, isSymbol, assign } from '@intlify/shared'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getLocale } from '../utils'
-import { getLocaleRouteName, getRouteName } from './utils'
+import { getLocaleRouteName, getRouteName } from '../utils'
 
 import type {
   RouteLocationNormalizedLoaded,

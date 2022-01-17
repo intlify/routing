@@ -1,30 +1,26 @@
-import { isString, isSymbol } from '@intlify/shared'
+import { unref } from 'vue-demi'
+import { useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { getRouteName } from '../utils'
+import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../constants'
 
-import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { Strategies } from '../types'
+import type { RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
 
-export function getRouteName(routeName?: string | symbol | null) {
-  // prettier-ignore
-  return isString(routeName)
-    ? routeName
-    : isSymbol(routeName)
-      ? routeName.toString()
-      : '(null)'
-}
-
-export function getLocaleRouteName(
-  routeName: string | null,
-  locale: Locale,
-  {
-    defaultLocale,
-    strategy,
-    routesNameSeparator,
-    defaultLocaleRouteNameSuffix
-  }: { defaultLocale: string; strategy: Strategies; routesNameSeparator: string; defaultLocaleRouteNameSuffix: string }
+/**
+ * Get route base name
+ *
+ * @param givenRoute - A route object, if not provided, the route is returned with `useRoute` will be used
+ * @param routesNameSeparator - A route name separator, if not provided, default separator is `routesNameSeparator` option of {@link VueI18nRoutingOptions} will be used
+ *
+ * @returns The route base name, if route name is not defined, return null
+ */
+export function getRouteBaseName(
+  givenRoute: Route | RouteLocationNormalizedLoaded = useRoute(),
+  routesNameSeparator = useRouter().__routesNameSeparator || DEFAULT_ROUTES_NAME_SEPARATOR
 ) {
-  let name = getRouteName(routeName) + (strategy === 'no_prefix' ? '' : routesNameSeparator + locale)
-  if (locale === defaultLocale && strategy === 'prefix_and_default') {
-    name += routesNameSeparator + defaultLocaleRouteNameSuffix
+  const _route = unref<Route | RouteLocationNormalizedLoaded>(givenRoute)
+  if (!_route.name) {
+    return null
   }
-  return name
+  const name = getRouteName(_route.name)
+  return name.split(routesNameSeparator)[0]
 }

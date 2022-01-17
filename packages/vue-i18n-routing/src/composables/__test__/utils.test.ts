@@ -1,61 +1,87 @@
-import { getLocaleRouteName } from '../utils'
+import { createMemoryHistory, useRoute } from 'vue-router'
+import { createI18n } from 'vue-i18n'
+import { createRouter } from '../../extends/router'
+import { getRouteBaseName } from '../utils'
+import { useSetup } from '../../../scripts/vitest'
 
-describe('getLocaleRouteName', () => {
-  describe('strategy: prefix_and_default', () => {
-    it('should be `route1___en___default`', () => {
-      assert.equal(
-        getLocaleRouteName('route1', 'en', {
-          defaultLocale: 'en',
-          strategy: 'prefix_and_default',
-          routesNameSeparator: '___',
-          defaultLocaleRouteNameSuffix: 'default'
-        }),
-        'route1___en___default'
-      )
-    })
-  })
+import type { Route } from '@intlify/vue-router-bridge'
 
-  describe('strategy: prefix_except_default', () => {
-    it('should be `route1___en`', () => {
-      assert.equal(
-        getLocaleRouteName('route1', 'en', {
-          defaultLocale: 'en',
-          strategy: 'prefix_except_default',
-          routesNameSeparator: '___',
-          defaultLocaleRouteNameSuffix: 'default'
-        }),
-        'route1___en'
-      )
-    })
-  })
-
-  describe('strategy: no_prefix', () => {
-    it('should be `route1`', () => {
-      assert.equal(
-        getLocaleRouteName('route1', 'en', {
-          defaultLocale: 'en',
-          strategy: 'no_prefix',
-          routesNameSeparator: '___',
-          defaultLocaleRouteNameSuffix: 'default'
-        }),
-        'route1'
-      )
-    })
-  })
-
-  describe('irregular', () => {
-    describe('route name is null', () => {
-      it('should be ` (null)___en___default`', () => {
-        assert.equal(
-          getLocaleRouteName(null, 'en', {
-            defaultLocale: 'en',
-            strategy: 'prefix_and_default',
-            routesNameSeparator: '___',
-            defaultLocaleRouteNameSuffix: 'default'
-          }),
-          '(null)___en___default'
-        )
+describe('getRouteBaseName', () => {
+  describe('route object', () => {
+    it('should return base name', async () => {
+      const i18n = createI18n({ legacy: false, locale: 'en' })
+      const router = createRouter(i18n, {
+        version: 4,
+        locales: ['en', 'ja'],
+        routes: [
+          {
+            path: '/',
+            component: {
+              template: '<div>Home</div>'
+            },
+            name: 'home'
+          }
+        ],
+        history: createMemoryHistory()
       })
+      await router.push('/en')
+      useSetup(() => {
+        const route = useRoute()
+        const name = getRouteBaseName(route)
+        assert.equal(name, 'home')
+      }, [i18n, router])
+    })
+  })
+
+  describe('route object is not included name', () => {
+    it('should return null', async () => {
+      const i18n = createI18n({ legacy: false, locale: 'en' })
+      const router = createRouter(i18n, {
+        version: 4,
+        locales: ['en', 'ja'],
+        routes: [
+          {
+            path: '/',
+            component: {
+              template: '<div>Home</div>'
+            },
+            name: 'home'
+          }
+        ],
+        history: createMemoryHistory()
+      })
+      await router.push('/en')
+      useSetup(() => {
+        const name = getRouteBaseName({} as Route)
+        assert.equal(name, null)
+      }, [i18n, router])
+    })
+  })
+
+  describe('route name separator option', () => {
+    it('should resolve with route name separator', async () => {
+      const i18n = createI18n({ legacy: false, locale: 'en' })
+      const router = createRouter(i18n, {
+        version: 4,
+        locales: ['en', 'ja'],
+        routesNameSeparator: '---',
+        routes: [
+          {
+            path: '/',
+            component: {
+              template: '<div>Home</div>'
+            },
+            name: 'home'
+          }
+        ],
+        history: createMemoryHistory()
+      })
+      await router.push('/ja')
+      useSetup(() => {
+        const route = useRoute()
+        const name = getRouteBaseName(route, '---')
+        assert.equal(name, 'home')
+      }, [i18n, router])
     })
   })
 })

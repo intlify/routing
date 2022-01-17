@@ -142,16 +142,16 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
 
   const removableGuardListener = router.beforeEach((to, from, next) => {
-    console.log('beforeEach', to, from)
+    // console.log('beforeEach', to, from)
     const currentLocale = getLocale(i18n as I18n)
     const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
-    console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
+    // console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
     if (currentLocale !== finalLocale) {
       setLocale(i18n as I18n, finalLocale)
     }
     next()
   })
 
-  console.log('create router', router)
+  // console.log('create router', router)
   return router
 }

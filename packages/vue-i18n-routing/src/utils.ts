@@ -1,8 +1,8 @@
 import { isRef } from 'vue-demi'
-import { isString } from '@intlify/shared'
+import { isString, isSymbol } from '@intlify/shared'
 
 import type { I18n, Composer, I18nMode, Locale } from '@intlify/vue-i18n-bridge'
-import type { LocaleObject } from './types'
+import type { LocaleObject, Strategies } from './types'
 
 export function getNormalizedLocales(locales: string[] | LocaleObject[]): LocaleObject[] {
   locales = locales || []
@@ -55,4 +55,30 @@ export function adjustRoutePathForTrailingSlash(
   isChildWithRelativePath: boolean
 ) {
   return pagePath.replace(/\/+$/, '') + (trailingSlash ? '/' : '') || (isChildWithRelativePath ? '' : '/')
+}
+
+export function getRouteName(routeName?: string | symbol | null) {
+  // prettier-ignore
+  return isString(routeName)
+    ? routeName
+    : isSymbol(routeName)
+      ? routeName.toString()
+      : '(null)'
+}
+
+export function getLocaleRouteName(
+  routeName: string | null,
+  locale: Locale,
+  {
+    defaultLocale,
+    strategy,
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix
+  }: { defaultLocale: string; strategy: Strategies; routesNameSeparator: string; defaultLocaleRouteNameSuffix: string }
+) {
+  let name = getRouteName(routeName) + (strategy === 'no_prefix' ? '' : routesNameSeparator + locale)
+  if (locale === defaultLocale && strategy === 'prefix_and_default') {
+    name += routesNameSeparator + defaultLocaleRouteNameSuffix
+  }
+  return name
 }

@@ -18,6 +18,4 @@ export function extendI18n<TI18n extends I18n>(i18n: TI18n, { locales = [] }: Vu
   const _locales = ref<LocaleObject[]>(locales)
 
   i18n.global.locales = computed(() => _locales.value)
-
-  console.log('... extends i18n done')
 }
