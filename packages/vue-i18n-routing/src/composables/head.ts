@@ -1,10 +1,12 @@
 import { isBoolean, isArray } from '@intlify/shared'
+import { ref, watch } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
-import { getLocale, warn } from '../utils'
+import { getLocale, getNormalizedLocales, warn } from '../utils'
 import { DEFAULT_LOCALE, DEFAULT_STRATEGY, STRATEGIES } from '../constants'
 
+import type { Ref } from 'vue-demi'
 import type { Router, VueRouter } from '@intlify/vue-router-bridge'
 import type { I18nHeadOptions, I18nHeadMetaInfo, I18nRoutingOptions, ComposableOptions, MetaAttrs } from './types'
 import type { LocaleObject } from '../types'
@@ -26,46 +28,65 @@ export function useI18nHead({
   i18n = useI18n()
 }: Pick<I18nRoutingOptions, 'strategy' | 'defaultLocale'> &
   ComposableOptions &
-  I18nHeadOptions = {}): I18nHeadMetaInfo {
+  I18nHeadOptions = {}): Ref<I18nHeadMetaInfo> {
   type R = Router | VueRouter
 
   const _defaultLocale = defaultLocale || (router as R).__defaultLocale
   const _strategy = strategy || (router as R).__strategy
 
-  const metaObject: I18nHeadMetaInfo = {
+  const metaObject: Ref<I18nHeadMetaInfo> = ref({
     htmlAttrs: {},
     link: [],
     meta: []
+  })
+
+  function cleanMeta() {
+    metaObject.value = {
+      htmlAttrs: {},
+      link: [],
+      meta: []
+    }
   }
 
-  const locale = getLocale(i18n)
-  const currentLocale = (router as R).__localeProperties || { code: locale }
-  const currentLocaleIso = currentLocale.iso
-  const currentLocaleDir = currentLocale.dir || (router as R).__defaultDetection
+  function updateMeta(_route: typeof route) {
+    const locale = getLocale(i18n)
+    const currentLocale = getNormalizedLocales(i18n.locales.value).find(l => l.code === locale) || {
+      code: locale
+    }
+    const currentLocaleIso = currentLocale.iso
+    const currentLocaleDir = currentLocale.dir || (router as R).__defaultDetection
 
-  // Adding Direction Attribute
-  if (addDirAttribute) {
-    metaObject.htmlAttrs!.dir = currentLocaleDir
-  }
-
-  // Adding SEO Meta
-  if (addSeoAttributes && locale && i18n.locales) {
-    if (currentLocaleIso) {
-      metaObject.htmlAttrs!.lang = currentLocaleIso // TODO: simple lang or "specific" lang with territory?
+    // Adding Direction Attribute
+    if (addDirAttribute) {
+      metaObject.value.htmlAttrs!.dir = currentLocaleDir
     }
 
-    const locales = i18n.locales.value as LocaleObject[]
-    addHreflangLinks(locales, i18n.__baseUrl, metaObject.link!, {
-      defaultLocale: _defaultLocale,
-      strategy: _strategy,
-      route,
-      router,
-      i18n
-    })
-    addCanonicalLinks(i18n.__baseUrl, metaObject.link!, addSeoAttributes, { route, router, i18n })
-    addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta!)
-    addAlternateOgLocales(locales, currentLocaleIso, metaObject.meta!)
+    // Adding SEO Meta
+    if (addSeoAttributes && locale && i18n.locales) {
+      if (currentLocaleIso) {
+        metaObject.value.htmlAttrs!.lang = currentLocaleIso
+      }
+
+      const locales = i18n.locales.value as LocaleObject[]
+      addHreflangLinks(locales, i18n.__baseUrl, metaObject.value.link!, {
+        defaultLocale: _defaultLocale,
+        strategy: _strategy,
+        route,
+        router,
+        i18n
+      })
+      addCanonicalLinks(i18n.__baseUrl, metaObject.value.link!, addSeoAttributes, { route: _route, router, i18n })
+      addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.value.meta!)
+      addAlternateOgLocales(locales, currentLocaleIso, metaObject.value.meta!)
+    }
   }
+
+  watch((router as R).currentRoute, async val => {
+    cleanMeta()
+    updateMeta(val)
+  })
+
+  updateMeta(route)
 
   return metaObject
 }
@@ -133,7 +154,7 @@ function addCanonicalLinks(
   const currentRoute = localeRoute(
     {
       ...(route as any), // eslint-disable-line @typescript-eslint/no-explicit-any
-      name: getRouteBaseName()
+      name: getRouteBaseName(route as any, options) // eslint-disable-line @typescript-eslint/no-explicit-any
     },
     undefined,
     options

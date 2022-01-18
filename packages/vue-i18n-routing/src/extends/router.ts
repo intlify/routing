@@ -143,7 +143,6 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
 
   router.__defaultLocale = defaultLocale
   router.__localeCodes = localeCodes
-  router.__localeProperties = normalizedLocaleCodes.find(l => l.code === locale) || { code: locale }
   router.__strategy = strategy
   router.__trailingSlash = trailingSlash
   router.__routesNameSeparator = routesNameSeparator
@@ -156,7 +155,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
     const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
     // console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
     if (currentLocale !== finalLocale) {
-      setLocale(i18n as I18n, finalLocale)
+      setLocale(i18n, finalLocale)
     }
     next()
   })

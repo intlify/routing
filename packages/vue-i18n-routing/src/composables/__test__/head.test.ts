@@ -1,5 +1,6 @@
-import { createMemoryHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
+import { computed } from 'vue-demi'
+import { createMemoryHistory, useRoute, useRouter } from 'vue-router'
+import { createI18n, useI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
 import { useI18nHead } from '../head'
 import { useSetup } from '../../../scripts/vitest'
@@ -14,6 +15,10 @@ describe('useI18nHead', () => {
           code: 'en',
           iso: 'en-US',
           dir: 'ltr'
+        },
+        {
+          code: 'ja',
+          iso: 'ja-JP'
         }
       ],
       baseUrl: 'http://localhost:8080',
@@ -26,8 +31,21 @@ describe('useI18nHead', () => {
     })
     await router.push('/en/about')
 
-    useSetup(() => {
-      expect(useI18nHead({ addDirAttribute: true, addSeoAttributes: true })).toMatchSnapshot()
+    const vm = useSetup(() => {
+      const route = useRoute()
+      const router = useRouter()
+      const i18n = useI18n()
+      const head = useI18nHead({ addDirAttribute: true, addSeoAttributes: true, route, router, i18n })
+      expect(head.value).toMatchSnapshot(i18n.locale.value)
+      assert.equal(head.value.htmlAttrs!.lang, 'en-US')
+      return {
+        i18n,
+        head
+      }
     }, [i18n, router])
+
+    await router.push('/ja')
+    expect(vm.head).toMatchSnapshot(vm.i18n.locale.value)
+    assert.equal(vm.head.htmlAttrs!.lang, 'ja-JP')
   })
 })

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`useI18nHead > should be worked 1`] = `
+exports[`useI18nHead > should be worked > en 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
@@ -20,6 +20,18 @@ exports[`useI18nHead > should be worked 1`] = `
       "rel": "alternate",
     },
     {
+      "hid": "i18n-alt-ja",
+      "href": "http://localhost:8080/ja/about",
+      "hreflang": "ja",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-alt-ja-JP",
+      "href": "http://localhost:8080/ja/about",
+      "hreflang": "ja-JP",
+      "rel": "alternate",
+    },
+    {
       "hid": "i18n-can",
       "href": "http://localhost:8080/en/about",
       "rel": "canonical",
@@ -30,6 +42,63 @@ exports[`useI18nHead > should be worked 1`] = `
       "content": "en_US",
       "hid": "i18n-og",
       "property": "og:locale",
+    },
+    {
+      "content": "ja_JP",
+      "hid": "i18n-og-alt-ja-JP",
+      "property": "og:locale:alternate",
+    },
+  ],
+}
+`;
+
+exports[`useI18nHead > should be worked > ja 1`] = `
+{
+  "htmlAttrs": {
+    "dir": "ltr",
+    "lang": "ja-JP",
+  },
+  "link": [
+    {
+      "hid": "i18n-alt-en",
+      "href": "http://localhost:8080/en",
+      "hreflang": "en",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-alt-en-US",
+      "href": "http://localhost:8080/en",
+      "hreflang": "en-US",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-alt-ja",
+      "href": "http://localhost:8080/ja",
+      "hreflang": "ja",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-alt-ja-JP",
+      "href": "http://localhost:8080/ja",
+      "hreflang": "ja-JP",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-can",
+      "href": "http://localhost:8080/ja",
+      "rel": "canonical",
+    },
+  ],
+  "meta": [
+    {
+      "content": "ja_JP",
+      "hid": "i18n-og",
+      "property": "og:locale",
+    },
+    {
+      "content": "en_US",
+      "hid": "i18n-og-alt-en-US",
+      "property": "og:locale:alternate",
     },
   ],
 }
