@@ -1,0 +1,36 @@
+// Vitest Snapshot v1
+
+exports[`useI18nHead > should be worked 1`] = `
+{
+  "htmlAttrs": {
+    "dir": "ltr",
+    "lang": "en-US",
+  },
+  "link": [
+    {
+      "hid": "i18n-alt-en",
+      "href": "http://localhost:8080/en/about",
+      "hreflang": "en",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-alt-en-US",
+      "href": "http://localhost:8080/en/about",
+      "hreflang": "en-US",
+      "rel": "alternate",
+    },
+    {
+      "hid": "i18n-can",
+      "href": "http://localhost:8080/en/about",
+      "rel": "canonical",
+    },
+  ],
+  "meta": [
+    {
+      "content": "en_US",
+      "hid": "i18n-og",
+      "property": "og:locale",
+    },
+  ],
+}
+`;

@@ -10,7 +10,9 @@ import {
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
   DEFAULT_ROUTES_NAME_SEPARATOR,
   DEFAULT_STRATEGY,
-  DEFAULT_TRAILING_SLASH
+  DEFAULT_TRAILING_SLASH,
+  DEFAULT_DETECTION_DIRECTION,
+  DEFAULT_BASE_URL
 } from '../constants'
 
 import type {
@@ -72,6 +74,8 @@ function asDefaultVueI18nRouterOptions(options: VueI18nRoutingOptions): Required
   options.routesNameSeparator = options.routesNameSeparator ?? DEFAULT_ROUTES_NAME_SEPARATOR
   options.defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix ?? DEFAULT_LOCALE_ROUTE_NAME_SUFFIX
   options.locales = options.locales ?? []
+  options.defaultDetection = options.defaultDetection ?? DEFAULT_DETECTION_DIRECTION
+  options.baseUrl = options.baseUrl ?? DEFAULT_BASE_URL
   options.routes = options.routes ?? []
   return options as Required<VueI18nRoutingOptions>
 }
@@ -105,14 +109,17 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
     trailingSlash,
     routesNameSeparator,
     defaultLocaleRouteNameSuffix,
+    defaultDetection,
+    baseUrl,
     routes
   } = asDefaultVueI18nRouterOptions(options)
 
+  const locale = getLocale(i18n)
   const normalizedLocaleCodes = getNormalizedLocales(locales)
   const localeCodes = normalizedLocaleCodes.map(l => l.code)
   const getLocaleFromRoute = createLocaleFromRouteGetter(localeCodes, routesNameSeparator, defaultLocaleRouteNameSuffix)
 
-  extendI18n(i18n, { locales: normalizedLocaleCodes })
+  extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl })
 
   const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
     locales,
@@ -136,14 +143,16 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
 
   router.__defaultLocale = defaultLocale
   router.__localeCodes = localeCodes
+  router.__localeProperties = normalizedLocaleCodes.find(l => l.code === locale) || { code: locale }
   router.__strategy = strategy
   router.__trailingSlash = trailingSlash
   router.__routesNameSeparator = routesNameSeparator
   router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
+  router.__defaultDetection = defaultDetection
 
   const removableGuardListener = router.beforeEach((to, from, next) => {
     // console.log('beforeEach', to, from)
-    const currentLocale = getLocale(i18n as I18n)
+    const currentLocale = getLocale(i18n)
     const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
     // console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
     if (currentLocale !== finalLocale) {

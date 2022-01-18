@@ -1,4 +1,4 @@
-import { isVue3, isRef, unref } from 'vue-demi'
+import { isVue3, isRef } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { isString, assign } from '@intlify/shared'

@@ -1,8 +1,18 @@
 import { isRef } from 'vue-demi'
-import { isString, isSymbol } from '@intlify/shared'
+import { isString, isSymbol, isFunction } from '@intlify/shared'
 
 import type { I18n, Composer, I18nMode, Locale } from '@intlify/vue-i18n-bridge'
-import type { LocaleObject, Strategies } from './types'
+import type { LocaleObject, Strategies, BaseUrlResolveHandler } from './types'
+
+export function warn(msg: string, err?: Error): void {
+  if (typeof console !== 'undefined') {
+    console.warn(`[vue-i18n-routing] ` + msg)
+    /* istanbul ignore if */
+    if (err) {
+      console.warn(err.stack)
+    }
+  }
+}
 
 export function getNormalizedLocales(locales: string[] | LocaleObject[]): LocaleObject[] {
   locales = locales || []
@@ -81,4 +91,27 @@ export function getLocaleRouteName(
     name += routesNameSeparator + defaultLocaleRouteNameSuffix
   }
   return name
+}
+
+export function resolveBaseUrl(
+  baseUrl: string | BaseUrlResolveHandler,
+  context: unknown
+  /*
+  localeCode: string
+  / { differentDomains, normalizedLocales } */
+) {
+  if (isFunction(baseUrl)) {
+    return baseUrl(context)
+  }
+
+  // TODO: SSR
+  // if (differentDomains && localeCode) {
+  //   // Lookup the `differentDomain` origin associated with given locale.
+  //   const domain = getDomainFromLocale(localeCode, context.req, { normalizedLocales })
+  //   if (domain) {
+  //     return domain
+  //   }
+  // }
+
+  return baseUrl
 }

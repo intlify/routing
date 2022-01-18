@@ -2,6 +2,15 @@
 
 ## Table Of Contents
 
+- [TypeAlias](#typealias)
+  - [BaseUrlResolveHandler](#baseurlresolvehandler)
+  - [ComposableOptions](#composableoptions)
+  - [Directions](#directions)
+  - [I18nRoutingOptions](#i18nroutingoptions)
+  - [MetaAttrs](#metaattrs)
+  - [Strategies](#strategies)
+  - [VueI18nRoute](#vuei18nroute)
+  - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Function](#function)
   - [createRouter](#createrouter)
   - [getRouteBaseName](#getroutebasename)
@@ -10,17 +19,86 @@
   - [localeRoute](#localeroute)
   - [localizeRoutes](#localizeroutes)
   - [switchLocalePath](#switchlocalepath)
-- [TypeAlias](#typealias)
-  - [Directions](#directions)
-  - [Strategies](#strategies)
-  - [VueI18nRoute](#vuei18nroute)
-  - [VueI18nRoutingOptions](#vuei18nroutingoptions)
+  - [useI18nHead](#usei18nhead)
 - [Interface](#interface)
+  - [I18nHeadMetaInfo](#i18nheadmetainfo)
+  - [I18nHeadOptions](#i18nheadoptions)
   - [LocaleObject](#localeobject)
   - [Route](#route)
   - [RouteLegacy](#routelegacy)
+  - [SeoAttributesOptions](#seoattributesoptions)
 - [Variable](#variable)
   - [VERSION](#version)
+
+## TypeAlias
+
+### BaseUrlResolveHandler
+
+### ComposableOptions
+
+### Directions
+
+Direction
+
+**Signature:**
+```typescript
+export declare type Directions = 'ltr' | 'rtl' | 'auto';
+```
+
+### I18nRoutingOptions
+
+Options for vue-i18n-routing common
+
+**Signature:**
+```typescript
+export declare type I18nRoutingOptions = Pick<VueI18nRoutingOptions, 'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'> & ComposableOptions;
+```
+
+### MetaAttrs
+
+### Strategies
+
+Routing strategy
+
+**Signature:**
+```typescript
+export declare type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES];
+```
+
+### VueI18nRoute
+
+Route config for vue-i18n-routing
+
+**Signature:**
+```typescript
+export declare type VueI18nRoute = Route & RouteLegacy & {
+    redirect?: string;
+};
+```
+
+### VueI18nRoutingOptions
+
+Options to initialize a VueRouter instance
+
+**Signature:**
+```typescript
+export declare type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
+    version?: 3 | 4;
+    defaultLocale?: string;
+    locales?: string[] | LocaleObject[];
+    strategy?: Strategies;
+    trailingSlash?: boolean;
+    routesNameSeparator?: string;
+    defaultLocaleRouteNameSuffix?: string;
+    defaultDetection?: Directions;
+    baseUrl?: string | BaseUrl;
+} & RouterOptions;
+```
+
+#### Remarks
+
+This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
+
 
 ## Function
 
@@ -86,7 +164,7 @@ options?: I18nRoutingOptions): Location | RouteLocation | undefined;
 | --- | --- | --- |
 | route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
 | locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details  |
+| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
 
 #### Returns
 
@@ -108,7 +186,7 @@ options?: I18nRoutingOptions): string;
 | --- | --- | --- |
 | route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
 | locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details  |
+| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
 
 #### Returns
 
@@ -130,7 +208,7 @@ options?: I18nRoutingOptions): Route | ReturnType<Router['resolve']> | undefined
 | --- | --- | --- |
 | route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
 | locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details  |
+| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
 
 #### Returns
 
@@ -158,61 +236,77 @@ export declare function switchLocalePath(locale: Locale, { route, i18n }?: I18nR
 
  Returns a link to the current route in another language
 
+### useI18nHead
 
-## TypeAlias
-
-### Directions
-
-Direction
+Generate SEO head meta information
 
 **Signature:**
 ```typescript
-export declare type Directions = 'ltr' | 'rtl' | 'auto';
+export declare function useI18nHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): I18nHeadMetaInfo;
 ```
 
-### Strategies
+#### Parameters
 
-Routing strategy
+| Parameter | Type | Description |
+| --- | --- | --- |
+| { addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n } | Pick&lt;I18nRoutingOptions, 'strategy' &#124; 'defaultLocale'&gt; &amp; ComposableOptions &amp; I18nHeadOptions |  |
 
-**Signature:**
-```typescript
-export declare type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES];
-```
+#### Returns
 
-### VueI18nRoute
-
-Route config for vue-i18n-routing
-
-**Signature:**
-```typescript
-export declare type VueI18nRoute = Route & RouteLegacy & {
-    redirect?: string;
-};
-```
-
-### VueI18nRoutingOptions
-
-Options to initialize a VueRouter instance
-
-**Signature:**
-```typescript
-export declare type VueI18nRoutingOptions = {
-    version?: 3 | 4;
-    defaultLocale?: string;
-    locales?: string[] | LocaleObject[];
-    strategy?: Strategies;
-    trailingSlash?: boolean;
-    routesNameSeparator?: string;
-    defaultLocaleRouteNameSuffix?: string;
-} & RouterOptions;
-```
-
-#### Remarks
-
-This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
+ Genereated SEO head meta information
 
 
 ## Interface
+
+### I18nHeadMetaInfo
+
+I18n header meta info
+
+**Signature:**
+```typescript
+export interface I18nHeadMetaInfo 
+```
+
+
+#### Properties
+
+##### htmlAttrs
+
+##### link
+
+##### meta
+
+
+### I18nHeadOptions
+
+Options for [useI18nHead](#usei18nhead) function
+
+**Signature:**
+```typescript
+export interface I18nHeadOptions 
+```
+
+
+#### Properties
+
+##### addDirAttribute
+
+Adds a `dir` attribute to the HTML element.
+
+**Signature:**
+```typescript
+addDirAttribute?: boolean;
+```
+
+##### addSeoAttributes
+
+Adds various SEO attributes.
+
+**Signature:**
+```typescript
+addSeoAttributes?: boolean | SeoAttributesOptions;
+```
+
 
 ### LocaleObject
 
@@ -281,6 +375,28 @@ export interface RouteLegacy extends Pick<_Route, Exclude<keyof _Route, 'childre
 ##### chunkNames
 
 ##### component
+
+
+### SeoAttributesOptions
+
+SEO Attribute options
+
+**Signature:**
+```typescript
+export interface SeoAttributesOptions 
+```
+
+
+#### Properties
+
+##### canonicalQueries
+
+An array of strings corresponding to query params you would like to include in your canonical URL.
+
+**Signature:**
+```typescript
+canonicalQueries?: string[];
+```
 
 
 

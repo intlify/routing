@@ -56,13 +56,15 @@ export interface LocaleObject extends Record<string, any> {
   iso?: string
 }
 
+export type BaseUrlResolveHandler = (context: unknown) => string
+
 /**
  * Options to initialize a VueRouter instance
  *
  * @remarks
  * This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
  */
-export type VueI18nRoutingOptions = {
+export type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
   /**
    * Vue Router version
    *
@@ -128,6 +130,25 @@ export type VueI18nRoutingOptions = {
    * @defaultValue 'default'
    */
   defaultLocaleRouteNameSuffix?: string
+  /**
+   * Default detection direction
+   *
+   * @defaultValue 'ltr'
+   */
+  defaultDetection?: Directions
+  /**
+   * The fallback base URL to use as a prefix for alternate URLs in hreflang tags.
+   *
+   * @remarks
+   * By default VueRouter's base URL will be used and only if that is not available, fallback URL will be used.
+   *
+   * Can also be a function (will be passed a Nuxt Context as a parameter) that returns a string.
+   *
+   * Useful to make base URL dynamic based on request headers.
+   *
+   * @defaultValue ''
+   */
+  baseUrl?: string | BaseUrl
 } & RouterOptions
 
 /* eslint-enable @typescript-eslint/no-explicit-any */
