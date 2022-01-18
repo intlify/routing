@@ -12,6 +12,7 @@
     "@intlify/shared": "beta",
     "@intlify/vue-i18n-bridge": "^0.3.4",
     "@intlify/vue-router-bridge": "^0.3.4",
+    "ufo": "^0.7.9",
     "vue-demi": "^0.12.1"
   },
   "devDependencies": {

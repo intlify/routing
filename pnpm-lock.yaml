@@ -75,6 +75,7 @@ importers:
       api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
       typescript: ^4.5.4
+      ufo: ^0.7.9
       vite: ^2.7.4
       vite-plugin-dts: ^0.9.6
       vue: ^3.2.23
@@ -90,6 +91,7 @@ importers:
       '@intlify/shared': 9.2.0-beta.28
       '@intlify/vue-i18n-bridge': 0.3.4_vue-i18n@9.2.0-beta.26
       '@intlify/vue-router-bridge': 0.3.4_vue-router@4.0.12
+      ufo: 0.7.9
       vue-demi: 0.12.1_vue@3.2.26
     devDependencies:
       '@microsoft/api-extractor': 7.19.4
@@ -5703,6 +5705,10 @@ packages:
     hasBin: true
     dev: true
 
+  /ufo/0.7.9:
+    resolution: {integrity: sha512-6t9LrLk3FhqTS+GW3IqlITtfRB5JAVr5MMNjpBECfK827W+Vh5Ilw/LhTcHWrt6b3hkeBvcbjx4Ti7QVFzmcww==}
+    dev: false
+
   /unbox-primitive/1.0.1:
     resolution: {integrity: sha512-tZU/3NqK3dA5gpE1KtyiJUrEB0lxnGkMFHptJ7q6ewdZ8s12QrODwNbhIJStmJkd1QDXa1NRA8aF2A1zk/Ypyw==}
     dependencies:
@@ -6387,6 +6393,7 @@ packages:
       '@intlify/vue-i18n-bridge': 0.3.4_57025ff3200bfd41dded232f40a7f0c8
       '@intlify/vue-router-bridge': 0.3.4_11201cbde3b833de46ca62b5455e3270
       '@vue/composition-api': 1.4.3_vue@2.6.14
+      ufo: 0.7.9
       vue: 2.6.14
       vue-demi: 0.12.1_e5303bfcb7b5c4dcf864c0d0a9aab3b4
       vue-i18n: 8.26.8
@@ -6413,6 +6420,7 @@ packages:
       '@intlify/shared': 9.2.0-beta.28
       '@intlify/vue-i18n-bridge': 0.3.4_vue-i18n@9.2.0-beta.26
       '@intlify/vue-router-bridge': 0.3.4_vue-router@4.0.12
+      ufo: 0.7.9
       vue: 3.2.26
       vue-demi: 0.12.1_vue@3.2.26
       vue-i18n: 9.2.0-beta.26_vue@3.2.26
