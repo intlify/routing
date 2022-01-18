@@ -81,7 +81,7 @@ export function useI18nHead({
     }
   }
 
-  watch((router as R).currentRoute, async val => {
+  watch((router as R).currentRoute, val => {
     cleanMeta()
     updateMeta(val)
   })
