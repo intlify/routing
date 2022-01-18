@@ -2,12 +2,11 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import { computed } from '@vue/composition-api'
 import { useI18n } from 'vue-i18n-bridge'
-import { useI18nRouting } from 'vue-i18n-routing'
+import { localePath, switchLocalePath } from 'vue-i18n-routing'
 
 import type { LocaleObject } from 'vue-i18n-routing'
 
 const { t, locale, locales } = useI18n()
-const { localePath, switchLocalePath } = useI18nRouting()
 const switchableLocale = computed(() => {
   const _locales = (locales.value as LocaleObject[]).filter(i => i.code !== locale.value)
   return _locales.length !== 0 ? _locales[0] : { code: 'ja', name: '日本語' }
