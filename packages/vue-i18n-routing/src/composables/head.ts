@@ -1,9 +1,8 @@
 import { isBoolean, isArray } from '@intlify/shared'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
-import { switchLocalePath, localeRoute } from './routing'
+import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
 import { getLocale, warn } from '../utils'
-import { getRouteBaseName } from './utils'
 import { DEFAULT_LOCALE, DEFAULT_STRATEGY, STRATEGIES } from '../constants'
 
 import type { Router, VueRouter } from '@intlify/vue-router-bridge'
