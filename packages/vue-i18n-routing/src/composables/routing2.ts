@@ -1,5 +1,5 @@
-import { isVue3 } from 'vue-demi'
-import { useRouter } from '@intlify/vue-router-bridge'
+import { isVue3, isRef, unref } from 'vue-demi'
+import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
@@ -13,7 +13,15 @@ import {
   DEFAULT_STRATEGY
 } from '../constants'
 
-import type { Route, RawLocation, RouteLocation, RouteLocationRaw, Router, VueRouter } from '@intlify/vue-router-bridge'
+import type {
+  Route,
+  RawLocation,
+  RouteLocation,
+  RouteLocationRaw,
+  RouteLocationNormalizedLoaded,
+  Router,
+  VueRouter
+} from '@intlify/vue-router-bridge'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { I18nRoutingOptions } from './types'
 import type { Strategies } from '../types'
@@ -27,7 +35,7 @@ const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, ST
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Returns the localized URL for a given page
+ * @returns Returns the localized URL for a given route
  */
 export function localePath(
   route: RawLocation | RouteLocationRaw,
@@ -50,7 +58,7 @@ export function localePath(
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Returns the route object for a given page, the route object is resolved by vue-router rather than just a full route path.
+ * @returns Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
  */
 export function localeRoute(
   route: RawLocation | RouteLocationRaw,
@@ -73,7 +81,7 @@ export function localeRoute(
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Returns the location object for a given page, the location object is resolved by vue-router rather than just a full route path.
+ * @returns Returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
  */
 export function localeLocation(
   route: RawLocation | RouteLocationRaw,
@@ -187,3 +195,41 @@ function resolveRoute(
   return (router as Router).resolve(route)
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
+
+/**
+ * Switch locale path
+ *
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns a link to the current route in another language
+ */
+export function switchLocalePath(
+  locale: Locale,
+  { route = useRoute(), i18n = useI18n() }: I18nRoutingOptions = {}
+): string {
+  const name = getRouteBaseName()
+  if (!name) {
+    return ''
+  }
+
+  // prettier-ignore
+  const { params, ...routeCopy } = !isVue3 && isRef<Route>(route)
+    ? route.value // for vue-router v3
+    : (route as RouteLocationNormalizedLoaded) // for vue-router v4
+  const langSwitchParams = {}
+
+  const baseRoute = assign({}, routeCopy, {
+    name,
+    params: {
+      ...params,
+      ...langSwitchParams,
+      0: params.pathMatch
+    }
+  })
+  const path = localePath(baseRoute, locale, { route, i18n })
+
+  // TODO: for domainDifference here
+
+  return path
+}

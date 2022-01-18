@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
 import { STRATEGIES } from '../../constants'
-import { localePath, localeRoute, localeLocation } from '../routing2'
+import { localePath, localeRoute, localeLocation, switchLocalePath } from '../routing2'
 import { useSetup } from '../../../scripts/vitest'
 
 describe('localePath', () => {
@@ -211,6 +211,29 @@ describe('localeLocation', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
+    }, [i18n, router])
+  })
+})
+
+describe('switchLocalePath', () => {
+  it('should be worked', async () => {
+    const i18n = createI18n({ legacy: false, locale: 'en' })
+    const router = createRouter(i18n, {
+      version: 4,
+      locales: ['en', 'ja', 'fr'],
+      routes: [
+        { path: '/', name: 'index', component: { template: '<div>index</div>' } },
+        { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
+        { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div>Not Found</div>' } }
+      ],
+      history: createMemoryHistory()
+    })
+    await router.push('/en/about')
+
+    useSetup(() => {
+      assert.equal(switchLocalePath('ja'), '/ja/about')
+      assert.equal(switchLocalePath('en'), '/en/about')
+      assert.equal(switchLocalePath('fr'), '/fr/about')
     }, [i18n, router])
   })
 })
