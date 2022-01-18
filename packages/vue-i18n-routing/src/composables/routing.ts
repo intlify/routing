@@ -1,204 +1,235 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { isRef, isVue2 } from 'vue-demi'
-import { isString, isSymbol, assign } from '@intlify/shared'
+import { isVue3, isRef, unref } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
-import { getLocale } from '../utils'
-import { getLocaleRouteName, getRouteName } from '../utils'
+import { isString, assign } from '@intlify/shared'
+import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
+import { getLocale, getLocaleRouteName } from '../utils'
+import { getRouteBaseName } from './utils'
+import {
+  STRATEGIES,
+  DEFAULT_ROUTES_NAME_SEPARATOR,
+  DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
+  DEFAULT_LOCALE,
+  DEFAULT_STRATEGY
+} from '../constants'
 
 import type {
-  RouteLocationNormalizedLoaded,
-  RouteLocationRaw,
-  Location,
-  RouteLocation,
-  VueRouter,
-  Router,
   Route,
-  RawLocation
+  RawLocation,
+  RouteLocation,
+  RouteLocationRaw,
+  RouteLocationNormalizedLoaded,
+  Router,
+  VueRouter
 } from '@intlify/vue-router-bridge'
-import { Locale, I18n, Composer, I18nMode, I18nInjectionKey } from '@intlify/vue-i18n-bridge'
-import type { VueI18nRoutingOptions, Strategies } from '../types'
+import type { Locale } from '@intlify/vue-i18n-bridge'
+import type { I18nRoutingOptions } from './types'
+import type { Strategies } from '../types'
 
-export type I18nRoutingOptions = Pick<
-  VueI18nRoutingOptions,
-  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
-> & { route?: ReturnType<typeof useRoute>; router?: ReturnType<typeof useRouter>; i18n?: ReturnType<typeof useI18n> }
+const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, STRATEGIES.PREFIX_EXCEPT_DEFAULT])
 
-// TODO: should be implemented useful type API
-export interface I18nRouting {
-  getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded): string | null
-  localePath(route: RawLocation | RouteLocationRaw, locale?: Locale): string
-  localeRoute(route: RawLocation | RouteLocationRaw, locale?: Locale): Route | ReturnType<Router['resolve']>
-  localeLocation(route: RawLocation | RouteLocationRaw, locale?: Locale): Location | RouteLocation
-  switchLocalePath(locale: Locale): void
+/**
+ * Resolve locale path
+ *
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns the localized URL for a given route
+ */
+export function localePath(
+  route: RawLocation | RouteLocationRaw,
+  locale?: Locale, // TODO: locale should be more type inference (completion)
+  options?: I18nRoutingOptions
+): string {
+  const localizedRoute = resolveRoute(route, locale, options)
+  // prettier-ignore
+  return localizedRoute == null
+    ? ''
+    : isVue3
+      ? localizedRoute.redirectedFrom || localizedRoute.fullPath
+      : localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
 }
 
-// TODO: should be implemented useful type API
-export function useI18nRouting(options?: I18nRoutingOptions): I18nRouting
+/**
+ * Resolve locale route
+ *
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
+ */
+export function localeRoute(
+  route: RawLocation | RouteLocationRaw,
+  locale?: Locale, // TODO: locale should be more type inference (completion)
+  options?: I18nRoutingOptions
+): Route | ReturnType<Router['resolve']> | undefined {
+  const resolved = resolveRoute(route, locale, options)
+  // prettier-ignore
+  return resolved == null
+    ? undefined
+    : isVue3
+      ? resolved as ReturnType<Router['resolve']> 
+      : resolved.route as Route
+}
 
-export function useI18nRouting(options: I18nRoutingOptions = {}): I18nRouting {
-  const $i18n = options.i18n ?? useI18n()
-  const $router = (options.router ?? useRouter<Router | VueRouter>()) as Router | VueRouter
-  const $route = (options.route ?? useRoute<RouteLocationNormalizedLoaded | Route>()) as
-    | RouteLocationNormalizedLoaded
-    | Route
+/**
+ * Resolve locale location
+ *
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
+ */
+export function localeLocation(
+  route: RawLocation | RouteLocationRaw,
+  locale?: Locale, // TODO: locale should be more type inference (completion)
+  options?: I18nRoutingOptions
+): Location | RouteLocation | undefined {
+  const resolved = resolveRoute(route, locale, options)
+  // prettier-ignore
+  return resolved == null
+    ? undefined
+      : isVue3
+        ? resolved
+        : resolved.location
+}
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function resolveRoute(
+  route: any,
+  locale?: Locale,
+  {
+    router = useRouter(),
+    i18n = useI18n(),
+    defaultLocale = DEFAULT_LOCALE,
+    defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
+    routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
+    strategy = DEFAULT_STRATEGY,
+    trailingSlash = false
+  }: I18nRoutingOptions = {}
+): any {
   // if option values is undefined, initialize with default value at here
-  const defaultLocaleRouteNameSuffix = options.defaultLocaleRouteNameSuffix ?? $router.__defaultLocaleRouteNameSuffix!
-  const defaultLocale = options.defaultLocale ?? $router.__defaultLocale!
-  const routesNameSeparator = options.routesNameSeparator ?? $router.__routesNameSeparator!
-  const strategy = options.strategy ?? $router.__strategy!
+  type R = Router | VueRouter
+  const _defaultLocaleRouteNameSuffix = (router as R).__defaultLocaleRouteNameSuffix || defaultLocaleRouteNameSuffix
+  const _defaultLocale = (router as R).__defaultLocale || defaultLocale
+  const _routesNameSeparator = (router as R).__routesNameSeparator || routesNameSeparator
+  const _strategy = (router as R).__strategy || strategy
+  const _locale = locale || getLocale(i18n)
 
-  /**
-   * define routing utilities with Composition API
-   */
-
-  function getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded) {
-    // prettier-ignore
-    const route = givenRoute != null
-      ? givenRoute
-      : isRef<Route>($route)
-        ? $route.value
-        : $route
-    if (!route.name) {
-      return null
+  // if route parameter is a string, check if it's a path or name of route.
+  let _route = route
+  if (isString(route)) {
+    if (_route[0] === '/') {
+      // if route parameter is a path, create route object with path.
+      _route = { path: route }
+    } else {
+      // else use it as route name.
+      _route = { name: route }
     }
-    const name = getRouteName(route.name)
-    return name.split(routesNameSeparator)[0]
   }
 
-  function resolveRoute(route: any, locale?: Locale): any {
-    // TODO:
-    const _locale = locale || getLocale($i18n as unknown as Composer)
+  let localizedRoute = assign({}, _route)
 
-    // if route parameter is a string, check if it's a path or name of route.
-    let _route = route
-    if (isString(route)) {
-      if (route[0] === '/') {
-        // if route parameter is a path, create route object with path.
-        _route = { path: route }
-      } else {
-        // else use it as route name.
-        _route = { name: route }
-      }
-    }
-
-    let localizedRoute = assign({}, _route)
-
-    if (localizedRoute.path && !localizedRoute.name) {
-      const _resolvedRoute = $router.resolve(localizedRoute) as any
-      // prettier-ignore
-      const resolvedRoute = !isVue2
-        ? _resolvedRoute // for vue-router v4
-        : _resolvedRoute.route // for vue-router v3
-      const resolvedRouteName = getRouteBaseName(resolvedRoute)
-      if (isString(resolvedRouteName)) {
-        localizedRoute = {
-          name: getLocaleRouteName(resolvedRouteName, _locale, {
-            defaultLocale,
-            strategy,
-            routesNameSeparator,
-            defaultLocaleRouteNameSuffix
-          }),
-          params: resolvedRoute.params,
-          query: resolvedRoute.query,
-          hash: resolvedRoute.hash
-        }
-      } else {
-        // TODO
+  if (localizedRoute.path && !localizedRoute.name) {
+    // TODO: should improve path resolving logic ..., especially for vue-router v4, console warning is occured by vue-router resolver
+    const _resolvedRoute = (router as R).resolve(localizedRoute) as any
+    // prettier-ignore
+    const resolvedRoute = isVue3
+      ? _resolvedRoute // for vue-router v4
+      : _resolvedRoute.route // for vue-router v3
+    const resolvedRouteName = getRouteBaseName(resolvedRoute)
+    if (isString(resolvedRouteName)) {
+      localizedRoute = {
+        name: getLocaleRouteName(resolvedRouteName, _locale, {
+          defaultLocale: _defaultLocale,
+          strategy: _strategy,
+          routesNameSeparator: _routesNameSeparator,
+          defaultLocaleRouteNameSuffix: _defaultLocaleRouteNameSuffix
+        }),
+        params: resolvedRoute.params,
+        query: resolvedRoute.query,
+        hash: resolvedRoute.hash
       }
     } else {
-      localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale, {
-        defaultLocale,
-        strategy,
-        routesNameSeparator,
-        defaultLocaleRouteNameSuffix
-      })
-
-      const { params } = localizedRoute
-      if (params && params['0'] === undefined && params.pathMatch) {
-        params['0'] = params.pathMatch
+      const isDefaultLocale = _locale === defaultLocale
+      const isPrefixed =
+        // don't prefix default locale
+        !(isDefaultLocale && RESOLVED_PREFIXED.has(_strategy)) &&
+        // no prefix for any language
+        !(_strategy === STRATEGIES.NO_PREFIX)
+      // if route has a path defined but no name, resolve full route using the path
+      if (isPrefixed) {
+        localizedRoute.path = `/${_locale}${localizedRoute.path}`
       }
+      localizedRoute.path = trailingSlash
+        ? withTrailingSlash(localizedRoute.path, true)
+        : withoutTrailingSlash(localizedRoute.path, true)
     }
-
-    const resolvedRoute = $router.resolve(localizedRoute) as any
-    // prettier-ignore
-    if (isVue2
-      ? resolvedRoute.route.name // for vue-router v3
-      : resolvedRoute.name // for vue-router v4
-    ) {
-      return resolvedRoute
-    }
-
-    // if didn't resolve to an existing route then just return resolved route based on original input.
-    return $router.resolve(route)
-  }
-
-  function localePath(route: any, locale: Locale) {
-    const localizedRoute = resolveRoute(route, locale)
-    // prettier-ignore
-    return localizedRoute == null
-      ? ''
-      : isVue2
-        ? localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
-        : localizedRoute.redirectedFrom || localizedRoute.fullPath
-  }
-
-  function localeRoute(route: any, locale: Locale) {
-    const resolved = resolveRoute(route, locale)
-    // prettier-ignore
-    return resolved == null
-      ? undefined
-        : isVue2
-          ? resolved.route
-          : resolved
-  }
-
-  function localeLocation(route: any, locale: Locale) {
-    const resolved = resolveRoute(route, locale)
-    // prettier-ignore
-    return resolved == null
-      ? undefined
-        : isVue2
-          ? resolved.location
-          : resolved
-  }
-
-  function switchLocalePath(locale: Locale) {
-    const name = getRouteBaseName()
-    if (!name) {
-      return ''
-    }
-
-    // prettier-ignore
-    const { params, ...routeCopy } = isVue2 && isRef<Route>($route)
-      ? $route.value // for vue-router v3
-      : ($route as RouteLocationNormalizedLoaded) // for vue-router v4
-    const langSwitchParams = {}
-
-    const baseRoute = assign({}, routeCopy, {
-      name,
-      params: {
-        ...params,
-        ...langSwitchParams,
-        0: params.pathMatch
-      }
+  } else {
+    localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale, {
+      defaultLocale: _defaultLocale,
+      strategy: _strategy,
+      routesNameSeparator: _routesNameSeparator,
+      defaultLocaleRouteNameSuffix: _defaultLocaleRouteNameSuffix
     })
-    const path = localePath(baseRoute, locale)
 
-    console.log('switchLocalePath', $i18n.locale.value, locale, path)
-    // TODO: for domainDifference
-
-    return path
+    const { params } = localizedRoute
+    if (params && params['0'] === undefined && params.pathMatch) {
+      params['0'] = params.pathMatch
+    }
   }
 
-  return {
-    getRouteBaseName,
-    localePath,
-    localeRoute,
-    localeLocation,
-    switchLocalePath
+  const resolvedRoute = (router as R).resolve(localizedRoute) as any
+  // prettier-ignore
+  if (isVue3
+    ? resolvedRoute.name // for vue-router v4
+    : resolvedRoute.route.name // for vue-router v3
+  ) {
+    return resolvedRoute
   }
+
+  // if didn't resolve to an existing route then just return resolved route based on original input.
+  return (router as Router).resolve(route)
 }
-
 /* eslint-enable @typescript-eslint/no-explicit-any */
+
+/**
+ * Switch locale path
+ *
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns a link to the current route in another language
+ */
+export function switchLocalePath(
+  locale: Locale,
+  { route = useRoute(), i18n = useI18n() }: I18nRoutingOptions = {}
+): string {
+  const name = getRouteBaseName()
+  if (!name) {
+    return ''
+  }
+
+  // prettier-ignore
+  const { params, ...routeCopy } = !isVue3 && isRef<Route>(route)
+    ? route.value // for vue-router v3
+    : (route as RouteLocationNormalizedLoaded) // for vue-router v4
+  const langSwitchParams = {}
+
+  const baseRoute = assign({}, routeCopy, {
+    name,
+    params: {
+      ...params,
+      ...langSwitchParams,
+      0: params.pathMatch
+    }
+  })
+  const path = localePath(baseRoute, locale, { route, i18n })
+
+  // TODO: for domainDifference here
+
+  return path
+}

@@ -4,16 +4,18 @@
 
 - [Function](#function)
   - [createRouter](#createrouter)
+  - [getRouteBaseName](#getroutebasename)
+  - [localeLocation](#localelocation)
+  - [localePath](#localepath)
+  - [localeRoute](#localeroute)
   - [localizeRoutes](#localizeroutes)
-  - [useI18nRouting](#usei18nrouting)
+  - [switchLocalePath](#switchlocalepath)
 - [TypeAlias](#typealias)
   - [Directions](#directions)
-  - [I18nRoutingOptions](#i18nroutingoptions)
   - [Strategies](#strategies)
   - [VueI18nRoute](#vuei18nroute)
   - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Interface](#interface)
-  - [I18nRouting](#i18nrouting)
   - [LocaleObject](#localeobject)
   - [Route](#route)
   - [RouteLegacy](#routelegacy)
@@ -48,9 +50,113 @@ The routes of the created router instance are handled with i18n routing.
 
 At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
 
+### getRouteBaseName
+
+Get route base name
+
+**Signature:**
+```typescript
+export declare function getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, routesNameSeparator?: string): string | null;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| givenRoute | Route &#124; RouteLocationNormalizedLoaded | A route object, if not provided, the route is returned with `useRoute` will be used |
+| routesNameSeparator | string | A route name separator, if not provided, default separator is `routesNameSeparator` option of [VueI18nRoutingOptions](#vuei18nroutingoptions) will be used |
+
+#### Returns
+
+ The route base name, if route name is not defined, return null
+
+### localeLocation
+
+Resolve locale location
+
+**Signature:**
+```typescript
+export declare function localeLocation(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
+options?: I18nRoutingOptions): Location | RouteLocation | undefined;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
+| locale | Locale | A locale code, if not specified, uses the current locale |
+| options | I18nRoutingOptions | An options, see about details  |
+
+#### Returns
+
+ Returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
+
+### localePath
+
+Resolve locale path
+
+**Signature:**
+```typescript
+export declare function localePath(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
+options?: I18nRoutingOptions): string;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
+| locale | Locale | A locale code, if not specified, uses the current locale |
+| options | I18nRoutingOptions | An options, see about details  |
+
+#### Returns
+
+ Returns the localized URL for a given route
+
+### localeRoute
+
+Resolve locale route
+
+**Signature:**
+```typescript
+export declare function localeRoute(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
+options?: I18nRoutingOptions): Route | ReturnType<Router['resolve']> | undefined;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
+| locale | Locale | A locale code, if not specified, uses the current locale |
+| options | I18nRoutingOptions | An options, see about details  |
+
+#### Returns
+
+ Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
+
 ### localizeRoutes
 
-### useI18nRouting
+### switchLocalePath
+
+Switch locale path
+
+**Signature:**
+```typescript
+export declare function switchLocalePath(locale: Locale, { route, i18n }?: I18nRoutingOptions): string;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| locale | Locale | A locale code, if not specified, uses the current locale |
+| { route, i18n } | I18nRoutingOptions |  |
+
+#### Returns
+
+ Returns a link to the current route in another language
 
 
 ## TypeAlias
@@ -63,8 +169,6 @@ Direction
 ```typescript
 export declare type Directions = 'ltr' | 'rtl' | 'auto';
 ```
-
-### I18nRoutingOptions
 
 ### Strategies
 
@@ -109,22 +213,6 @@ This options is extended from Vue Router `RouterOptioins`, so you can specify th
 
 
 ## Interface
-
-### I18nRouting
-
-
-#### Methods
-
-##### getRouteBaseName
-
-##### localeLocation
-
-##### localePath
-
-##### localeRoute
-
-##### switchLocalePath
-
 
 ### LocaleObject
 
@@ -204,7 +292,7 @@ Vue I18n Routing Version
 
 **Signature:**
 ```typescript
-VERSION = ""
+VERSION: string
 ```
 
 #### Remarks

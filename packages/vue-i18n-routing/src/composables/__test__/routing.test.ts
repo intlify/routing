@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
 import { STRATEGIES } from '../../constants'
-import { localePath, localeRoute, localeLocation, switchLocalePath } from '../routing2'
+import { localePath, localeRoute, localeLocation, switchLocalePath } from '../routing'
 import { useSetup } from '../../../scripts/vitest'
 
 describe('localePath', () => {
