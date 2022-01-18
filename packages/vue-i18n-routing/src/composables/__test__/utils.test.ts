@@ -79,7 +79,7 @@ describe('getRouteBaseName', () => {
       await router.push('/ja')
       useSetup(() => {
         const route = useRoute()
-        const name = getRouteBaseName(route, '---')
+        const name = getRouteBaseName(route, { routesNameSeparator: '---' })
         assert.equal(name, 'home')
       }, [i18n, router])
     })

@@ -204,11 +204,9 @@ function resolveRoute(
  *
  * @returns Returns a link to the current route in another language
  */
-export function switchLocalePath(
-  locale: Locale,
-  { route = useRoute(), i18n = useI18n() }: I18nRoutingOptions = {}
-): string {
-  const name = getRouteBaseName()
+export function switchLocalePath(locale: Locale, options?: I18nRoutingOptions): string {
+  const route = (options && options.route) || useRoute()
+  const name = getRouteBaseName(route as Route | RouteLocationNormalizedLoaded, options)
   if (!name) {
     return ''
   }
@@ -227,7 +225,7 @@ export function switchLocalePath(
       0: params.pathMatch
     }
   })
-  const path = localePath(baseRoute, locale, { route, i18n })
+  const path = localePath(baseRoute, locale, options)
 
   // TODO: for domainDifference here
 

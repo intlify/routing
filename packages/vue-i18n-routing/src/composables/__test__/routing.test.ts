@@ -1,5 +1,6 @@
-import { createMemoryHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
+import { computed } from 'vue-demi'
+import { createMemoryHistory, useRoute, useRouter } from 'vue-router'
+import { createI18n, useI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
 import { STRATEGIES } from '../../constants'
 import { localePath, localeRoute, localeLocation, switchLocalePath } from '../routing'
@@ -230,10 +231,22 @@ describe('switchLocalePath', () => {
     })
     await router.push('/en/about')
 
-    useSetup(() => {
+    const vm = useSetup(() => {
+      const route = useRoute()
+      const router = useRouter()
+      const i18n = useI18n()
+      const change = (locale: string) => switchLocalePath(locale, { route, router, i18n })
       assert.equal(switchLocalePath('ja'), '/ja/about')
       assert.equal(switchLocalePath('en'), '/en/about')
       assert.equal(switchLocalePath('fr'), '/fr/about')
+      return {
+        switchLocalePath: change
+      }
     }, [i18n, router])
+
+    await router.push('/ja')
+    assert.equal(vm.switchLocalePath('ja'), '/ja')
+    assert.equal(vm.switchLocalePath('en'), '/en')
+    assert.equal(vm.switchLocalePath('fr'), '/fr')
   })
 })
