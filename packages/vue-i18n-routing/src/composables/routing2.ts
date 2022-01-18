@@ -13,7 +13,7 @@ import {
   DEFAULT_STRATEGY
 } from '../constants'
 
-import type { Route, RawLocation, RouteLocationRaw, Router, VueRouter } from '@intlify/vue-router-bridge'
+import type { Route, RawLocation, RouteLocation, RouteLocationRaw, Router, VueRouter } from '@intlify/vue-router-bridge'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { I18nRoutingOptions } from './types'
 import type { Strategies } from '../types'
@@ -27,7 +27,7 @@ const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, ST
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Return localized path
+ * @returns Returns the localized URL for a given page
  */
 export function localePath(
   route: RawLocation | RouteLocationRaw,
@@ -50,11 +50,11 @@ export function localePath(
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Return localized route resolved by vue-router
+ * @returns Returns the route object for a given page, the route object is resolved by vue-router rather than just a full route path.
  */
 export function localeRoute(
   route: RawLocation | RouteLocationRaw,
-  locale?: Locale,
+  locale?: Locale, // TODO: locale should be more type inference (completion)
   options?: I18nRoutingOptions
 ): Route | ReturnType<Router['resolve']> | undefined {
   const resolved = resolveRoute(route, locale, options)
@@ -64,6 +64,29 @@ export function localeRoute(
     : isVue3
       ? resolved as ReturnType<Router['resolve']> 
       : resolved.route as Route
+}
+
+/**
+ * Resolve locale location
+ *
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Returns the location object for a given page, the location object is resolved by vue-router rather than just a full route path.
+ */
+export function localeLocation(
+  route: RawLocation | RouteLocationRaw,
+  locale?: Locale, // TODO: locale should be more type inference (completion)
+  options?: I18nRoutingOptions
+): Location | RouteLocation | undefined {
+  const resolved = resolveRoute(route, locale, options)
+  // prettier-ignore
+  return resolved == null
+    ? undefined
+      : isVue3
+        ? resolved
+        : resolved.location
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -103,6 +126,7 @@ function resolveRoute(
   let localizedRoute = assign({}, _route)
 
   if (localizedRoute.path && !localizedRoute.name) {
+    // TODO: should improve path resolving logic ..., especially for vue-router v4, console warning is occured by vue-router resolver
     const _resolvedRoute = (router as R).resolve(localizedRoute) as any
     // prettier-ignore
     const resolvedRoute = isVue3
