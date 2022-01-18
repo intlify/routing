@@ -23,9 +23,9 @@ const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, ST
 /**
  * Resolve locale path
  *
- * @param route - A route location
- * @param locale - A locale, If not specified, uses the current locale
- * @param options - An options, see {@link I18nRoutingOptions}
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
  *
  * @returns Return localized path for passed in `route`
  */
