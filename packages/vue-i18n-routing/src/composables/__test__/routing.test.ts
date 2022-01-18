@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
 import { STRATEGIES } from '../../constants'
-import { localePath } from '../routing2'
+import { localePath, localeRoute } from '../routing2'
 import { useSetup } from '../../../scripts/vitest'
 
 describe('localePath', () => {
@@ -70,5 +70,76 @@ describe('localePath', () => {
         assert.equal(localePath({ name: 'about' }, 'ja'), '/about')
       }, [i18n, router])
     })
+  })
+})
+
+describe('localeRoute', () => {
+  it('should return route', async () => {
+    const i18n = createI18n({ legacy: false, locale: 'en' })
+    const router = createRouter(i18n, {
+      version: 4,
+      locales: ['en', 'ja'],
+      routes: [
+        { path: '/', name: 'index', component: { template: '<div>index</div>' } },
+        { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
+        { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div>Not Found</div>' } }
+      ],
+      history: createMemoryHistory()
+    })
+    await router.push('/en')
+
+    useSetup(() => {
+      // path
+      assert.include(localeRoute('/'), {
+        fullPath: '/en',
+        path: '/en',
+        name: 'not-found___en',
+        href: '/en'
+      })
+      assert.include(localeRoute('/about', 'ja'), {
+        fullPath: '/ja/about',
+        path: '/ja/about',
+        name: 'about___ja',
+        href: '/ja/about'
+      })
+      assert.include(localeRoute('/:pathMatch(.*)*', 'ja'), {
+        fullPath: '/ja/:pathMatch(.*)*',
+        path: '/ja/:pathMatch(.*)*',
+        name: 'not-found___ja',
+        href: '/ja/:pathMatch(.*)*'
+      })
+      // name
+      assert.include(localeRoute('index', 'ja'), {
+        fullPath: '/ja',
+        path: '/ja',
+        name: 'index___ja',
+        href: '/ja'
+      })
+      assert.include(localeRoute('about'), {
+        fullPath: '/en/about',
+        path: '/en/about',
+        name: 'about___en',
+        href: '/en/about'
+      })
+      assert.include(localeRoute('not-found', 'ja'), {
+        fullPath: '/ja',
+        path: '/ja',
+        name: 'not-found___ja',
+        href: '/ja'
+      })
+      assert.include(localeRoute('not-found'), {
+        fullPath: '/en',
+        path: '/en',
+        name: 'not-found___en',
+        href: '/en'
+      })
+      // object
+      assert.include(localeRoute({ name: 'about' }, 'ja'), {
+        fullPath: '/ja/about',
+        path: '/ja/about',
+        name: 'about___ja',
+        href: '/ja/about'
+      })
+    }, [i18n, router])
   })
 })

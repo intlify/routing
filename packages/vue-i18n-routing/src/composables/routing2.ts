@@ -1,4 +1,4 @@
-import { isVue2 } from 'vue-demi'
+import { isVue3 } from 'vue-demi'
 import { useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { isString, assign } from '@intlify/shared'
@@ -13,7 +13,7 @@ import {
   DEFAULT_STRATEGY
 } from '../constants'
 
-import type { RawLocation, RouteLocationRaw, Router, VueRouter } from '@intlify/vue-router-bridge'
+import type { Route, RawLocation, RouteLocationRaw, Router, VueRouter } from '@intlify/vue-router-bridge'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { I18nRoutingOptions } from './types'
 import type { Strategies } from '../types'
@@ -27,7 +27,7 @@ const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, ST
  * @param locale - A locale code, if not specified, uses the current locale
  * @param options - An options, see about details {@link I18nRoutingOptions}
  *
- * @returns Return localized path for passed in `route`
+ * @returns Return localized path
  */
 export function localePath(
   route: RawLocation | RouteLocationRaw,
@@ -38,9 +38,32 @@ export function localePath(
   // prettier-ignore
   return localizedRoute == null
     ? ''
-    : isVue2
-      ? localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
-      : localizedRoute.redirectedFrom || localizedRoute.fullPath
+    : isVue3
+      ? localizedRoute.redirectedFrom || localizedRoute.fullPath
+      : localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
+}
+
+/**
+ * Resolve locale route
+ *
+ * @param route - A route location. The path or name of the route or an object for more complex routes
+ * @param locale - A locale code, if not specified, uses the current locale
+ * @param options - An options, see about details {@link I18nRoutingOptions}
+ *
+ * @returns Return localized route resolved by vue-router
+ */
+export function localeRoute(
+  route: RawLocation | RouteLocationRaw,
+  locale?: Locale,
+  options?: I18nRoutingOptions
+): Route | ReturnType<Router['resolve']> | undefined {
+  const resolved = resolveRoute(route, locale, options)
+  // prettier-ignore
+  return resolved == null
+    ? undefined
+    : isVue3
+      ? resolved as ReturnType<Router['resolve']> 
+      : resolved.route as Route
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -82,7 +105,7 @@ function resolveRoute(
   if (localizedRoute.path && !localizedRoute.name) {
     const _resolvedRoute = (router as R).resolve(localizedRoute) as any
     // prettier-ignore
-    const resolvedRoute = !isVue2
+    const resolvedRoute = isVue3
       ? _resolvedRoute // for vue-router v4
       : _resolvedRoute.route // for vue-router v3
     const resolvedRouteName = getRouteBaseName(resolvedRoute)
@@ -129,9 +152,9 @@ function resolveRoute(
 
   const resolvedRoute = (router as R).resolve(localizedRoute) as any
   // prettier-ignore
-  if (isVue2
-    ? resolvedRoute.route.name // for vue-router v3
-    : resolvedRoute.name // for vue-router v4
+  if (isVue3
+    ? resolvedRoute.name // for vue-router v4
+    : resolvedRoute.route.name // for vue-router v3
   ) {
     return resolvedRoute
   }
