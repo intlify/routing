@@ -22,7 +22,7 @@ module.exports = {
   },
   rules: {
     '@intlify/vue-i18n/no-raw-text': 'error',
-    '@intlify/vue-i18n/no-dynamic-keys': 'error',
+    '@intlify/vue-i18n/no-dynamic-keys': 'warn',
     '@intlify/vue-i18n/no-missing-keys-in-other-locales': 'error',
     '@intlify/vue-i18n/no-unused-keys': 'error'
   },
