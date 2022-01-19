@@ -125,8 +125,8 @@ export interface I18nHeadMetaInfo {
   // meta?: (MetaPropertyCharset | MetaPropertyEquiv | MetaPropertyName | MetaPropertyMicrodata | MetaPropertyProperty)[]
   // link?: (LinkPropertyBase | LinkPropertyHref) /* | LinkPropertyHrefCallback*/[]
   htmlAttrs?: MetaAttrs
-  meta?: MetaAttrs
-  link?: MetaAttrs
+  meta?: MetaAttrs[]
+  link?: MetaAttrs[]
 }
 
 /* eslint-enable @typescript-eslint/no-explicit-any */
