@@ -9,13 +9,16 @@ export function createRouter(i18n: I18n) {
   return _createRouter(i18n, {
     version: 4,
     defaultLocale: 'en',
+    baseUrl: 'https://localhost:3000',
     locales: [
       {
         code: 'en',
+        iso: 'en-US',
         name: 'English'
       },
       {
         code: 'ja',
+        iso: 'ja-JP',
         name: '日本語'
       }
     ],

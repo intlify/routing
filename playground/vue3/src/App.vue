@@ -2,11 +2,26 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { localePath, switchLocalePath } from 'vue-i18n-routing'
+import { useRouter } from 'vue-router'
+import { localePath, switchLocalePath, useI18nHead } from 'vue-i18n-routing'
+import { useHead } from '@vueuse/head'
 
 import type { LocaleObject } from 'vue-i18n-routing'
 
 const { t, locale, locales } = useI18n()
+const router = useRouter()
+const i18nHead = useI18nHead({ addSeoAttributes: true })
+
+const title = computed(() => router.currentRoute.value.name?.toString().split('___')[0] || '')
+useHead({
+  title: computed(() => t(`App.${title.value || 'home'}`)),
+  htmlAttrs: computed(() => ({
+    lang: i18nHead.value.htmlAttrs!.lang
+  })),
+  link: computed(() => [...(i18nHead.value.link || [])]),
+  meta: computed(() => [...(i18nHead.value.meta || [])])
+})
+
 const switchableLocale = computed(() => {
   const _locales = (locales.value as LocaleObject[]).filter(i => i.code !== locale.value)
   return _locales.length !== 0 ? _locales[0] : { code: 'ja', name: '日本語' }

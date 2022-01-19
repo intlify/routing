@@ -14,6 +14,7 @@
     "vue-i18n": "next",
     "@intlify/vue-i18n-bridge": "^0.3.4",
     "@intlify/vue-router-bridge": "^0.3.4",
+    "@vueuse/head": "^0.7.5",
     "vue-i18n-routing": "workspace:*"
   },
   "dependenciesMeta": {
