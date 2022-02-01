@@ -67,8 +67,11 @@
         "node": "./index.mjs",
         "default": "./dist/vue-i18n-routing.es.js"
       },
-      "require": "./dist/vue-i18n-routing.cjs.js"
-    }
+      "require": "./dist/vue-i18n-routing.cjs.js",
+      "types": "./dist/vue-i18n-routing.d.ts"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
   },
   "license": "MIT",
   "author": {
