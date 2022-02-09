@@ -45,14 +45,14 @@ Options to compute route localizing
 **Signature:**
 ```typescript
 export declare type ComputedRouteOptions = {
-    locales?: readonly string[];
-    paths?: Record<string, string>;
+    locales: readonly string[];
+    paths: Record<string, string>;
 };
 ```
 
 #### Remarks
 
-The route options that is compute the route to be localized on 
+The route options that is compute the route to be localized on [localizeRoutes](#localizeroutes)
 
 ### Directions
 
@@ -243,6 +243,30 @@ options?: I18nRoutingOptions): Route | ReturnType<Router['resolve']> | undefined
  Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
 
 ### localizeRoutes
+
+Localize routes
+
+**Signature:**
+```typescript
+export declare function localizeRoutes(routes: VueI18nRoute[], { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales }?: Pick<VueI18nRoutingOptions, 'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'> & {
+    includeUprefixedFallback?: boolean;
+    optionsResolver?: RouteOptionsResolver;
+}): VueI18nRoute[];
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| routes | VueI18nRoute[] | Some routes |
+| { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales } | Pick&lt;VueI18nRoutingOptions, 'defaultLocale' &#124; 'strategy' &#124; 'locales' &#124; 'routesNameSeparator' &#124; 'trailingSlash' &#124; 'defaultLocaleRouteNameSuffix'&gt; &amp; {
+    includeUprefixedFallback?: boolean;
+    optionsResolver?: RouteOptionsResolver;
+} |  |
+
+#### Returns
+
+ Localized routes
 
 ### switchLocalePath
 

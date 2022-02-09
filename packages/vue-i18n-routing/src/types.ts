@@ -65,8 +65,8 @@ export type BaseUrlResolveHandler = (context: unknown) => string
  * The route options that is compute the route to be localized on {@link localizeRoutes}
  */
 export type ComputedRouteOptions = {
-  locales?: readonly string[]
-  paths?: Record<string, string>
+  locales: readonly string[]
+  paths: Record<string, string>
 }
 
 /**
