@@ -85,6 +85,7 @@
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git"
   },
+  "packageManager": "pnpm@6.28.0",
   "scripts": {
     "force": "pnpm build && pnpm clean && pnpm i --force",
     "build": "pnpm switch:vue3 && ./scripts/build.sh",
