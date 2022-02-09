@@ -1,3 +1,4 @@
+import { describe, it, assert } from 'vitest'
 import { extendI18n } from '../i18n'
 import { createI18n as createI18nNext } from 'vue-i18n'
 

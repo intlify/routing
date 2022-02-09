@@ -1,3 +1,4 @@
+import { describe, it, assert } from 'vitest'
 import { createMemoryHistory, useRoute, useRouter } from 'vue-router'
 import { createI18n, useI18n } from 'vue-i18n'
 import { createRouter } from '../../extends/router'
