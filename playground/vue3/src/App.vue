@@ -14,6 +14,7 @@ const i18nHead = useI18nHead({ addSeoAttributes: true })
 
 const title = computed(() => router.currentRoute.value.name?.toString().split('___')[0] || '')
 useHead({
+  // eslint-disable-next-line @intlify/vue-i18n/no-dynamic-keys
   title: computed(() => t(`App.${title.value || 'home'}`)),
   htmlAttrs: computed(() => ({
     lang: i18nHead.value.htmlAttrs!.lang

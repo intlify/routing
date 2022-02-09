@@ -1,6 +1,5 @@
 import { fileURLToPath } from 'url'
 
-import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuei18n from '@intlify/vite-plugin-vue-i18n'

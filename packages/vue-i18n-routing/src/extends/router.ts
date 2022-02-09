@@ -150,6 +150,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
   router.__defaultDirection = defaultDirection
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const removableGuardListener = router.beforeEach((to, from, next) => {
     // console.log('beforeEach', to, from)
     const currentLocale = getLocale(i18n)
