@@ -131,11 +131,11 @@ export type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUr
    */
   defaultLocaleRouteNameSuffix?: string
   /**
-   * Default detection direction
+   * Default direction direction
    *
    * @defaultValue 'ltr'
    */
-  defaultDetection?: Directions
+  defaultDirection?: Directions
   /**
    * The fallback base URL to use as a prefix for alternate URLs in hreflang tags.
    *

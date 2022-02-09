@@ -10,7 +10,7 @@ declare module '@intlify/vue-router-bridge' {
     __trailingSlash?: boolean
     __routesNameSeparator?: string
     __defaultLocaleRouteNameSuffix?: string
-    __defaultDetection?: Directions
+    __defaultDirection?: Directions
   }
   interface Router {
     __defaultLocale?: string
@@ -19,6 +19,6 @@ declare module '@intlify/vue-router-bridge' {
     __trailingSlash?: boolean
     __routesNameSeparator?: string
     __defaultLocaleRouteNameSuffix?: string
-    __defaultDetection?: Directions
+    __defaultDirection?: Directions
   }
 }

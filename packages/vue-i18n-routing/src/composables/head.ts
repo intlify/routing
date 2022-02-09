@@ -54,7 +54,7 @@ export function useI18nHead({
       code: locale
     }
     const currentLocaleIso = currentLocale.iso
-    const currentLocaleDir = currentLocale.dir || (router as R).__defaultDetection
+    const currentLocaleDir = currentLocale.dir || (router as R).__defaultDirection
 
     // Adding Direction Attribute
     if (addDirAttribute) {

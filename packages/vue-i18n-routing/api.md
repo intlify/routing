@@ -90,7 +90,7 @@ export declare type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler 
     trailingSlash?: boolean;
     routesNameSeparator?: string;
     defaultLocaleRouteNameSuffix?: string;
-    defaultDetection?: Directions;
+    defaultDirection?: Directions;
     baseUrl?: string | BaseUrl;
 } & RouterOptions;
 ```
@@ -134,7 +134,7 @@ Get route base name
 
 **Signature:**
 ```typescript
-export declare function getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, routesNameSeparator?: string): string | null;
+export declare function getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, { router, routesNameSeparator }?: I18nRoutingOptions): string | null;
 ```
 
 #### Parameters
@@ -142,7 +142,7 @@ export declare function getRouteBaseName(givenRoute?: Route | RouteLocationNorma
 | Parameter | Type | Description |
 | --- | --- | --- |
 | givenRoute | Route &#124; RouteLocationNormalizedLoaded | A route object, if not provided, the route is returned with `useRoute` will be used |
-| routesNameSeparator | string | A route name separator, if not provided, default separator is `routesNameSeparator` option of [VueI18nRoutingOptions](#vuei18nroutingoptions) will be used |
+| { router, routesNameSeparator } | I18nRoutingOptions |  |
 
 #### Returns
 
@@ -222,7 +222,7 @@ Switch locale path
 
 **Signature:**
 ```typescript
-export declare function switchLocalePath(locale: Locale, { route, i18n }?: I18nRoutingOptions): string;
+export declare function switchLocalePath(locale: Locale, options?: I18nRoutingOptions): string;
 ```
 
 #### Parameters
@@ -230,7 +230,7 @@ export declare function switchLocalePath(locale: Locale, { route, i18n }?: I18nR
 | Parameter | Type | Description |
 | --- | --- | --- |
 | locale | Locale | A locale code, if not specified, uses the current locale |
-| { route, i18n } | I18nRoutingOptions |  |
+| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
 
 #### Returns
 
@@ -242,7 +242,7 @@ Generate SEO head meta information
 
 **Signature:**
 ```typescript
-export declare function useI18nHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): I18nHeadMetaInfo;
+export declare function useI18nHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): Ref<I18nHeadMetaInfo>;
 ```
 
 #### Parameters
