@@ -59,6 +59,22 @@ export interface LocaleObject extends Record<string, any> {
 export type BaseUrlResolveHandler = (context: unknown) => string
 
 /**
+ * Options to compute route localizing
+ *
+ * @remarks
+ * The route options that is compute the route to be localized on {@link localizedRoutes}
+ */
+export type ComputedRouteOptions = {
+  locales?: readonly string[]
+  paths?: Record<string, string>
+}
+
+/**
+ * Resolver for route localizing options
+ */
+export type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null
+
+/**
  * Options to initialize a VueRouter instance
  *
  * @remarks
@@ -149,6 +165,12 @@ export type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUr
    * @defaultValue ''
    */
   baseUrl?: string | BaseUrl
+  /**
+   * Route options resolver
+   *
+   * @defaultValue undefined
+   */
+  routeOptionsResolver?: RouteOptionsResolver
 } & RouterOptions
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

@@ -4,7 +4,6 @@ import { defineConfig } from 'vite'
 
 import type { AliasOptions } from 'vite'
 
-const r = (p: string) => resolve(__dirname, p)
 const alias: AliasOptions = {}
 
 const TARGET = process.env.TEST_TARGET || 'vue3'

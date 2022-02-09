@@ -1,5 +1,18 @@
 // Vitest Snapshot v1
 
+exports[`localizeRoutes > Route optiosn resolver: routing disable > should be disabled routing 1`] = `
+[
+  {
+    "name": "home",
+    "path": "/",
+  },
+  {
+    "name": "about",
+    "path": "/about",
+  },
+]
+`;
+
 exports[`localizeRoutes > basic > should be localized routing 1`] = `
 [
   {

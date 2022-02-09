@@ -111,7 +111,8 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
     defaultLocaleRouteNameSuffix,
     defaultDirection,
     baseUrl,
-    routes
+    routes,
+    routeOptionsResolver: optionsResolver
   } = asDefaultVueI18nRouterOptions(options)
 
   const normalizedLocaleCodes = getNormalizedLocales(locales)
@@ -126,7 +127,8 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
     strategy,
     trailingSlash,
     routesNameSeparator,
-    defaultLocaleRouteNameSuffix
+    defaultLocaleRouteNameSuffix,
+    optionsResolver
   })
   options.routes = localizedRoutes as any // eslint-disable-line @typescript-eslint/no-explicit-any
 

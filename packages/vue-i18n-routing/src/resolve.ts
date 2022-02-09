@@ -8,17 +8,18 @@ import {
   DEFAULT_TRAILING_SLASH
 } from './constants'
 
-import type { Strategies, VueI18nRoute, VueI18nRoutingOptions } from './types'
+import type {
+  Strategies,
+  VueI18nRoute,
+  VueI18nRoutingOptions,
+  ComputedRouteOptions,
+  RouteOptionsResolver
+} from './types'
 
 // type RouteOptions = {
 //   locales: string[]
 //   paths: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
 // }
-export type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null
-export type ComputedRouteOptions = {
-  locales?: readonly string[]
-  paths?: Record<string, string>
-}
 
 export function localizeRoutes(
   routes: VueI18nRoute[],
@@ -29,14 +30,14 @@ export function localizeRoutes(
     routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
     defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
     includeUprefixedFallback = false,
-    optionResolver = undefined,
+    optionsResolver = undefined,
     locales = []
   }: Pick<
     VueI18nRoutingOptions,
     'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
   > & {
     includeUprefixedFallback?: boolean
-    optionResolver?: RouteOptionsResolver
+    optionsResolver?: RouteOptionsResolver
   } = {}
 ): VueI18nRoute[] {
   if (strategy === 'no_prefix') {
@@ -59,8 +60,8 @@ export function localizeRoutes(
 
     // Resolve with route (page) options
     let routeOptions: ComputedRouteOptions | null = null
-    if (optionResolver != null) {
-      routeOptions = optionResolver(route, allowedLocaleCodes)
+    if (optionsResolver != null) {
+      routeOptions = optionsResolver(route, allowedLocaleCodes)
       if (routeOptions == null) {
         return [route]
       }

@@ -1,3 +1,4 @@
+import { describe, it, assert } from 'vitest'
 import { adjustRoutePathForTrailingSlash, getLocaleRouteName } from '../utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {

@@ -9,7 +9,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["vitest/global"],
     "paths": {
       "@intlify/vue-router-bridge": ["./node_modules/@intlify/vue-router-bridge/lib/index.d.ts"],
       "@intlify/vue-i18n-bridge": ["./node_modules/@intlify/vue-i18n-bridge/lib/index.d.ts"]

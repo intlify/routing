@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { localizeRoutes } from '../resolve'
 import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../constants'
 
@@ -192,6 +193,28 @@ describe('localizeRoutes', function () {
         defaultLocale: 'en',
         strategy: 'no_prefix',
         locales: localeCodes
+      })
+
+      expect(localizedRoutes).toMatchSnapshot()
+    })
+  })
+
+  describe('Route optiosn resolver: routing disable', () => {
+    it('should be disabled routing', () => {
+      const routes: VueI18nRoute[] = [
+        {
+          path: '/',
+          name: 'home'
+        },
+        {
+          path: '/about',
+          name: 'about'
+        }
+      ]
+      const localeCodes = ['en', 'ja']
+      const localizedRoutes = localizeRoutes(routes, {
+        locales: localeCodes,
+        optionsResolver: () => null
       })
 
       expect(localizedRoutes).toMatchSnapshot()
