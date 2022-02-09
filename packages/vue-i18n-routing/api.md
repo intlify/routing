@@ -5,9 +5,11 @@
 - [TypeAlias](#typealias)
   - [BaseUrlResolveHandler](#baseurlresolvehandler)
   - [ComposableOptions](#composableoptions)
+  - [ComputedRouteOptions](#computedrouteoptions)
   - [Directions](#directions)
   - [I18nRoutingOptions](#i18nroutingoptions)
   - [MetaAttrs](#metaattrs)
+  - [RouteOptionsResolver](#routeoptionsresolver)
   - [Strategies](#strategies)
   - [VueI18nRoute](#vuei18nroute)
   - [VueI18nRoutingOptions](#vuei18nroutingoptions)
@@ -36,6 +38,22 @@
 
 ### ComposableOptions
 
+### ComputedRouteOptions
+
+Options to compute route localizing
+
+**Signature:**
+```typescript
+export declare type ComputedRouteOptions = {
+    locales?: readonly string[];
+    paths?: Record<string, string>;
+};
+```
+
+#### Remarks
+
+The route options that is compute the route to be localized on 
+
 ### Directions
 
 Direction
@@ -55,6 +73,15 @@ export declare type I18nRoutingOptions = Pick<VueI18nRoutingOptions, 'defaultLoc
 ```
 
 ### MetaAttrs
+
+### RouteOptionsResolver
+
+Resolver for route localizing options
+
+**Signature:**
+```typescript
+export declare type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null;
+```
 
 ### Strategies
 
@@ -92,6 +119,7 @@ export declare type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler 
     defaultLocaleRouteNameSuffix?: string;
     defaultDirection?: Directions;
     baseUrl?: string | BaseUrl;
+    routeOptionsResolver?: RouteOptionsResolver;
 } & RouterOptions;
 ```
 
