@@ -62,7 +62,7 @@ export type BaseUrlResolveHandler = (context: unknown) => string
  * Options to compute route localizing
  *
  * @remarks
- * The route options that is compute the route to be localized on {@link localizedRoutes}
+ * The route options that is compute the route to be localized on {@link localizeRoutes}
  */
 export type ComputedRouteOptions = {
   locales?: readonly string[]

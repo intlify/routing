@@ -87,7 +87,7 @@
   },
   "scripts": {
     "force": "pnpm build && pnpm clean && pnpm i --force",
-    "build": "./scripts/build.sh",
+    "build": "pnpm switch:vue3 && ./scripts/build.sh",
     "build:vue2": "pnpm switch:vue2 && pnpm build --filter playground-vue2",
     "build:vue3": "pnpm switch:vue3 && pnpm build --filter playground-vue3",
     "build:docs": "pnpm build:docs --filter vue-i18n-routing",

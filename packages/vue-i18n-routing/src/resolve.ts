@@ -21,6 +21,16 @@ import type {
 //   paths: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
 // }
 
+/**
+ * Localize routes
+ *
+ * @param routes - Some routes
+ * @param options - An options
+ *
+ * @returns Localized routes
+ *
+ * @public
+ */
 export function localizeRoutes(
   routes: VueI18nRoute[],
   {

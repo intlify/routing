@@ -94,6 +94,8 @@ function asDefaultVueI18nRouterOptions(options: VueI18nRoutingOptions): Required
  * The routes of the created router instance are handled with i18n routing.
  *
  * At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+ *
+ * @public
  */
 export function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(
   i18n: I18n,
