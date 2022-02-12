@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@intlify/shared": "beta",
-    "@intlify/vue-i18n-bridge": "^0.3.4",
-    "@intlify/vue-router-bridge": "^0.3.4",
+    "@intlify/vue-i18n-bridge": "^0.3.5",
+    "@intlify/vue-router-bridge": "^0.3.5",
     "ufo": "^0.7.9",
     "vue-demi": "^0.12.1"
   },
@@ -24,9 +24,9 @@
     "api-docs-gen": "^0.4.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.4",
-    "vite": "^2.7.4",
-    "vitest": "^0.2.8",
+    "vite": "latest",
     "vite-plugin-dts": "^0.9.6",
+    "vitest": "^0.2.8",
     "vue": "^3.2.23",
     "vue-i18n": "npm:vue-i18n@next",
     "vue-i18n-bridge": "beta",

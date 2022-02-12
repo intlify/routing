@@ -76,8 +76,8 @@
   "pnpm": {
     "overrides": {
       "vue-demi": "^0.12.1",
-      "@intlify/vue-i18n-bridge": "^0.3.4",
-      "@intlify/vue-router-bridge": "^0.3.4"
+      "@intlify/vue-i18n-bridge": "^0.3.5",
+      "@intlify/vue-router-bridge": "^0.3.5"
     }
   },
   "private": true,
@@ -117,7 +117,7 @@
     "switch:vue3": "npx vue-i18n-switch 9 && npx vue-router-switch 4 && vue-demi-switch 3",
     "preinstall": "node ./scripts/preinstall.mjs",
     "release": "./scripts/release.sh",
-    "typecheck": "pnpm typecheck --filter vue-i18n-routing",
+    "typecheck": "pnpm switch:vue3 && pnpm typecheck --filter vue-i18n-routing",
     "test": "pnpm typecheck && run-s \"test:unit\" \"test:unit:vue2\"",
     "test:unit": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm test --filter vue-i18n-routing",
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm test --filter vue-i18n-routing",
