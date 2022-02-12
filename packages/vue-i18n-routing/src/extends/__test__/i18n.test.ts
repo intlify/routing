@@ -12,7 +12,7 @@ describe('extendI18n', () => {
         locales: [{ code: 'en' }, { code: 'ja' }]
       })
 
-      assert.deepEqual((i18n.global as unknown as Composer).locales.value, [{ code: 'en' }, { code: 'ja' }])
+      assert.deepEqual((i18n.global as unknown as Composer).locales!.value, [{ code: 'en' }, { code: 'ja' }])
     })
   })
 })

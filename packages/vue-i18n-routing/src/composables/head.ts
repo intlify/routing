@@ -49,6 +49,9 @@ export function useI18nHead({
   }
 
   function updateMeta(_route: typeof route) {
+    if (i18n.locales == null || i18n.__baseUrl == null) {
+      return
+    }
     const locale = getLocale(i18n)
     const currentLocale = getNormalizedLocales(i18n.locales.value).find(l => l.code === locale) || {
       code: locale
