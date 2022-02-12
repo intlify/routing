@@ -106,7 +106,8 @@ export type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUr
   /**
    * List of locales supported by your app
    *
-   * @remarks TODO:
+   * @remarks
+   * Can either be an array of string codes (e.g. `['en', 'fr']`) or an array of {@link LocaleObject} for more complex configurations
    *
    * @defaultValue []
    */
