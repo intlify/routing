@@ -24,7 +24,7 @@ useHead({
 })
 
 const switchableLocale = computed(() => {
-  const _locales = (locales.value as LocaleObject[]).filter(i => i.code !== locale.value)
+  const _locales = (locales!.value as LocaleObject[]).filter(i => i.code !== locale.value)
   return _locales.length !== 0 ? _locales[0] : { code: 'ja', name: '日本語' }
 })
 </script>

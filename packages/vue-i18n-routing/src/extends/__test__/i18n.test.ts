@@ -9,10 +9,13 @@ describe('extendI18n', () => {
     it('should be extended', () => {
       const i18n = createI18nNext({ legacy: false, locale: 'en' })
       extendI18n(i18n, {
-        locales: [{ code: 'en' }, { code: 'ja' }]
+        locales: [{ code: 'en' }, { code: 'ja' }],
+        localeCodes: ['en', 'ja']
       })
 
-      assert.deepEqual((i18n.global as unknown as Composer).locales!.value, [{ code: 'en' }, { code: 'ja' }])
+      const composer = i18n.global as unknown as Composer
+      assert.deepEqual(composer.locales!.value, [{ code: 'en' }, { code: 'ja' }])
+      assert.deepEqual(composer.localeCodes!.value, ['en', 'ja'])
     })
   })
 })

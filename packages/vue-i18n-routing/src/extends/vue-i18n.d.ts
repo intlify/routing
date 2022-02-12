@@ -9,6 +9,12 @@ declare module 'vue-i18n' {
      * @defaultValue `undefined`
      */
     locales?: ComputedRef<string[] | LocaleObject[]>
+    /**
+     * List of locale codes
+     *
+     * @defaultValue `undefined`
+     */
+    localeCodes?: ComputedRef<string[]>
     __baseUrl?: string
   }
 }
@@ -20,6 +26,12 @@ declare module 'vue-i18n-bridge' {
      * @defaultValue `undefined`
      */
     locales?: ComputedRef<string[] | LocaleObject[]>
+    /**
+     * List of locale codes
+     *
+     * @defaultValue `undefined`
+     */
+    localeCodes?: ComputedRef<string[]>
     __baseUrl?: string
   }
 }
