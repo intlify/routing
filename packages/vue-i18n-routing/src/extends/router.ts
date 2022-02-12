@@ -1,6 +1,6 @@
 import VueRouter3 from '@intlify/vue-router-bridge'
 import { createRouter as _createRouter } from '@intlify/vue-router-bridge'
-import { isString } from '@intlify/shared'
+import { isString, isObject } from '@intlify/shared'
 import { isVue2, isVue3 } from 'vue-demi'
 import { extendI18n } from './i18n'
 import { localizeRoutes } from '../resolve'
@@ -44,17 +44,26 @@ export function createLocaleFromRouteGetter(
    * - if route has a name, try to extract locale from it
    * - otherwise, fall back to using the routes'path
    */
-  const getLocaleFromRoute = (route: Route | RouteLocationNormalizedLoaded | RouteLocationNormalized): string => {
+  const getLocaleFromRoute = (
+    route: Route | RouteLocationNormalizedLoaded | RouteLocationNormalized | string
+  ): string => {
     // extract from route name
-    if (route.name) {
-      const name = isString(route.name) ? route.name : route.name.toString()
-      const matches = name.match(regexpName)
-      if (matches && matches.length > 1) {
-        return matches[1]
+    if (isObject(route)) {
+      if (route.name) {
+        const name = isString(route.name) ? route.name : route.name.toString()
+        const matches = name.match(regexpName)
+        if (matches && matches.length > 1) {
+          return matches[1]
+        }
+      } else if (route.path) {
+        // Extract from path
+        const matches = route.path.match(regexpPath)
+        if (matches && matches.length > 1) {
+          return matches[1]
+        }
       }
-    } else if (route.path) {
-      // Extract from path
-      const matches = route.path.match(regexpPath)
+    } else if (isString(route)) {
+      const matches = route.match(regexpPath)
       if (matches && matches.length > 1) {
         return matches[1]
       }
