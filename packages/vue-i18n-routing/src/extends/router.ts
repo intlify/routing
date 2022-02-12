@@ -29,7 +29,7 @@ function getLocalesRegex(localeCodes: string[]) {
   return new RegExp(`^/(${localeCodes.join('|')})(?:/|$)`, 'i')
 }
 
-function createLocaleFromRouteGetter(
+export function createLocaleFromRouteGetter(
   localeCodes: string[],
   routesNameSeparator: string,
   defaultLocaleRouteNameSuffix: string

@@ -14,12 +14,15 @@
   - [VueI18nRoute](#vuei18nroute)
   - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Function](#function)
+  - [createLocaleFromRouteGetter](#createlocalefromroutegetter)
   - [createRouter](#createrouter)
+  - [getLocale](#getlocale)
   - [getRouteBaseName](#getroutebasename)
   - [localeLocation](#localelocation)
   - [localePath](#localepath)
   - [localeRoute](#localeroute)
   - [localizeRoutes](#localizeroutes)
+  - [setLocale](#setlocale)
   - [switchLocalePath](#switchlocalepath)
   - [useI18nHead](#usei18nhead)
 - [Interface](#interface)
@@ -130,6 +133,8 @@ This options is extended from Vue Router `RouterOptioins`, so you can specify th
 
 ## Function
 
+### createLocaleFromRouteGetter
+
 ### createRouter
 
 Create a Vue Router instance
@@ -155,6 +160,8 @@ export declare function createRouter<Options extends VueI18nRoutingOptions = Vue
 The routes of the created router instance are handled with i18n routing.
 
 At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+
+### getLocale
 
 ### getRouteBaseName
 
@@ -267,6 +274,8 @@ export declare function localizeRoutes(routes: VueI18nRoute[], { defaultLocale, 
 #### Returns
 
  Localized routes
+
+### setLocale
 
 ### switchLocalePath
 
