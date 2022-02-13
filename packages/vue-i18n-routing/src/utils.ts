@@ -41,6 +41,13 @@ function isI18nInstance(i18n: I18n | Composer): i18n is I18n {
   return 'global' in i18n && 'mode' in i18n
 }
 
+/**
+ * Get a locale
+ *
+ * @param i18n - An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance
+ *
+ * @returns A locale
+ */
 export function getLocale(i18n: I18n | Composer): Locale {
   // prettier-ignore
   return isI18nInstance(i18n)
@@ -50,6 +57,12 @@ export function getLocale(i18n: I18n | Composer): Locale {
     : i18n.locale.value
 }
 
+/**
+ * Set a locale
+ *
+ * @param i18n - An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance
+ * @param locale - A target locale
+ */
 export function setLocale(i18n: I18n | Composer, locale: Locale): void {
   // prettier-ignore
   if (isI18nInstance(i18n)) {
@@ -110,6 +123,14 @@ export function getLocaleRouteName(
   return name
 }
 
+/**
+ * Resolve base url
+ *
+ * @param baseUrl - A base url to resolve on SEO and domain. if you want to resolve with dynamically, you can spacify {@link BaseUrlResolveHandler}
+ * @param context - A context to resolve base url, if you want to resolve base url with {@link BaseUrlResolveHandler}
+ *
+ * @returns A resolved base url
+ */
 export function resolveBaseUrl(
   baseUrl: string | BaseUrlResolveHandler,
   context: unknown

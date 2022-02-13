@@ -22,6 +22,7 @@
   - [localePath](#localepath)
   - [localeRoute](#localeroute)
   - [localizeRoutes](#localizeroutes)
+  - [resolveBaseUrl](#resolvebaseurl)
   - [setLocale](#setlocale)
   - [switchLocalePath](#switchlocalepath)
   - [useI18nHead](#usei18nhead)
@@ -163,6 +164,23 @@ At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api
 
 ### getLocale
 
+Get a locale
+
+**Signature:**
+```typescript
+export declare function getLocale(i18n: I18n | Composer): Locale;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| i18n | I18n &#124; Composer | An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance |
+
+#### Returns
+
+ A locale
+
 ### getRouteBaseName
 
 Get route base name
@@ -275,7 +293,41 @@ export declare function localizeRoutes(routes: VueI18nRoute[], { defaultLocale, 
 
  Localized routes
 
+### resolveBaseUrl
+
+Resolve base url
+
+**Signature:**
+```typescript
+export declare function resolveBaseUrl(baseUrl: string | BaseUrlResolveHandler, context: unknown): string;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| baseUrl | string &#124; BaseUrlResolveHandler | A base url to resolve on SEO and domain. if you want to resolve with dynamically, you can spacify [BaseUrlResolveHandler](#baseurlresolvehandler) |
+| context | unknown | A context to resolve base url, if you want to resolve base url with [BaseUrlResolveHandler](#baseurlresolvehandler) |
+
+#### Returns
+
+ A resolved base url
+
 ### setLocale
+
+Set a locale
+
+**Signature:**
+```typescript
+export declare function setLocale(i18n: I18n | Composer, locale: Locale): void;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| i18n | I18n &#124; Composer | An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance |
+| locale | Locale | A target locale |
 
 ### switchLocalePath
 

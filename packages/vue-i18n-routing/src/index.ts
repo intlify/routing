@@ -9,5 +9,5 @@ export const VERSION = __VERSION__
 export * from './composables'
 export * from './resolve'
 export * from './types'
-export { getLocale, setLocale } from './utils'
+export { getLocale, setLocale, resolveBaseUrl } from './utils'
 export { createRouter, createLocaleFromRouteGetter } from './extends'
