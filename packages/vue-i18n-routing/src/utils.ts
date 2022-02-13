@@ -1,8 +1,13 @@
 import { isRef } from 'vue-demi'
+import { isVueRouter4 } from '@intlify/vue-router-bridge'
 import { isString, isSymbol, isFunction } from '@intlify/shared'
 
 import type { I18n, Composer, I18nMode, Locale } from '@intlify/vue-i18n-bridge'
 import type { LocaleObject, Strategies, BaseUrlResolveHandler } from './types'
+import type { Ref } from 'vue-demi'
+import type { RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
+
+export const inBrowser = typeof window !== 'undefined'
 
 export function warn(msg: string, err?: Error): void {
   if (typeof console !== 'undefined') {
@@ -65,6 +70,18 @@ export function adjustRoutePathForTrailingSlash(
   isChildWithRelativePath: boolean
 ) {
   return pagePath.replace(/\/+$/, '') + (trailingSlash ? '/' : '') || (isChildWithRelativePath ? '' : '/')
+}
+
+export function toRawRoute(
+  maybeRoute: Ref<RouteLocationNormalizedLoaded> | Route
+): RouteLocationNormalizedLoaded | Route {
+  return isVueRouter4
+    ? isRef(maybeRoute)
+      ? maybeRoute.value
+      : maybeRoute
+    : isRef(maybeRoute)
+    ? maybeRoute.value
+    : maybeRoute
 }
 
 export function getRouteName(routeName?: string | symbol | null) {

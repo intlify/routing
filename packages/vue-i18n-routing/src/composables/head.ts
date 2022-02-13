@@ -1,13 +1,13 @@
 import { isBoolean, isArray } from '@intlify/shared'
-import { ref, watch } from 'vue-demi'
+import { ref, watchEffect } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
-import { getLocale, getNormalizedLocales, warn } from '../utils'
+import { getLocale, getNormalizedLocales, warn, inBrowser, toRawRoute } from '../utils'
 import { DEFAULT_LOCALE, DEFAULT_STRATEGY, STRATEGIES } from '../constants'
 
 import type { Ref } from 'vue-demi'
-import type { Router, VueRouter } from '@intlify/vue-router-bridge'
+import type { Router, VueRouter, RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
 import type { I18nHeadOptions, I18nHeadMetaInfo, I18nRoutingOptions, ComposableOptions, MetaAttrs } from './types'
 import type { LocaleObject } from '../types'
 
@@ -48,7 +48,7 @@ export function useI18nHead({
     }
   }
 
-  function updateMeta(_route: typeof route) {
+  function updateMeta(_route: RouteLocationNormalizedLoaded | Route) {
     if (i18n.locales == null || i18n.__baseUrl == null) {
       return
     }
@@ -84,12 +84,14 @@ export function useI18nHead({
     }
   }
 
-  watch((router as R).currentRoute, val => {
-    cleanMeta()
-    updateMeta(val)
-  })
-
-  updateMeta(route)
+  if (inBrowser) {
+    watchEffect(() => {
+      cleanMeta()
+      updateMeta(toRawRoute((router as R).currentRoute))
+    })
+  } else {
+    updateMeta(toRawRoute((router as R).currentRoute))
+  }
 
   return metaObject
 }
