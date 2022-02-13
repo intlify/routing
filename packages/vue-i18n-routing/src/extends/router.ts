@@ -22,8 +22,99 @@ import type {
   RouteLocationNormalizedLoaded,
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
+import type { App } from 'vue-demi'
 import type { I18n } from '@intlify/vue-i18n-bridge'
 import type { VueI18nRoute, VueI18nRoutingOptions } from '../types'
+
+/**
+ * Create a Vue Router instance
+ *
+ * @param i18n - A Vue I18n instance, see [Vue I18n API docs](https://vue-i18n.intlify.dev/api/general.html#i18n)
+ * @param options - An options, see {@link VueI18nRoutingOptions}
+ *
+ * @returns A Vue Router instance
+ *
+ * @remakrs
+ * You can create a vue router instance to be used by the Vue app.
+ *
+ * The routes of the created router instance are handled with i18n routing.
+ *
+ * At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+ *
+ * @public
+ */
+export function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(
+  i18n: I18n,
+  options?: Options
+): Options['version'] extends 4 ? Router : VueRouter
+
+export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) {
+  const {
+    version,
+    defaultLocale,
+    locales,
+    strategy,
+    trailingSlash,
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix,
+    defaultDirection,
+    baseUrl,
+    routes,
+    routeOptionsResolver: optionsResolver
+  } = asDefaultVueI18nRouterOptions(options)
+
+  const normalizedLocaleCodes = getNormalizedLocales(locales)
+  const localeCodes = normalizedLocaleCodes.map(l => l.code)
+  const getLocaleFromRoute = createLocaleFromRouteGetter(localeCodes, routesNameSeparator, defaultLocaleRouteNameSuffix)
+
+  extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes })
+
+  const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
+    locales,
+    defaultLocale,
+    strategy,
+    trailingSlash,
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix,
+    optionsResolver
+  })
+  options.routes = localizedRoutes as any // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  const router = createVueRouter(options, version)
+  router.__defaultLocale = defaultLocale
+  router.__localeCodes = localeCodes
+  router.__strategy = strategy
+  router.__trailingSlash = trailingSlash
+  router.__routesNameSeparator = routesNameSeparator
+  router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
+  router.__defaultDirection = defaultDirection
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const removableGuardListener = router.beforeEach((to, from, next) => {
+    // console.log('beforeEach', to, from)
+    const currentLocale = getLocale(i18n)
+    const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
+    // console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
+    if (currentLocale !== finalLocale) {
+      setLocale(i18n, finalLocale)
+    }
+    next()
+  })
+
+  // console.log('create router', router)
+  return router
+}
+
+function createVueRouter(options: VueI18nRoutingOptions, version: number): VueRouter | Router {
+  if (isVue3 && version === 4) {
+    return _createRouter(options)
+  } else if (isVue2 && version === 3) {
+    return new VueRouter3(options as any) as VueRouter // eslint-disable-line @typescript-eslint/no-explicit-any
+  } else {
+    // TODO:
+    throw new Error('TODO:')
+  }
+}
 
 function getLocalesRegex(localeCodes: string[]) {
   return new RegExp(`^/(${localeCodes.join('|')})(?:/|$)`, 'i')
@@ -87,92 +178,4 @@ function asDefaultVueI18nRouterOptions(options: VueI18nRoutingOptions): Required
   options.baseUrl = options.baseUrl ?? DEFAULT_BASE_URL
   options.routes = options.routes ?? []
   return options as Required<VueI18nRoutingOptions>
-}
-
-/**
- * Create a Vue Router instance
- *
- * @param i18n - A Vue I18n instance, see [Vue I18n API docs](https://vue-i18n.intlify.dev/api/general.html#i18n)
- * @param options - An options, see {@link VueI18nRoutingOptions}
- *
- * @returns A Vue Router instance
- *
- * @remakrs
- * You can create a vue router instance to be used by the Vue app.
- *
- * The routes of the created router instance are handled with i18n routing.
- *
- * At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
- *
- * @public
- */
-export function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(
-  i18n: I18n,
-  options?: Options
-): Options['version'] extends 4 ? Router : VueRouter
-
-export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) {
-  const {
-    version,
-    defaultLocale,
-    locales,
-    strategy,
-    trailingSlash,
-    routesNameSeparator,
-    defaultLocaleRouteNameSuffix,
-    defaultDirection,
-    baseUrl,
-    routes,
-    routeOptionsResolver: optionsResolver
-  } = asDefaultVueI18nRouterOptions(options)
-
-  const normalizedLocaleCodes = getNormalizedLocales(locales)
-  const localeCodes = normalizedLocaleCodes.map(l => l.code)
-  const getLocaleFromRoute = createLocaleFromRouteGetter(localeCodes, routesNameSeparator, defaultLocaleRouteNameSuffix)
-
-  extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes })
-
-  const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
-    locales,
-    defaultLocale,
-    strategy,
-    trailingSlash,
-    routesNameSeparator,
-    defaultLocaleRouteNameSuffix,
-    optionsResolver
-  })
-  options.routes = localizedRoutes as any // eslint-disable-line @typescript-eslint/no-explicit-any
-
-  let router: VueRouter | Router | null = null
-  if (isVue3 && version === 4) {
-    router = _createRouter(options)
-  } else if (isVue2 && version === 3) {
-    router = new VueRouter3(options as any) as VueRouter // eslint-disable-line @typescript-eslint/no-explicit-any
-  } else {
-    // TODO:
-    throw new Error('TODO:')
-  }
-
-  router.__defaultLocale = defaultLocale
-  router.__localeCodes = localeCodes
-  router.__strategy = strategy
-  router.__trailingSlash = trailingSlash
-  router.__routesNameSeparator = routesNameSeparator
-  router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
-  router.__defaultDirection = defaultDirection
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const removableGuardListener = router.beforeEach((to, from, next) => {
-    // console.log('beforeEach', to, from)
-    const currentLocale = getLocale(i18n)
-    const finalLocale = getLocaleFromRoute(to) || currentLocale || defaultLocale || ''
-    // console.log('currentLocale', currentLocale, 'finalLocale', finalLocale)
-    if (currentLocale !== finalLocale) {
-      setLocale(i18n, finalLocale)
-    }
-    next()
-  })
-
-  // console.log('create router', router)
-  return router
 }
