@@ -22,7 +22,6 @@ import type {
   RouteLocationNormalizedLoaded,
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
-import type { App } from 'vue-demi'
 import type { I18n } from '@intlify/vue-i18n-bridge'
 import type { VueI18nRoute, VueI18nRoutingOptions } from '../types'
 

@@ -1,5 +1,5 @@
 import { isBoolean, isArray } from '@intlify/shared'
-import { ref, watchEffect } from 'vue-demi'
+import { ref, watchEffect, isVue3, onUnmounted } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
@@ -85,10 +85,25 @@ export function useI18nHead({
   }
 
   if (inBrowser) {
-    watchEffect(() => {
-      cleanMeta()
-      updateMeta(toRawRoute((router as R).currentRoute))
-    })
+    if (isVue3) {
+      const stop = watchEffect(() => {
+        cleanMeta()
+        updateMeta(toRawRoute((router as R).currentRoute))
+      })
+      onUnmounted(() => stop())
+    } else {
+      /**
+       * NOTE:
+       * In vue 2 + `@vue/compoistion-api`, useRoute (`$route`) cannot be watched.
+       * For this reason, use `afterEach` to work around it.
+       */
+      const handler = (router as R).afterEach((to: Route) => {
+        cleanMeta()
+        updateMeta(to)
+      })
+      onUnmounted(() => handler())
+      updateMeta(route)
+    }
   } else {
     updateMeta(toRawRoute((router as R).currentRoute))
   }
