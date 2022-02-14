@@ -7,7 +7,13 @@ import { getLocale, getNormalizedLocales, warn, inBrowser, toRawRoute } from '..
 import { DEFAULT_LOCALE, DEFAULT_STRATEGY, STRATEGIES } from '../constants'
 
 import type { Ref } from 'vue-demi'
-import type { Router, VueRouter, RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
+import type {
+  Router,
+  VueRouter,
+  RouteLocationNormalizedLoaded,
+  RouteLocationNormalized,
+  Route
+} from '@intlify/vue-router-bridge'
 import type { I18nHeadOptions, I18nHeadMetaInfo, I18nRoutingOptions, ComposableOptions, MetaAttrs } from './types'
 import type { LocaleObject } from '../types'
 
@@ -30,9 +36,10 @@ export function useI18nHead({
   ComposableOptions &
   I18nHeadOptions = {}): Ref<I18nHeadMetaInfo> {
   type R = Router | VueRouter
+  const _router = router as R
 
-  const _defaultLocale = defaultLocale || (router as R).__defaultLocale
-  const _strategy = strategy || (router as R).__strategy
+  const _defaultLocale = defaultLocale || _router.__defaultLocale
+  const _strategy = strategy || _router.__strategy
 
   const metaObject: Ref<I18nHeadMetaInfo> = ref({
     htmlAttrs: {},
@@ -88,7 +95,7 @@ export function useI18nHead({
     if (isVue3) {
       const stop = watchEffect(() => {
         cleanMeta()
-        updateMeta(toRawRoute((router as R).currentRoute))
+        updateMeta(toRawRoute(_router.currentRoute))
       })
       onUnmounted(() => stop())
     } else {
@@ -97,15 +104,18 @@ export function useI18nHead({
        * In vue 2 + `@vue/compoistion-api`, useRoute (`$route`) cannot be watched.
        * For this reason, use `afterEach` to work around it.
        */
-      const handler = (router as R).afterEach((to: Route) => {
-        cleanMeta()
-        updateMeta(to)
-      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const handler = _router.afterEach(
+        (to: Route | RouteLocationNormalized, from: Route | RouteLocationNormalized) => {
+          cleanMeta()
+          updateMeta(to)
+        }
+      )
       onUnmounted(() => handler())
-      updateMeta(route)
+      updateMeta(route as Route)
     }
   } else {
-    updateMeta(toRawRoute((router as R).currentRoute))
+    updateMeta(toRawRoute(_router.currentRoute))
   }
 
   return metaObject
