@@ -4,18 +4,23 @@
 
 - [TypeAlias](#typealias)
   - [BaseUrlResolveHandler](#baseurlresolvehandler)
+  - [BrowserLocale](#browserlocale)
+  - [BrowserLocaleMatcher](#browserlocalematcher)
   - [ComposableOptions](#composableoptions)
   - [ComputedRouteOptions](#computedrouteoptions)
   - [Directions](#directions)
+  - [FindBrowserLocaleOptions](#findbrowserlocaleoptions)
   - [I18nRoutingOptions](#i18nroutingoptions)
   - [MetaAttrs](#metaattrs)
   - [RouteOptionsResolver](#routeoptionsresolver)
   - [Strategies](#strategies)
+  - [TargetLocale](#targetlocale)
   - [VueI18nRoute](#vuei18nroute)
   - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Function](#function)
   - [createLocaleFromRouteGetter](#createlocalefromroutegetter)
   - [createRouter](#createrouter)
+  - [findBrowserLocale](#findbrowserlocale)
   - [getLocale](#getlocale)
   - [getRouteBaseName](#getroutebasename)
   - [localeLocation](#localelocation)
@@ -39,6 +44,35 @@
 ## TypeAlias
 
 ### BaseUrlResolveHandler
+
+### BrowserLocale
+
+The browser locale info
+
+**Signature:**
+```typescript
+export declare type BrowserLocale = {
+    code: string;
+    score: number;
+};
+```
+
+#### Remarks
+
+This type is used by  in [findBrowserLocale](#findbrowserlocale) function
+
+### BrowserLocaleMatcher
+
+The browser locale matcher
+
+**Signature:**
+```typescript
+export declare type BrowserLocaleMatcher = (locales: TargetLocale[], browserLocales: string[]) => BrowserLocale[];
+```
+
+#### Remarks
+
+This matcher is used by [findBrowserLocale](#findbrowserlocale) function
 
 ### ComposableOptions
 
@@ -65,6 +99,18 @@ Direction
 **Signature:**
 ```typescript
 export declare type Directions = 'ltr' | 'rtl' | 'auto';
+```
+
+### FindBrowserLocaleOptions
+
+The options for [findBrowserLocale](#findbrowserlocale) function
+
+**Signature:**
+```typescript
+export declare type FindBrowserLocaleOptions = {
+    matcher?: BrowserLocaleMatcher;
+    comparer?: (a: BrowserLocale, b: BrowserLocale) => number;
+};
 ```
 
 ### I18nRoutingOptions
@@ -95,6 +141,19 @@ Routing strategy
 ```typescript
 export declare type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES];
 ```
+
+### TargetLocale
+
+The target locale info
+
+**Signature:**
+```typescript
+export declare type TargetLocale = Required<Pick<LocaleObject, 'code' | 'iso'>>;
+```
+
+#### Remarks
+
+This type is used by [BrowserLocaleMatcher](#browserlocalematcher) first argument
 
 ### VueI18nRoute
 
@@ -161,6 +220,27 @@ export declare function createRouter<Options extends VueI18nRoutingOptions = Vue
 The routes of the created router instance are handled with i18n routing.
 
 At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+
+### findBrowserLocale
+
+Find the browser locale
+
+**Signature:**
+```typescript
+export declare function findBrowserLocale(locales: LocaleObject[], browserLocales: string[], { matcher, comparer }?: FindBrowserLocaleOptions): string | '';
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| locales | LocaleObject[] | The target [locale](#localeobject) list |
+| browserLocales | string[] | The locale code list that is used in browser |
+| { matcher, comparer } | FindBrowserLocaleOptions |  |
+
+#### Returns
+
+ The matched the locale code
 
 ### getLocale
 

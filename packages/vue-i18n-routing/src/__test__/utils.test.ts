@@ -1,5 +1,7 @@
 import { describe, it, assert } from 'vitest'
-import { adjustRoutePathForTrailingSlash, getLocaleRouteName } from '../utils'
+import { adjustRoutePathForTrailingSlash, getLocaleRouteName, findBrowserLocale } from '../utils'
+
+import { BrowserLocale } from '../utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {
   describe('pagePath: /foo/bar', function () {
@@ -101,6 +103,50 @@ describe('getLocaleRouteName', () => {
           '(null)___en___default'
         )
       })
+    })
+  })
+})
+
+describe('findBrowserLocale', () => {
+  describe('default', () => {
+    it('should be worked', () => {
+      const locale = findBrowserLocale(
+        [
+          {
+            code: 'en',
+            iso: 'en-US'
+          },
+          {
+            code: 'ja',
+            iso: 'ja-JP'
+          }
+        ],
+        ['ja-JP', 'en-US']
+      )
+      assert.ok(locale === 'ja')
+    })
+  })
+
+  describe('options', () => {
+    it('should be worked', () => {
+      const locale = findBrowserLocale([{ code: 'en' }, { code: 'ja' }], ['ja-JP', 'en-US'], {
+        // custom matcher
+        matcher(locales, browserLocales) {
+          const matchedLocales = [] as BrowserLocale[]
+          for (const [index, browserCode] of browserLocales.entries()) {
+            const languageCode = browserCode.split('-')[0].toLowerCase()
+            const matchedLocale = locales.find(l => l.iso.split('-')[0].toLowerCase() === languageCode)
+            if (matchedLocale) {
+              matchedLocales.push({ code: matchedLocale.code, score: 1 * index })
+              break
+            }
+          }
+          return matchedLocales
+        },
+        // custom comparer
+        comparer: (a, b) => a.score - b.score
+      })
+      assert.ok(locale === 'ja')
     })
   })
 })
