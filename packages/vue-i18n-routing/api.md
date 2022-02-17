@@ -379,15 +379,15 @@ Resolve base url
 
 **Signature:**
 ```typescript
-export declare function resolveBaseUrl(baseUrl: string | BaseUrlResolveHandler, context: unknown): string;
+export declare function resolveBaseUrl<Context = unknown>(baseUrl: string | BaseUrlResolveHandler<Context>, context: Context): string;
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| baseUrl | string &#124; BaseUrlResolveHandler | A base url to resolve on SEO and domain. if you want to resolve with dynamically, you can spacify [BaseUrlResolveHandler](#baseurlresolvehandler) |
-| context | unknown | A context to resolve base url, if you want to resolve base url with [BaseUrlResolveHandler](#baseurlresolvehandler) |
+| baseUrl | string &#124; BaseUrlResolveHandler&lt;Context&gt; | A base url to resolve on SEO and domain. if you want to resolve with dynamically, you can spacify [BaseUrlResolveHandler](#baseurlresolvehandler) |
+| context | Context | A context to resolve base url, if you want to resolve base url with [BaseUrlResolveHandler](#baseurlresolvehandler) |
 
 #### Returns
 

@@ -131,26 +131,10 @@ export function getLocaleRouteName(
  *
  * @returns A resolved base url
  */
-export function resolveBaseUrl(
-  baseUrl: string | BaseUrlResolveHandler,
-  context: unknown
-  /*
-  localeCode: string
-  / { differentDomains, normalizedLocales } */
-) {
+export function resolveBaseUrl<Context = unknown>(baseUrl: string | BaseUrlResolveHandler<Context>, context: Context) {
   if (isFunction(baseUrl)) {
     return baseUrl(context)
   }
-
-  // TODO: SSR
-  // if (differentDomains && localeCode) {
-  //   // Lookup the `differentDomain` origin associated with given locale.
-  //   const domain = getDomainFromLocale(localeCode, context.req, { normalizedLocales })
-  //   if (domain) {
-  //     return domain
-  //   }
-  // }
-
   return baseUrl
 }
 

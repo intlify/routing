@@ -56,7 +56,7 @@ export interface LocaleObject extends Record<string, any> {
   iso?: string
 }
 
-export type BaseUrlResolveHandler = (context: unknown) => string
+export type BaseUrlResolveHandler<Context = unknown> = (context: Context) => string
 
 /**
  * Options to compute route localizing
