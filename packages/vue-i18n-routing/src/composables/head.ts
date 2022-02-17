@@ -104,8 +104,8 @@ export function useI18nHead({
        * In vue 2 + `@vue/compoistion-api`, useRoute (`$route`) cannot be watched.
        * For this reason, use `afterEach` to work around it.
        */
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const handler = _router.afterEach(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         (to: Route | RouteLocationNormalized, from: Route | RouteLocationNormalized) => {
           cleanMeta()
           updateMeta(to)
