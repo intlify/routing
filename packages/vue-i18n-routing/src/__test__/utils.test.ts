@@ -1,4 +1,4 @@
-import { describe, it, assert } from 'vitest'
+import { describe, it, assert, test } from 'vitest'
 import { adjustRoutePathForTrailingSlash, getLocaleRouteName, findBrowserLocale } from '../utils'
 
 import { BrowserLocale } from '../utils'
@@ -108,45 +108,114 @@ describe('getLocaleRouteName', () => {
 })
 
 describe('findBrowserLocale', () => {
-  describe('default', () => {
-    it('should be worked', () => {
-      const locale = findBrowserLocale(
-        [
-          {
-            code: 'en',
-            iso: 'en-US'
-          },
-          {
-            code: 'ja',
-            iso: 'ja-JP'
-          }
-        ],
-        ['ja-JP', 'en-US']
-      )
-      assert.ok(locale === 'ja')
-    })
+  test('matches highest-ranked full locale', () => {
+    const locales = [{ code: 'en' }, { code: 'en-US' }]
+    const browserLocales = ['en-US', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en-US')
   })
 
-  describe('options', () => {
-    it('should be worked', () => {
-      const locale = findBrowserLocale([{ code: 'en' }, { code: 'ja' }], ['ja-JP', 'en-US'], {
-        // custom matcher
-        matcher(locales, browserLocales) {
-          const matchedLocales = [] as BrowserLocale[]
-          for (const [index, browserCode] of browserLocales.entries()) {
-            const languageCode = browserCode.split('-')[0].toLowerCase()
-            const matchedLocale = locales.find(l => l.iso.split('-')[0].toLowerCase() === languageCode)
-            if (matchedLocale) {
-              matchedLocales.push({ code: matchedLocale.code, score: 1 * index })
-              break
-            }
+  test('matches highest-ranked short locale', () => {
+    const locales = [{ code: 'en' }, { code: 'en-US' }]
+    const browserLocales = ['en', 'en-US']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en')
+  })
+
+  test('matches highest-ranked short locale (only short defined)', () => {
+    const locales = [{ code: 'en' }]
+    const browserLocales = ['en-US', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en')
+  })
+
+  test('matches highest-ranked short locale', () => {
+    const locales = [{ code: 'en' }, { code: 'fr' }]
+    const browserLocales = ['en-US', 'en-GB']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en')
+  })
+
+  test('does not match any locale', () => {
+    const locales = [{ code: 'pl' }, { code: 'fr' }]
+    const browserLocales = ['en-US', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === '')
+  })
+
+  test('matches full locale with mixed short and full, full having highest rank', () => {
+    const locales = [{ code: 'en-US' }, { code: 'en-GB' }, { code: 'en' }]
+    const browserLocales = ['en-GB', 'en-US', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en-GB')
+  })
+
+  test('matches short locale with mixed short and full, short having highest rank', () => {
+    const locales = [{ code: 'en-US' }, { code: 'en-GB' }, { code: 'en' }]
+    const browserLocales = ['en', 'en-GB', 'en-US']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en')
+  })
+
+  test('matches short locale case-insensitively', () => {
+    const locales = [{ code: 'EN' }, { code: 'en-GB' }]
+    const browserLocales = ['en', 'en-GB', 'en-US']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'EN')
+  })
+
+  test('matches long locale case-insensitively', () => {
+    const locales = [{ code: 'en-gb' }, { code: 'en-US' }]
+    const browserLocales = ['en-GB', 'en-US']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en-gb')
+  })
+
+  test('matches ISO locale code', () => {
+    const locales = [
+      { code: 'cn', iso: 'zh-CN' },
+      { code: 'en', iso: 'en-US' }
+    ]
+    const browserLocales = ['zh', 'zh-CN']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'cn')
+  })
+
+  test('matches full ISO code', () => {
+    const locales = [
+      { code: 'us', iso: 'en-US' },
+      { code: 'gb', iso: 'en-GB' }
+    ]
+    const browserLocales = ['en-GB', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'gb')
+  })
+
+  test('matches locale when only languages match', () => {
+    const locales = [{ code: 'en-GB' }, { code: 'en-US' }]
+    const browserLocales = ['en-IN', 'en']
+
+    assert.ok(findBrowserLocale(locales, browserLocales) === 'en-GB')
+  })
+
+  it('options', () => {
+    const locale = findBrowserLocale([{ code: 'en' }, { code: 'ja' }], ['ja-JP', 'en-US'], {
+      // custom matcher
+      matcher(locales, browserLocales) {
+        const matchedLocales = [] as BrowserLocale[]
+        for (const [index, browserCode] of browserLocales.entries()) {
+          const languageCode = browserCode.split('-')[0].toLowerCase()
+          const matchedLocale = locales.find(l => l.iso.split('-')[0].toLowerCase() === languageCode)
+          if (matchedLocale) {
+            matchedLocales.push({ code: matchedLocale.code, score: 1 * index })
+            break
           }
-          return matchedLocales
-        },
-        // custom comparer
-        comparer: (a, b) => a.score - b.score
-      })
-      assert.ok(locale === 'ja')
+        }
+        return matchedLocales
+      },
+      // custom comparer
+      comparer: (a, b) => a.score - b.score
     })
+    assert.ok(locale === 'ja')
   })
 })
