@@ -29,7 +29,7 @@
     "vitest": "^0.2.8",
     "vue": "^3.2.23",
     "vue-i18n": "npm:vue-i18n@next",
-    "vue-i18n-bridge": "beta",
+    "vue-i18n-bridge": "next",
     "vue-i18n-legacy": "npm:vue-i18n@8",
     "vue-router": "^4.0.12",
     "vue-router3": "npm:vue-router@3",

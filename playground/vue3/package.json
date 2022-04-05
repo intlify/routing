@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "latest",
-    "@intlify/vite-plugin-vue-i18n": "latest",
+    "@intlify/vite-plugin-vue-i18n": "next",
     "typescript": "^4.4.3",
     "vite": "latest",
     "vue-tsc": "latest"
