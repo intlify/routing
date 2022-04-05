@@ -3,14 +3,17 @@ import HelloWorld from '@/components/HelloWorld.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { localePath, switchLocalePath, useI18nHead } from 'vue-i18n-routing'
+import { useLocalePath, useSwitchLocalePath, useLocalizeHead } from 'vue-i18n-routing'
 import { useHead } from '@vueuse/head'
 
 import type { LocaleObject } from 'vue-i18n-routing'
 
 const { t, locale, locales } = useI18n()
 const router = useRouter()
-const i18nHead = useI18nHead({ addSeoAttributes: true })
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+const i18nHead = useLocalizeHead({ addSeoAttributes: true })
+console.log('head', i18nHead)
 
 const title = computed(() => router.currentRoute.value.name?.toString().split('___')[0] || '')
 useHead({

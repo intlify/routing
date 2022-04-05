@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { createI18n, castToVueI18n } from '@intlify/vue-i18n-bridge'
+import { createI18n } from '@intlify/vue-i18n-bridge'
 import en from './locales/en.json'
 import ja from './locales/ja.json'
 
@@ -17,7 +17,5 @@ const i18n = createI18n(
   },
   VueI18n
 )
-
-Vue.use(castToVueI18n(i18n))
 
 export default i18n

@@ -31,7 +31,7 @@ export interface Route {
 /**
  * Route config for vue-i18n-routing
  */
-export type VueI18nRoute = Route & RouteLegacy & { redirect?: string }
+export type I18nRoute = Route & RouteLegacy & { redirect?: string }
 
 /**
  * Routing strategy
@@ -72,7 +72,7 @@ export type ComputedRouteOptions = {
 /**
  * Resolver for route localizing options
  */
-export type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null
+export type RouteOptionsResolver = (route: I18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null
 
 /**
  * Options to initialize a VueRouter instance
@@ -80,7 +80,7 @@ export type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: str
  * @remarks
  * This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
  */
-export type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
+export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
   /**
    * Vue Router version
    *

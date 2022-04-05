@@ -8,13 +8,7 @@ import {
   DEFAULT_TRAILING_SLASH
 } from './constants'
 
-import type {
-  Strategies,
-  VueI18nRoute,
-  VueI18nRoutingOptions,
-  ComputedRouteOptions,
-  RouteOptionsResolver
-} from './types'
+import type { Strategies, I18nRoute, I18nRoutingOptions, ComputedRouteOptions, RouteOptionsResolver } from './types'
 
 // type RouteOptions = {
 //   locales: string[]
@@ -32,7 +26,7 @@ import type {
  * @public
  */
 export function localizeRoutes(
-  routes: VueI18nRoute[],
+  routes: I18nRoute[],
   {
     defaultLocale = DEFAULT_LOCALE,
     strategy = DEFAULT_STRATEGY as Strategies,
@@ -43,13 +37,13 @@ export function localizeRoutes(
     optionsResolver = undefined,
     locales = []
   }: Pick<
-    VueI18nRoutingOptions,
+    I18nRoutingOptions,
     'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
   > & {
     includeUprefixedFallback?: boolean
     optionsResolver?: RouteOptionsResolver
   } = {}
-): VueI18nRoute[] {
+): I18nRoute[] {
   if (strategy === 'no_prefix') {
     return routes
   }
@@ -58,11 +52,11 @@ export function localizeRoutes(
   const _localeCodes = locales.map(locale => (isString(locale) ? locale : locale.code))
 
   function makeLocalizedRoutes(
-    route: VueI18nRoute,
+    route: I18nRoute,
     allowedLocaleCodes: string[],
     isChild = false,
     isExtraPageTree = false
-  ): VueI18nRoute[] {
+  ): I18nRoute[] {
     // skip route localization
     if (route.redirect && (!route.component || !route.file)) {
       return [route]
@@ -95,7 +89,7 @@ export function localizeRoutes(
       if (route.children) {
         localizedRoute.children = route.children.reduce(
           (children, child) => [...children, ...makeLocalizedRoutes(child, [locale], true, isExtraPageTree)],
-          [] as NonNullable<VueI18nRoute['children']>
+          [] as NonNullable<I18nRoute['children']>
         )
       }
 
@@ -119,7 +113,7 @@ export function localizeRoutes(
             for (const childRoute of route.children) {
               // isExtraRouteTree argument is true to indicate that this is extra route added for 'prefix_and_default' strategy
               defaultRoute.children = defaultRoute.children.concat(
-                makeLocalizedRoutes(childRoute as VueI18nRoute, [locale], true, true)
+                makeLocalizedRoutes(childRoute as I18nRoute, [locale], true, true)
               )
             }
           }
@@ -155,11 +149,11 @@ export function localizeRoutes(
       _routes.push(localizedRoute)
 
       return _routes
-    }, [] as VueI18nRoute[])
+    }, [] as I18nRoute[])
   }
 
   return routes.reduce(
     (localized, route) => [...localized, ...makeLocalizedRoutes(route, _localeCodes || [])],
-    [] as VueI18nRoute[]
+    [] as I18nRoute[]
   )
 }

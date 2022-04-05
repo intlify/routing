@@ -1,0 +1,32 @@
+{
+  "name": "playground-vue3-options",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --minify false",
+    "serve": "vite preview",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.2.16",
+    "vue-router": "^4.0.12",
+    "vue-i18n": "next",
+    "@intlify/vue-i18n-bridge": "^0.3.4",
+    "@intlify/vue-router-bridge": "^0.3.4",
+    "@vueuse/head": "^0.7.5",
+    "vue-i18n-routing": "workspace:*"
+  },
+  "dependenciesMeta": {
+    "vue-i18n-routing": {
+      "injected": true
+    }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "@intlify/vite-plugin-vue-i18n": "latest",
+    "typescript": "^4.4.3",
+    "vite": "latest",
+    "vue-tsc": "latest"
+  }
+}

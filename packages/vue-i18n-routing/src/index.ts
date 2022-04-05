@@ -6,6 +6,7 @@
  */
 export const VERSION = __VERSION__
 
+export * from './compatibles'
 export * from './composables'
 export * from './resolve'
 export * from './types'

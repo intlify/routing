@@ -1,0 +1,38 @@
+{
+  "App": {
+    "msg": "それをしました！",
+    "home": "ホーム",
+    "about": "アバウト"
+  },
+  "views": {
+    "AboutView": "これはアバウトページです"
+  },
+  "components": {
+    "HelloWorld": "{vite} + {vue} でプロジェクトを作成しました。次は何をすればいいですか？",
+    "TheWelcome": {
+      "documentation": {
+        "title": "ドキュメント",
+        "official": "公式ドキュメント",
+        "message": "Vue {official} はあなたが始めるために必要なすべての情報を提供します。"
+      },
+      "tooling": {
+        "title": "ツール",
+        "message": "このプロジェクトは、{vite} によってバンドルされ提供されます。推奨される IDE のセットアップは、{vscode} + {volar} です。もし、コンポーネントとページのテストが必要である場合、{cypress} と {testing} をよく調べてください。 より詳しい説明は、{readme} にあります。"
+      },
+      "ecosystem": {
+        "title": "エコシステム",
+        "message": "{state}、{router}、{test} そして {devtools} のような公式ツールやライブラリをプロジェクトに導入しましょう。もしもっとリソースが必要ならば、{awesome} に行ってご覧になってください。"
+      },
+      "community": {
+        "title": "コミュニティ",
+        "mailing": "メーリングリスト",
+        "message": "詰まりましたか？ 私達の公式 Discord サーバーである {discord} 、または {stackoverflow} で質問してみましょう。また、{news}を購読したり、公式 Twitter アカウント {twitter} をフォローしたりすると、Vue の世界の最新情報を得ることが出来ます。"
+      },
+      "support": {
+        "title": "Vue をサポートする",
+        "sponsor": "スポンサーになっていただく",
+        "message": "独立したプロジェクトである Vue は、その持続性のためにコミュニティの支援に依存しています。{sponsor}ことで、私たちを支援していただけます。"
+      }
+    }
+  }
+}

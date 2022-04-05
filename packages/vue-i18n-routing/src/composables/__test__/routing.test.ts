@@ -1,14 +1,14 @@
 import { describe, it, assert } from 'vitest'
-import { createMemoryHistory, useRoute, useRouter } from 'vue-router'
-import { createI18n, useI18n } from 'vue-i18n'
+import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { createI18n, useI18n } from '@intlify/vue-i18n-bridge'
 import { createRouter } from '../../extends/router'
 import { STRATEGIES } from '../../constants'
-import { getRouteBaseName, localePath, localeRoute, localeLocation, switchLocalePath } from '../routing'
+import { useRouteBaseName, useLocalePath, useLocaleRoute, useLocaleLocation, useSwitchLocalePath } from '../routing'
 import { useSetup } from '../../../scripts/vitest'
 
 import type { Route } from '@intlify/vue-router-bridge'
 
-describe('getRouteBaseName', () => {
+describe('useRouteBaseName', () => {
   describe('route object', () => {
     it('should return base name', async () => {
       const i18n = createI18n({ legacy: false, locale: 'en' })
@@ -29,9 +29,9 @@ describe('getRouteBaseName', () => {
       await router.push('/en')
       useSetup(() => {
         const route = useRoute()
-        const name = getRouteBaseName(route)
+        const name = useRouteBaseName(route)
         assert.equal(name, 'home')
-      }, [i18n, router])
+      }, [router, i18n])
     })
   })
 
@@ -54,9 +54,9 @@ describe('getRouteBaseName', () => {
       })
       await router.push('/en')
       useSetup(() => {
-        const name = getRouteBaseName({} as Route)
+        const name = useRouteBaseName({} as Route)
         assert.equal(name, null)
-      }, [i18n, router])
+      }, [router, i18n])
     })
   })
 
@@ -81,14 +81,14 @@ describe('getRouteBaseName', () => {
       await router.push('/ja')
       useSetup(() => {
         const route = useRoute()
-        const name = getRouteBaseName(route, { routesNameSeparator: '---' })
+        const name = useRouteBaseName(route, { routesNameSeparator: '---' })
         assert.equal(name, 'home')
-      }, [i18n, router])
+      }, [router, i18n])
     })
   })
 })
 
-describe('localePath', () => {
+describe('useLocalePath', () => {
   ;[STRATEGIES.PREFIX_EXCEPT_DEFAULT, STRATEGIES.PREFIX_AND_DEFAULT, STRATEGIES.PREFIX].forEach(strategy => {
     describe(`route strategy: ${strategy}`, () => {
       it('should be worked', async () => {
@@ -107,6 +107,7 @@ describe('localePath', () => {
         await router.push('/en')
 
         useSetup(() => {
+          const localePath = useLocalePath()
           // path
           assert.equal(localePath('/'), '/en')
           assert.equal(localePath('/about', 'ja'), '/ja/about')
@@ -118,7 +119,7 @@ describe('localePath', () => {
           assert.equal(localePath('not-found'), '/en')
           // object
           assert.equal(localePath({ name: 'about' }, 'ja'), '/ja/about')
-        }, [i18n, router])
+        }, [router, i18n])
       })
     })
   })
@@ -140,6 +141,7 @@ describe('localePath', () => {
       await router.push('/')
 
       useSetup(() => {
+        const localePath = useLocalePath()
         // path
         assert.equal(localePath('/'), '/')
         assert.equal(localePath('/about', 'ja'), '/about')
@@ -151,12 +153,12 @@ describe('localePath', () => {
         assert.equal(localePath('not-found'), '') // TOOD: check `@nuxtjs/i18n` behavior
         // object
         assert.equal(localePath({ name: 'about' }, 'ja'), '/about')
-      }, [i18n, router])
+      }, [router, i18n])
     })
   })
 })
 
-describe('localeRoute', () => {
+describe('useLocaleRoute', () => {
   it('should return route', async () => {
     const i18n = createI18n({ legacy: false, locale: 'en' })
     const router = createRouter(i18n, {
@@ -172,6 +174,7 @@ describe('localeRoute', () => {
     await router.push('/en')
 
     useSetup(() => {
+      const localeRoute = useLocaleRoute()
       // path
       assert.include(localeRoute('/'), {
         fullPath: '/en',
@@ -223,11 +226,11 @@ describe('localeRoute', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
-    }, [i18n, router])
+    }, [router, i18n])
   })
 })
 
-describe('localeLocation', () => {
+describe('useLocaleLocation', () => {
   it('should return route', async () => {
     const i18n = createI18n({ legacy: false, locale: 'en' })
     const router = createRouter(i18n, {
@@ -243,6 +246,7 @@ describe('localeLocation', () => {
     await router.push('/en')
 
     useSetup(() => {
+      const localeLocation = useLocaleLocation()
       // path
       assert.include(localeLocation('/'), {
         fullPath: '/en',
@@ -294,11 +298,11 @@ describe('localeLocation', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
-    }, [i18n, router])
+    }, [router, i18n])
   })
 })
 
-describe('switchLocalePath', () => {
+describe('useSwitchLocalePath', () => {
   it('should be worked', async () => {
     const i18n = createI18n({ legacy: false, locale: 'en' })
     const router = createRouter(i18n, {
@@ -317,14 +321,15 @@ describe('switchLocalePath', () => {
       const route = useRoute()
       const router = useRouter()
       const i18n = useI18n()
-      const change = (locale: string) => switchLocalePath(locale, { route, router, i18n })
+      const switchLocalePath = useSwitchLocalePath({ route, router, i18n })
+      const change = (locale: string) => switchLocalePath(locale)
       assert.equal(switchLocalePath('ja'), '/ja/about')
       assert.equal(switchLocalePath('en'), '/en/about')
       assert.equal(switchLocalePath('fr'), '/fr/about')
       return {
         switchLocalePath: change
       }
-    }, [i18n, router])
+    }, [router, i18n])
 
     await router.push('/ja')
     assert.equal(vm.switchLocalePath('ja'), '/ja')

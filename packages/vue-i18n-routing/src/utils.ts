@@ -1,8 +1,10 @@
-import { isRef } from 'vue-demi'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { isRef, isVue2 } from 'vue-demi'
 import { isVueRouter4 } from '@intlify/vue-router-bridge'
 import { isString, isSymbol, isFunction } from '@intlify/shared'
 
-import type { I18n, Composer, I18nMode, Locale } from '@intlify/vue-i18n-bridge'
+import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
 import type { LocaleObject, Strategies, BaseUrlResolveHandler } from './types'
 import type { Ref } from 'vue-demi'
 import type { RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
@@ -32,13 +34,35 @@ export function getNormalizedLocales(locales: string[] | LocaleObject[]): Locale
   return normalized
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isComposer(target: any, mode: I18nMode): target is Composer {
-  return isRef(target.locale) && mode === 'composition'
+function isI18nInstance(i18n: any): i18n is I18n {
+  return i18n != null && 'global' in i18n && 'mode' in i18n
 }
 
-function isI18nInstance(i18n: I18n | Composer): i18n is I18n {
-  return 'global' in i18n && 'mode' in i18n
+export function isComposer(target: any): target is Composer {
+  return target != null && !('__composer' in target) && isRef(target.locale)
+}
+
+export function isVueI18n(target: any): target is VueI18n {
+  return target != null && '__composer' in target
+}
+
+export function isExportedGlobalComposer(target: any): target is ExportedGlobalComposer {
+  return target != null && !('__composer' in target) && !isRef(target.locale)
+}
+
+export function isLegacyVueI18n(target: any): target is Pick<VueI18n, 'locale'> {
+  return target != null && ('__VUE_I18N_BRIDGE__' in target || '_sync' in target)
+}
+
+export function getComposer(i18n: I18n | VueI18n): Composer {
+  // prettier-ignore
+  return isI18nInstance(i18n)
+    ? isComposer(i18n.global)
+      ? i18n.global
+      : ((i18n.global as any).__composer as Composer)
+    : isVueI18n(i18n)
+      ? ((i18n as any).__composer as Composer)
+      : i18n
 }
 
 /**
@@ -48,13 +72,29 @@ function isI18nInstance(i18n: I18n | Composer): i18n is I18n {
  *
  * @returns A locale
  */
-export function getLocale(i18n: I18n | Composer): Locale {
+export function getLocale(i18n: I18n | Composer | VueI18n): Locale {
+  // TODO: we might re-design `getLocale` for vue-i18n-next & vue-i18n-bridge (legacy mode & Vue 2)
+  const target: unknown = isI18nInstance(i18n) ? i18n.global : i18n
   // prettier-ignore
-  return isI18nInstance(i18n)
-    ? isComposer(i18n.global, i18n.mode)
-      ? i18n.global.locale.value
-      : i18n.global.locale
-    : i18n.locale.value
+  return isComposer(target)
+    ? isVue2 && isLegacyVueI18n(i18n)
+      ? i18n.locale
+      : target.locale.value
+    : isExportedGlobalComposer(target) || isVueI18n(target) || isLegacyVueI18n(target)
+      ? target.locale
+      : (target as any).locale // TODO:
+}
+
+export function getLocales(i18n: I18n | VueI18n | Composer): string[] | LocaleObject[] {
+  const target: unknown = isI18nInstance(i18n) ? i18n.global : i18n
+  // prettier-ignore
+  return isComposer(target)
+    ? isVue2 && isLegacyVueI18n(i18n)
+      ? i18n.locales
+      : (target as any).locales.value
+    : isExportedGlobalComposer(target) || isVueI18n(target) || isLegacyVueI18n(target)
+      ? (target as any).locales
+      : (target as any).locales // TODO:
 }
 
 /**
@@ -64,15 +104,19 @@ export function getLocale(i18n: I18n | Composer): Locale {
  * @param locale - A target locale
  */
 export function setLocale(i18n: I18n | Composer, locale: Locale): void {
-  // prettier-ignore
-  if (isI18nInstance(i18n)) {
-   if (isComposer(i18n.global, i18n.mode)) {
-     i18n.global.locale.value = locale
-   } else {
-     i18n.global.locale = locale
-   }
-  } else if (isRef(i18n.locale)) {
-    i18n.locale.value = locale
+  // console.log('setLocale', i18n)
+  const target: unknown = isI18nInstance(i18n) ? i18n.global : i18n
+  if (isComposer(target)) {
+    // TODO: we might re-design `setLocale` for vue-i18n-next & vue-i18n-bridge (legacy mode & Vue 2)
+    if (isVue2 && isLegacyVueI18n(i18n)) {
+      i18n.locale = locale
+    } else {
+      target.locale.value = locale
+    }
+  } else if (isExportedGlobalComposer(target) || isVueI18n(target) || isLegacyVueI18n(target)) {
+    target.locale = locale
+  } else {
+    throw new Error('TODO:')
   }
 }
 
@@ -262,3 +306,5 @@ export function findBrowserLocale(
 
   return matchedLocales.length ? matchedLocales[0].code : ''
 }
+
+/* eslint-enable @typescript-eslint/no-explicit-any */

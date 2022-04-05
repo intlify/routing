@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { localizeRoutes } from '../resolve'
 import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../constants'
 
-import type { VueI18nRoute } from '../types'
+import type { I18nRoute } from '../types'
 
 describe('localizeRoutes', function () {
   describe('basic', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -35,7 +35,7 @@ describe('localizeRoutes', function () {
 
   describe('has children', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/user/:id',
           name: 'user',
@@ -51,7 +51,7 @@ describe('localizeRoutes', function () {
           ]
         }
       ]
-      const children: VueI18nRoute[] = routes[0].children as VueI18nRoute[]
+      const children: I18nRoute[] = routes[0].children as I18nRoute[]
 
       const localeCodes = ['en', 'ja']
       const localizedRoutes = localizeRoutes(routes, { locales: localeCodes })
@@ -75,7 +75,7 @@ describe('localizeRoutes', function () {
 
   describe('trailing slash', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -103,7 +103,7 @@ describe('localizeRoutes', function () {
 
   describe('route name separator', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -131,7 +131,7 @@ describe('localizeRoutes', function () {
 
   describe('strategy: "prefix_and_default"', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -154,7 +154,7 @@ describe('localizeRoutes', function () {
 
   describe('strategy: "prefix"', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -178,7 +178,7 @@ describe('localizeRoutes', function () {
 
   describe('strategy: "no_prefix"', function () {
     it('should be localized routing', function () {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'
@@ -201,7 +201,7 @@ describe('localizeRoutes', function () {
 
   describe('Route optiosn resolver: routing disable', () => {
     it('should be disabled routing', () => {
-      const routes: VueI18nRoute[] = [
+      const routes: I18nRoute[] = [
         {
           path: '/',
           name: 'home'

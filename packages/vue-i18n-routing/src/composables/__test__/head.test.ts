@@ -1,8 +1,8 @@
 import { describe, it, expect, assert } from 'vitest'
-import { createMemoryHistory, useRoute, useRouter } from 'vue-router'
-import { createI18n, useI18n } from 'vue-i18n'
+import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { createI18n, useI18n } from '@intlify/vue-i18n-bridge'
 import { createRouter } from '../../extends/router'
-import { useI18nHead } from '../head'
+import { useLocalizeHead } from '../head'
 import { useSetup } from '../../../scripts/vitest'
 
 describe('useI18nHead', () => {
@@ -35,14 +35,14 @@ describe('useI18nHead', () => {
       const route = useRoute()
       const router = useRouter()
       const i18n = useI18n()
-      const head = useI18nHead({ addDirAttribute: true, addSeoAttributes: true, route, router, i18n })
+      const head = useLocalizeHead({ addDirAttribute: true, addSeoAttributes: true, route, router, i18n })
       expect(head.value).toMatchSnapshot(i18n.locale.value)
       assert.equal(head.value.htmlAttrs!.lang, 'en-US')
       return {
         i18n,
         head
       }
-    }, [i18n, router])
+    }, [router, i18n])
 
     await router.push('/ja')
     expect(vm.head).toMatchSnapshot(vm.i18n.locale.value)

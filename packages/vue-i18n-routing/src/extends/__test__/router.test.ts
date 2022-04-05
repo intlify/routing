@@ -1,7 +1,7 @@
 import { describe, it, assert } from 'vitest'
 import { createRouter } from '../router'
-import { createMemoryHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
+import { createMemoryHistory } from '@intlify/vue-router-bridge'
+import { createI18n } from '@intlify/vue-i18n-bridge'
 import {
   DEFAULT_LOCALE,
   DEFAULT_TRAILING_SLASH,

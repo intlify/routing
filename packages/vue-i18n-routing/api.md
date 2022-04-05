@@ -10,13 +10,18 @@
   - [ComputedRouteOptions](#computedrouteoptions)
   - [Directions](#directions)
   - [FindBrowserLocaleOptions](#findbrowserlocaleoptions)
+  - [I18nCommonRoutingOptions](#i18ncommonroutingoptions)
+  - [I18nRoute](#i18nroute)
   - [I18nRoutingOptions](#i18nroutingoptions)
+  - [LocaleLocationFunction](#localelocationfunction)
+  - [LocalePathFunction](#localepathfunction)
+  - [LocaleRouteFunction](#localeroutefunction)
   - [MetaAttrs](#metaattrs)
   - [RouteOptionsResolver](#routeoptionsresolver)
+  - [RoutingProxy](#routingproxy)
   - [Strategies](#strategies)
+  - [SwitchLocalePathFunction](#switchlocalepathfunction)
   - [TargetLocale](#targetlocale)
-  - [VueI18nRoute](#vuei18nroute)
-  - [VueI18nRoutingOptions](#vuei18nroutingoptions)
 - [Function](#function)
   - [createLocaleFromRouteGetter](#createlocalefromroutegetter)
   - [createRouter](#createrouter)
@@ -26,11 +31,18 @@
   - [localeLocation](#localelocation)
   - [localePath](#localepath)
   - [localeRoute](#localeroute)
+  - [localizeHead](#localizehead)
   - [localizeRoutes](#localizeroutes)
   - [resolveBaseUrl](#resolvebaseurl)
+  - [resolveRoute](#resolveroute)
   - [setLocale](#setlocale)
   - [switchLocalePath](#switchlocalepath)
-  - [useI18nHead](#usei18nhead)
+  - [useLocaleLocation](#uselocalelocation)
+  - [useLocalePath](#uselocalepath)
+  - [useLocaleRoute](#uselocaleroute)
+  - [useLocalizeHead](#uselocalizehead)
+  - [useRouteBaseName](#useroutebasename)
+  - [useSwitchLocalePath](#useswitchlocalepath)
 - [Interface](#interface)
   - [I18nHeadMetaInfo](#i18nheadmetainfo)
   - [I18nHeadOptions](#i18nheadoptions)
@@ -113,66 +125,33 @@ export declare type FindBrowserLocaleOptions = {
 };
 ```
 
-### I18nRoutingOptions
+### I18nCommonRoutingOptions
 
 Options for vue-i18n-routing common
 
 **Signature:**
 ```typescript
-export declare type I18nRoutingOptions = Pick<VueI18nRoutingOptions, 'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'> & ComposableOptions;
+export declare type I18nCommonRoutingOptions = Pick<I18nRoutingOptions, 'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'> & ComposableOptions;
 ```
 
-### MetaAttrs
-
-### RouteOptionsResolver
-
-Resolver for route localizing options
-
-**Signature:**
-```typescript
-export declare type RouteOptionsResolver = (route: VueI18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null;
-```
-
-### Strategies
-
-Routing strategy
-
-**Signature:**
-```typescript
-export declare type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES];
-```
-
-### TargetLocale
-
-The target locale info
-
-**Signature:**
-```typescript
-export declare type TargetLocale = Required<Pick<LocaleObject, 'code' | 'iso'>>;
-```
-
-#### Remarks
-
-This type is used by [BrowserLocaleMatcher](#browserlocalematcher) first argument
-
-### VueI18nRoute
+### I18nRoute
 
 Route config for vue-i18n-routing
 
 **Signature:**
 ```typescript
-export declare type VueI18nRoute = Route & RouteLegacy & {
+export declare type I18nRoute = Route & RouteLegacy & {
     redirect?: string;
 };
 ```
 
-### VueI18nRoutingOptions
+### I18nRoutingOptions
 
 Options to initialize a VueRouter instance
 
 **Signature:**
 ```typescript
-export declare type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
+export declare type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
     version?: 3 | 4;
     defaultLocale?: string;
     locales?: string[] | LocaleObject[];
@@ -190,6 +169,100 @@ export declare type VueI18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler 
 
 This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
 
+### LocaleLocationFunction
+
+Resolve locale location function
+
+**Signature:**
+```typescript
+export declare type LocaleLocationFunction = (route: RawLocation | RouteLocationRaw, locale?: Locale) => Location | RouteLocation | undefined;
+```
+
+### LocalePathFunction
+
+Resolve locale path function
+
+**Signature:**
+```typescript
+export declare type LocalePathFunction = (route: RawLocation | RouteLocation, locale?: Locale) => string;
+```
+
+### LocaleRouteFunction
+
+Resolve route fucntion
+
+**Signature:**
+```typescript
+export declare type LocaleRouteFunction = (route: RawLocation | RouteLocationRaw, locale?: Locale) => Route | ReturnType<Router['resolve']> | undefined;
+```
+
+### MetaAttrs
+
+### RouteOptionsResolver
+
+Resolver for route localizing options
+
+**Signature:**
+```typescript
+export declare type RouteOptionsResolver = (route: I18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null;
+```
+
+### RoutingProxy
+
+Routing Proxy
+
+**Signature:**
+```typescript
+export declare type RoutingProxy = {
+    i18n: any;
+    getRouteBaseName: any;
+    localePath: any;
+    localeRoute: any;
+    localeLocation: any;
+    resolveRoute: any;
+    switchLocalePath: any;
+    localizeHead: any;
+    route: Route | RouteLocationNormalizedLoaded;
+    router: Router | VueRouter;
+    __defaultLocale: string;
+    __strategy: Strategies;
+    __defaultLocaleRouteNameSuffix: string;
+    __trailingSlash: boolean;
+    __routesNameSeparator: string;
+};
+```
+
+### Strategies
+
+Routing strategy
+
+**Signature:**
+```typescript
+export declare type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES];
+```
+
+### SwitchLocalePathFunction
+
+Swtich locale path function
+
+**Signature:**
+```typescript
+export declare type SwitchLocalePathFunction = (locale?: Locale) => string;
+```
+
+### TargetLocale
+
+The target locale info
+
+**Signature:**
+```typescript
+export declare type TargetLocale = Required<Pick<LocaleObject, 'code' | 'iso'>>;
+```
+
+#### Remarks
+
+This type is used by [BrowserLocaleMatcher](#browserlocalematcher) first argument
+
 
 ## Function
 
@@ -201,7 +274,7 @@ Create a Vue Router instance
 
 **Signature:**
 ```typescript
-export declare function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(i18n: I18n, options?: Options): Options['version'] extends 4 ? Router : VueRouter;
+export declare function createRouter<Options extends I18nRoutingOptions = I18nRoutingOptions>(i18n: I18n, options?: Options): Options['version'] extends 4 ? Router : VueRouter;
 ```
 
 #### Parameters
@@ -209,7 +282,7 @@ export declare function createRouter<Options extends VueI18nRoutingOptions = Vue
 | Parameter | Type | Description |
 | --- | --- | --- |
 | i18n | I18n | A Vue I18n instance, see [Vue I18n API docs](https://vue-i18n.intlify.dev/api/general.html#i18n) |
-| options | Options | An options, see [VueI18nRoutingOptions](#vuei18nroutingoptions) |
+| options | Options | An options, see [I18nRoutingOptions](#i18nroutingoptions) |
 
 #### Returns
 
@@ -248,14 +321,14 @@ Get a locale
 
 **Signature:**
 ```typescript
-export declare function getLocale(i18n: I18n | Composer): Locale;
+export declare function getLocale(i18n: I18n | Composer | VueI18n): Locale;
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| i18n | I18n &#124; Composer | An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance |
+| i18n | I18n &#124; Composer &#124; VueI18n | An [I18n](https://vue-i18n.intlify.dev/api/general.html#i18n) instance or a [Composer](https://vue-i18n.intlify.dev/api/composition.html#composer) instance |
 
 #### Returns
 
@@ -263,89 +336,13 @@ export declare function getLocale(i18n: I18n | Composer): Locale;
 
 ### getRouteBaseName
 
-Get route base name
-
-**Signature:**
-```typescript
-export declare function getRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, { router, routesNameSeparator }?: I18nRoutingOptions): string | null;
-```
-
-#### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| givenRoute | Route &#124; RouteLocationNormalizedLoaded | A route object, if not provided, the route is returned with `useRoute` will be used |
-| { router, routesNameSeparator } | I18nRoutingOptions |  |
-
-#### Returns
-
- The route base name, if route name is not defined, return null
-
 ### localeLocation
-
-Resolve locale location
-
-**Signature:**
-```typescript
-export declare function localeLocation(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
-options?: I18nRoutingOptions): Location | RouteLocation | undefined;
-```
-
-#### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
-| locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
-
-#### Returns
-
- Returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
 
 ### localePath
 
-Resolve locale path
-
-**Signature:**
-```typescript
-export declare function localePath(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
-options?: I18nRoutingOptions): string;
-```
-
-#### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
-| locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
-
-#### Returns
-
- Returns the localized URL for a given route
-
 ### localeRoute
 
-Resolve locale route
-
-**Signature:**
-```typescript
-export declare function localeRoute(route: RawLocation | RouteLocationRaw, locale?: Locale, // TODO: locale should be more type inference (completion)
-options?: I18nRoutingOptions): Route | ReturnType<Router['resolve']> | undefined;
-```
-
-#### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| route | RawLocation &#124; RouteLocationRaw | A route location. The path or name of the route or an object for more complex routes |
-| locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
-
-#### Returns
-
- Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
+### localizeHead
 
 ### localizeRoutes
 
@@ -353,18 +350,18 @@ Localize routes
 
 **Signature:**
 ```typescript
-export declare function localizeRoutes(routes: VueI18nRoute[], { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales }?: Pick<VueI18nRoutingOptions, 'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'> & {
+export declare function localizeRoutes(routes: I18nRoute[], { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales }?: Pick<I18nRoutingOptions, 'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'> & {
     includeUprefixedFallback?: boolean;
     optionsResolver?: RouteOptionsResolver;
-}): VueI18nRoute[];
+}): I18nRoute[];
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| routes | VueI18nRoute[] | Some routes |
-| { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales } | Pick&lt;VueI18nRoutingOptions, 'defaultLocale' &#124; 'strategy' &#124; 'locales' &#124; 'routesNameSeparator' &#124; 'trailingSlash' &#124; 'defaultLocaleRouteNameSuffix'&gt; &amp; {
+| routes | I18nRoute[] | Some routes |
+| { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales } | Pick&lt;I18nRoutingOptions, 'defaultLocale' &#124; 'strategy' &#124; 'locales' &#124; 'routesNameSeparator' &#124; 'trailingSlash' &#124; 'defaultLocaleRouteNameSuffix'&gt; &amp; {
     includeUprefixedFallback?: boolean;
     optionsResolver?: RouteOptionsResolver;
 } |  |
@@ -393,6 +390,8 @@ export declare function resolveBaseUrl<Context = unknown>(baseUrl: string | Base
 
  A resolved base url
 
+### resolveRoute
+
 ### setLocale
 
 Set a locale
@@ -411,42 +410,120 @@ export declare function setLocale(i18n: I18n | Composer, locale: Locale): void;
 
 ### switchLocalePath
 
-Switch locale path
+### useLocaleLocation
+
+Use resolve locale location
 
 **Signature:**
 ```typescript
-export declare function switchLocalePath(locale: Locale, options?: I18nRoutingOptions): string;
+export declare function useLocaleLocation({ router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash }?: I18nCommonRoutingOptions): LocaleLocationFunction;
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| locale | Locale | A locale code, if not specified, uses the current locale |
-| options | I18nRoutingOptions | An options, see about details [I18nRoutingOptions](#i18nroutingoptions) |
+| { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash } | I18nCommonRoutingOptions |  |
 
 #### Returns
 
- Returns a link to the current route in another language
+ Returns a [LocaleLocationFunction](#localelocationfunction)
 
-### useI18nHead
+### useLocalePath
 
-Generate SEO head meta information
+Use resolve locale path
 
 **Signature:**
 ```typescript
-export declare function useI18nHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): Ref<I18nHeadMetaInfo>;
+export declare function useLocalePath({ router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash }?: I18nCommonRoutingOptions): LocalePathFunction;
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| { addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n } | Pick&lt;I18nRoutingOptions, 'strategy' &#124; 'defaultLocale'&gt; &amp; ComposableOptions &amp; I18nHeadOptions |  |
+| { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash } | I18nCommonRoutingOptions |  |
+
+#### Returns
+
+ Returns a [LocalePathFunction](#localepathfunction)
+
+### useLocaleRoute
+
+Use resolve locale route
+
+**Signature:**
+```typescript
+export declare function useLocaleRoute({ router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash }?: I18nCommonRoutingOptions): LocaleRouteFunction;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash } | I18nCommonRoutingOptions |  |
+
+#### Returns
+
+ Returns a [LocaleRouteFunction](#localeroutefunction)
+
+### useLocalizeHead
+
+Use localize head meta
+
+**Signature:**
+```typescript
+export declare function useLocalizeHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nCommonRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): Ref<I18nHeadMetaInfo>;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| { addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n } | Pick&lt;I18nCommonRoutingOptions, 'strategy' &#124; 'defaultLocale'&gt; &amp; ComposableOptions &amp; I18nHeadOptions |  |
 
 #### Returns
 
  Genereated SEO head meta information
+
+### useRouteBaseName
+
+Use route base name
+
+**Signature:**
+```typescript
+export declare function useRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, { router, routesNameSeparator }?: I18nCommonRoutingOptions): string | undefined;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| givenRoute | Route &#124; RouteLocationNormalizedLoaded | A route object, if not provided, the route is returned with `useRoute` will be used |
+| { router, routesNameSeparator } | I18nCommonRoutingOptions |  |
+
+#### Returns
+
+ The route base name, if route name is not defined, return null
+
+### useSwitchLocalePath
+
+Use swtich locale path
+
+**Signature:**
+```typescript
+export declare function useSwitchLocalePath({ router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash }?: I18nCommonRoutingOptions): SwitchLocalePathFunction;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash } | I18nCommonRoutingOptions |  |
+
+#### Returns
+
+ Returns a [SwitchLocalePathFunction](#switchlocalepathfunction)
 
 
 ## Interface
@@ -472,7 +549,7 @@ export interface I18nHeadMetaInfo
 
 ### I18nHeadOptions
 
-Options for [useI18nHead](#usei18nhead) function
+Options for [localizeHead](#localizehead) function
 
 **Signature:**
 ```typescript

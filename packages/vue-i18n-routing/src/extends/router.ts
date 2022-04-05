@@ -23,13 +23,13 @@ import type {
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
 import type { I18n } from '@intlify/vue-i18n-bridge'
-import type { VueI18nRoute, VueI18nRoutingOptions } from '../types'
+import type { I18nRoute, I18nRoutingOptions } from '../types'
 
 /**
  * Create a Vue Router instance
  *
  * @param i18n - A Vue I18n instance, see [Vue I18n API docs](https://vue-i18n.intlify.dev/api/general.html#i18n)
- * @param options - An options, see {@link VueI18nRoutingOptions}
+ * @param options - An options, see {@link I18nRoutingOptions}
  *
  * @returns A Vue Router instance
  *
@@ -42,12 +42,13 @@ import type { VueI18nRoute, VueI18nRoutingOptions } from '../types'
  *
  * @public
  */
-export function createRouter<Options extends VueI18nRoutingOptions = VueI18nRoutingOptions>(
+export function createRouter<Options extends I18nRoutingOptions = I18nRoutingOptions>(
   i18n: I18n,
   options?: Options
 ): Options['version'] extends 4 ? Router : VueRouter
 
-export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) {
+// TODO: strictly `I18n` type!
+export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
   const {
     version,
     defaultLocale,
@@ -68,7 +69,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
 
   extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes })
 
-  const localizedRoutes = localizeRoutes(routes as VueI18nRoute[], {
+  const localizedRoutes = localizeRoutes(routes as I18nRoute[], {
     locales,
     defaultLocale,
     strategy,
@@ -104,7 +105,7 @@ export function createRouter(i18n: I18n, options = {} as VueI18nRoutingOptions) 
   return router
 }
 
-function createVueRouter(options: VueI18nRoutingOptions, version: number): VueRouter | Router {
+function createVueRouter(options: I18nRoutingOptions, version: number): VueRouter | Router {
   if (isVue3 && version === 4) {
     return _createRouter(options)
   } else if (isVue2 && version === 3) {
@@ -165,7 +166,7 @@ export function createLocaleFromRouteGetter(
   return getLocaleFromRoute
 }
 
-function asDefaultVueI18nRouterOptions(options: VueI18nRoutingOptions): Required<VueI18nRoutingOptions> {
+function asDefaultVueI18nRouterOptions(options: I18nRoutingOptions): Required<I18nRoutingOptions> {
   options.version = options.version ?? 4
   options.defaultLocale = options.defaultLocale ?? DEFAULT_LOCALE
   options.strategy = options.strategy ?? DEFAULT_STRATEGY
@@ -176,5 +177,5 @@ function asDefaultVueI18nRouterOptions(options: VueI18nRoutingOptions): Required
   options.defaultDirection = options.defaultDirection ?? DEFAULT_DETECTION_DIRECTION
   options.baseUrl = options.baseUrl ?? DEFAULT_BASE_URL
   options.routes = options.routes ?? []
-  return options as Required<VueI18nRoutingOptions>
+  return options as Required<I18nRoutingOptions>
 }
