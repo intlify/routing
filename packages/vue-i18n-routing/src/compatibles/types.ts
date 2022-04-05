@@ -13,7 +13,7 @@ export type RoutingProxy = {
   localeLocation: any
   resolveRoute: any
   switchLocalePath: any
-  localizeHead: any
+  localeHead: any
   route: Route | RouteLocationNormalizedLoaded
   router: Router | VueRouter
   __defaultLocale: string
@@ -36,7 +36,7 @@ export interface SeoAttributesOptions {
 }
 
 /**
- * Options for {@link localizeHead} function
+ * Options for {@link localeHead} function
  */
 export interface I18nHeadOptions {
   /**

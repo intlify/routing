@@ -12,5 +12,6 @@ export default defineComponent({
 <template>
   <main>
     <TheWelcome />
+    {{ localeHead({ addSeoAttributes: true }) }}
   </main>
 </template>

@@ -8,7 +8,7 @@ import {
   switchLocalePath,
   getRouteBaseName,
   resolveRoute,
-  localizeHead
+  localeHead
 } from '../compatibles'
 
 import type { App, EffectScope } from 'vue-demi'
@@ -36,7 +36,7 @@ function proxyVueInstance(target: Function): Function {
         localeLocation: this.localeLocation,
         resolveRoute: this.resolveRoute,
         switchLocalePath: this.switchLocalePath,
-        localizeHead: this.localizeHead,
+        localeHead: this.localeHead,
         i18n: this.$i18n,
         route: this.$route,
         router: this.$router
@@ -89,7 +89,7 @@ export function extendI18n<TI18n extends I18n>(
         localeLocation: proxyVueInstance(localeLocation),
         switchLocalePath: proxyVueInstance(switchLocalePath),
         getRouteBaseName: proxyVueInstance(getRouteBaseName),
-        localizeHead: proxyVueInstance(localizeHead)
+        localeHead: proxyVueInstance(localeHead)
       }
     })
   }

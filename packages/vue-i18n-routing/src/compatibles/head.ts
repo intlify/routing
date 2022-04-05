@@ -7,7 +7,7 @@ import type { I18nHeadOptions, I18nHeadMetaInfo, MetaAttrs } from './types'
 import type { LocaleObject } from '../types'
 import type { RoutingProxy } from './types'
 
-export function localizeHead(
+export function localeHead(
   this: RoutingProxy,
   { addDirAttribute = false, addSeoAttributes = false }: I18nHeadOptions = {}
 ): I18nHeadMetaInfo {

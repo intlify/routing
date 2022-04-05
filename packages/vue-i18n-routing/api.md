@@ -28,19 +28,19 @@
   - [findBrowserLocale](#findbrowserlocale)
   - [getLocale](#getlocale)
   - [getRouteBaseName](#getroutebasename)
+  - [localeHead](#localehead)
   - [localeLocation](#localelocation)
   - [localePath](#localepath)
   - [localeRoute](#localeroute)
-  - [localizeHead](#localizehead)
   - [localizeRoutes](#localizeroutes)
   - [resolveBaseUrl](#resolvebaseurl)
   - [resolveRoute](#resolveroute)
   - [setLocale](#setlocale)
   - [switchLocalePath](#switchlocalepath)
+  - [useLocaleHead](#uselocalehead)
   - [useLocaleLocation](#uselocalelocation)
   - [useLocalePath](#uselocalepath)
   - [useLocaleRoute](#uselocaleroute)
-  - [useLocalizeHead](#uselocalizehead)
   - [useRouteBaseName](#useroutebasename)
   - [useSwitchLocalePath](#useswitchlocalepath)
 - [Interface](#interface)
@@ -221,7 +221,7 @@ export declare type RoutingProxy = {
     localeLocation: any;
     resolveRoute: any;
     switchLocalePath: any;
-    localizeHead: any;
+    localeHead: any;
     route: Route | RouteLocationNormalizedLoaded;
     router: Router | VueRouter;
     __defaultLocale: string;
@@ -336,13 +336,13 @@ export declare function getLocale(i18n: I18n | Composer | VueI18n): Locale;
 
 ### getRouteBaseName
 
+### localeHead
+
 ### localeLocation
 
 ### localePath
 
 ### localeRoute
-
-### localizeHead
 
 ### localizeRoutes
 
@@ -410,6 +410,25 @@ export declare function setLocale(i18n: I18n | Composer, locale: Locale): void;
 
 ### switchLocalePath
 
+### useLocaleHead
+
+Use localize head meta
+
+**Signature:**
+```typescript
+export declare function useLocaleHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nCommonRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): Ref<I18nHeadMetaInfo>;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| { addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n } | Pick&lt;I18nCommonRoutingOptions, 'strategy' &#124; 'defaultLocale'&gt; &amp; ComposableOptions &amp; I18nHeadOptions |  |
+
+#### Returns
+
+ Genereated SEO head meta information
+
 ### useLocaleLocation
 
 Use resolve locale location
@@ -466,25 +485,6 @@ export declare function useLocaleRoute({ router, route, i18n, defaultLocale, def
 #### Returns
 
  Returns a [LocaleRouteFunction](#localeroutefunction)
-
-### useLocalizeHead
-
-Use localize head meta
-
-**Signature:**
-```typescript
-export declare function useLocalizeHead({ addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n }?: Pick<I18nCommonRoutingOptions, 'strategy' | 'defaultLocale'> & ComposableOptions & I18nHeadOptions): Ref<I18nHeadMetaInfo>;
-```
-
-#### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| { addDirAttribute, addSeoAttributes, strategy, defaultLocale, route, router, i18n } | Pick&lt;I18nCommonRoutingOptions, 'strategy' &#124; 'defaultLocale'&gt; &amp; ComposableOptions &amp; I18nHeadOptions |  |
-
-#### Returns
-
- Genereated SEO head meta information
 
 ### useRouteBaseName
 
@@ -549,7 +549,7 @@ export interface I18nHeadMetaInfo
 
 ### I18nHeadOptions
 
-Options for [localizeHead](#localizehead) function
+Options for [localeHead](#localehead) function
 
 **Signature:**
 ```typescript

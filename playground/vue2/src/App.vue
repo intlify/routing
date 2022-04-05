@@ -2,14 +2,14 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import { computed } from '@vue/composition-api'
 import { useI18n } from 'vue-i18n-bridge'
-import { useLocalePath, useSwitchLocalePath, useLocalizeHead } from 'vue-i18n-routing'
+import { useLocalePath, useSwitchLocalePath, useLocaleHead } from 'vue-i18n-routing'
 
 import type { LocaleObject } from 'vue-i18n-routing'
 
 const { t, locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
-const i18nHead = useLocalizeHead({ addSeoAttributes: true })
+const i18nHead = useLocaleHead({ addSeoAttributes: true })
 console.log('i18nHead', i18nHead)
 
 const switchableLocale = computed(() => {

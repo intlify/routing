@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { describe, it, assert, expect } from 'vitest'
 import { createMemoryHistory } from '@intlify/vue-router-bridge'
 import { createI18n, I18n } from '@intlify/vue-i18n-bridge'
@@ -24,7 +26,7 @@ describe('getRouteBaseName', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n])
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
       const name = vm.getRouteBaseName()
       assert.equal(name, 'home')
     })
@@ -48,7 +50,7 @@ describe('getRouteBaseName', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n])
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
       const name = vm.getRouteBaseName()
       assert.equal(name, 'home')
     })
@@ -73,7 +75,7 @@ describe('localePath', () => {
             history: createMemoryHistory()
           })
           await router.push('/en')
-          const vm = useSetup(() => {}, [router, i18n])
+          const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
           // path
           assert.equal(vm.localePath('/'), '/en')
@@ -102,7 +104,7 @@ describe('localePath', () => {
             history: createMemoryHistory()
           })
           await router.push('/en')
-          const vm = useSetup(() => {}, [router, i18n])
+          const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
           // path
           assert.equal(vm.localePath('/'), '/en')
@@ -134,7 +136,7 @@ describe('localePath', () => {
           history: createMemoryHistory()
         })
         await router.push('/')
-        const vm = useSetup(() => {}, [router, i18n])
+        const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
         // path
         assert.equal(vm.localePath('/'), '/')
@@ -174,7 +176,7 @@ describe('localeRoute', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n])
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
       // path
       assert.include(vm.localeRoute('/'), {
@@ -255,7 +257,7 @@ describe('localeLocation', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n])
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
       // path
       assert.include(vm.localeLocation('/'), {
@@ -336,7 +338,7 @@ describe('switchLocalePath', () => {
         history: createMemoryHistory()
       })
       await router.push('/en/about')
-      const vm = useSetup(() => {}, [router, i18n])
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
       await router.push('/ja')
 
       assert.equal(vm.switchLocalePath('ja'), '/ja')
@@ -356,8 +358,8 @@ describe('switchLocalePath', () => {
   })
 })
 
-describe('localizeHead', () => {
-  function testLocalizeHead(i18n: I18n) {
+describe('localeHead', () => {
+  function testLocaleHead(i18n: I18n) {
     it('should be worked', async () => {
       const router = createRouter(i18n, {
         version: 4,
@@ -381,15 +383,14 @@ describe('localizeHead', () => {
         history: createMemoryHistory()
       })
       await router.push('/en/about')
+      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
 
-      const vm = useSetup(() => {}, [router, i18n])
-
-      let head = vm.localizeHead({ addDirAttribute: true, addSeoAttributes: true })
+      let head = vm.localeHead({ addDirAttribute: true, addSeoAttributes: true })
       expect(head).toMatchSnapshot('en')
       assert.equal(head.htmlAttrs.lang, 'en-US')
 
       await router.push('/ja')
-      head = vm.localizeHead({ addDirAttribute: true, addSeoAttributes: true })
+      head = vm.localeHead({ addDirAttribute: true, addSeoAttributes: true })
       expect(head).toMatchSnapshot('ja')
       assert.equal(head.htmlAttrs.lang, 'ja-JP')
     })
@@ -397,11 +398,13 @@ describe('localizeHead', () => {
 
   describe('composition mode', () => {
     const i18n = createI18n({ legacy: false, locale: 'en' })
-    testLocalizeHead(i18n)
+    testLocaleHead(i18n)
   })
 
   describe('legacy mode', () => {
     const i18n = createI18n({ locale: 'en' })
-    testLocalizeHead(i18n)
+    testLocaleHead(i18n)
   })
 })
+
+/* eslint-enable @typescript-eslint/no-explicit-any */

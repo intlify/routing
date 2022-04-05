@@ -1,7 +1,7 @@
 import { ref, watchEffect, isVue3, onUnmounted } from 'vue-demi'
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
-import { localizeHead } from '../compatibles'
+import { localeHead } from '../compatibles'
 import { inBrowser, toRawRoute } from '../utils'
 import { DEFAULT_LOCALE, DEFAULT_STRATEGY } from '../constants'
 
@@ -23,7 +23,7 @@ import type { I18nCommonRoutingOptions, ComposableOptions } from './types'
  *
  * @returns Genereated SEO head meta information
  */
-export function useLocalizeHead({
+export function useLocaleHead({
   addDirAttribute = false,
   addSeoAttributes = false,
   strategy = DEFAULT_STRATEGY,
@@ -53,7 +53,7 @@ export function useLocalizeHead({
 
   function updateMeta(_route: RouteLocationNormalizedLoaded | Route) {
     metaObject.value = Reflect.apply(
-      localizeHead,
+      localeHead,
       {
         router,
         route: _route,

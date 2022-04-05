@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`localizeHead > composition mode > should be worked > en 1`] = `
+exports[`localeHead > composition mode > should be worked > en 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
@@ -52,7 +52,7 @@ exports[`localizeHead > composition mode > should be worked > en 1`] = `
 }
 `;
 
-exports[`localizeHead > composition mode > should be worked > ja 1`] = `
+exports[`localeHead > composition mode > should be worked > ja 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
@@ -104,7 +104,7 @@ exports[`localizeHead > composition mode > should be worked > ja 1`] = `
 }
 `;
 
-exports[`localizeHead > legacy mode > should be worked > en 1`] = `
+exports[`localeHead > legacy mode > should be worked > en 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
@@ -156,7 +156,7 @@ exports[`localizeHead > legacy mode > should be worked > en 1`] = `
 }
 `;
 
-exports[`localizeHead > legacy mode > should be worked > ja 1`] = `
+exports[`localeHead > legacy mode > should be worked > ja 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
