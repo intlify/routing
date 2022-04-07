@@ -3,6 +3,7 @@ import type {
   LocaleRouteFunction,
   LocaleLocationFunction,
   SwitchLocalePathFunction,
+  I18nHeadOptions,
   I18nHeadMetaInfo
 } from 'vue-i18n-routing'
 import type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
