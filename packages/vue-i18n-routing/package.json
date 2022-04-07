@@ -57,7 +57,7 @@
   "files": [
     "dist",
     "index.mjs",
-    "mixins.d.ts",
+    "types.d.ts",
     "LICENSE",
     "README.md"
   ],
