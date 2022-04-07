@@ -2,8 +2,9 @@ import type {
   LocalePathFunction,
   LocaleRouteFunction,
   LocaleLocationFunction,
-  SwitchLocalePathFunction
-} from './composables/routing'
+  SwitchLocalePathFunction,
+  I18nHeadMetaInfo
+} from 'vue-i18n-routing'
 import type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 
 declare module '@vue/runtime-core' {
@@ -51,5 +52,13 @@ declare module '@vue/runtime-core' {
      * @returns Returns a link to the current route in another language
      */
     swtchLocalePath: SwitchLocalePathFunction
+    /**
+     * Resolve locale head meta info
+     *
+     * @param options - A options of locale head meta info, optional, see about {@link I18nHeadOptions}
+     *
+     * @returns Returns a {@link I18nHeadMetaInfo | head meta info}
+     */
+    localeHead: (options?: I18nHeadOptions) => I18nHeadMetaInfo
   }
 }
