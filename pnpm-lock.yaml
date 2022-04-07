@@ -63,7 +63,7 @@ importers:
 
   packages/vue-i18n-routing:
     specifiers:
-      '@intlify/shared': beta
+      '@intlify/shared': next
       '@intlify/vue-i18n-bridge': ^0.3.5
       '@intlify/vue-router-bridge': ^0.3.5
       '@microsoft/api-extractor': ^7.18.20
