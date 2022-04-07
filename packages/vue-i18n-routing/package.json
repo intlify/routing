@@ -75,8 +75,8 @@
       "require": "./dist/vue-i18n-routing.cjs.js",
       "types": "./dist/vue-i18n-routing.d.ts"
     },
-    "./mixins": {
-      "types": "./mixins.d.ts"
+    "./types": {
+      "types": "./types.d.ts"
     },
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
