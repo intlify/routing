@@ -52,7 +52,7 @@ declare module '@vue/runtime-core' {
      *
      * @returns Returns a link to the current route in another language
      */
-    swtchLocalePath: SwitchLocalePathFunction
+    switchLocalePath: SwitchLocalePathFunction
     /**
      * Resolve locale head meta info
      *
