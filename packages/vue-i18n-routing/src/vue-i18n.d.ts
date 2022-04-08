@@ -1,6 +1,6 @@
 import type { LocaleObject } from 'vue-i18n-routing'
 
-interface RoutingExportedGlobalComposer {
+export interface I18nRoutingCustomProperties {
   /**
    * List of locales
    *
@@ -17,5 +17,21 @@ interface RoutingExportedGlobalComposer {
 
 declare module 'vue-i18n' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface ExportedGlobalComposer extends RoutingExportedGlobalComposer {}
+  export interface ExportedGlobalComposer extends I18nRoutingCustomProperties {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface VueI18n extends I18nRoutingCustomProperties {}
+}
+
+declare module 'vue-i18n-bridge' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface ExportedGlobalComposer extends I18nRoutingCustomProperties {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface VueI18n extends I18nRoutingCustomProperties {}
+}
+
+declare module '@intlify/vue-i18n-bridge' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface ExportedGlobalComposer extends I18nRoutingCustomProperties {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface VueI18n extends I18nRoutingCustomProperties {}
 }
