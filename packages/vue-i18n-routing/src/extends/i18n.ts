@@ -159,6 +159,7 @@ function extendVueI18n(vueI18n: VueI18n): void {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPluginOptions(options: any): options is VueI18nRoutingPluginOptions {
   return isObject(options) && 'inject' in options && isBoolean(options.inject)
 }
