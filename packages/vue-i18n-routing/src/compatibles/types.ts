@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Route, RouteLocationNormalizedLoaded, Router, VueRouter } from '@intlify/vue-router-bridge'
-import type { Strategies } from '../types'
+import type { Strategies, Directions } from '../types'
 
 /**
  * Routing Proxy
@@ -16,11 +16,13 @@ export type RoutingProxy = {
   localeHead: any
   route: Route | RouteLocationNormalizedLoaded
   router: Router | VueRouter
-  __defaultLocale: string
-  __strategy: Strategies
-  __defaultLocaleRouteNameSuffix: string
-  __trailingSlash: boolean
-  __routesNameSeparator: string
+  defaultLocale?: string
+  localeCodes?: string[]
+  strategy?: Strategies
+  defaultDirection?: Directions
+  defaultLocaleRouteNameSuffix?: string
+  trailingSlash?: boolean
+  routesNameSeparator?: string
 }
 
 /**

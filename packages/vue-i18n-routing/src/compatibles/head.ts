@@ -2,6 +2,7 @@ import { isArray, isObject } from '@intlify/shared'
 import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
 import { getLocale, getLocales, getNormalizedLocales, warn } from '../utils'
 import { STRATEGIES } from '../constants'
+import { getI18nRoutingOptions } from './utils'
 
 import type { I18nHeadOptions, I18nHeadMetaInfo, MetaAttrs } from './types'
 import type { LocaleObject } from '../types'
@@ -13,6 +14,7 @@ export function localeHead(
 ): I18nHeadMetaInfo {
   const router = this.router
   const i18n = this.i18n
+  const { defaultDirection } = getI18nRoutingOptions(router, this)
 
   const metaObject: Required<I18nHeadMetaInfo> = {
     htmlAttrs: {},
@@ -30,7 +32,7 @@ export function localeHead(
     code: locale
   }
   const currentLocaleIso = currentLocale.iso
-  const currentLocaleDir = currentLocale.dir || router.__defaultDirection
+  const currentLocaleDir = currentLocale.dir || defaultDirection
 
   // Adding Direction Attribute
   if (addDirAttribute) {
@@ -54,9 +56,7 @@ export function localeHead(
 
 function addHreflangLinks(this: RoutingProxy, locales: LocaleObject[], baseUrl: string, link: MetaAttrs) {
   const router = this.router
-  const defaultLocale = router.__defaultLocale || this.__defaultLocale
-  const strategy = router.__strategy || this.__strategy
-
+  const { defaultLocale, strategy } = getI18nRoutingOptions(router, this)
   if (strategy === STRATEGIES.NO_PREFIX) {
     return
   }

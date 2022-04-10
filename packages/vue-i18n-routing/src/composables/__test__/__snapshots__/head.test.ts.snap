@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`useI18nHead > should be worked > en 1`] = `
+exports[`useLocaleHead > should be worked > en 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",
@@ -52,7 +52,7 @@ exports[`useI18nHead > should be worked > en 1`] = `
 }
 `;
 
-exports[`useI18nHead > should be worked > ja 1`] = `
+exports[`useLocaleHead > should be worked > ja 1`] = `
 {
   "htmlAttrs": {
     "dir": "ltr",

@@ -5,7 +5,7 @@ import { createRouter } from '../../extends/router'
 import { useLocaleHead } from '../head'
 import { useSetup } from '../../../scripts/vitest'
 
-describe('useI18nHead', () => {
+describe('useLocaleHead', () => {
   it('should be worked', async () => {
     const i18n = createI18n({ legacy: false, locale: 'en' })
     const router = createRouter(i18n, {

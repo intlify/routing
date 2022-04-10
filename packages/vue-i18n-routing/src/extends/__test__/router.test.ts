@@ -1,14 +1,7 @@
 import { describe, it, assert } from 'vitest'
-import { createRouter } from '../router'
+import { createRouter, getGlobalOptions } from '../router'
 import { createMemoryHistory } from '@intlify/vue-router-bridge'
 import { createI18n } from '@intlify/vue-i18n-bridge'
-import {
-  DEFAULT_LOCALE,
-  DEFAULT_TRAILING_SLASH,
-  DEFAULT_ROUTES_NAME_SEPARATOR,
-  DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  DEFAULT_STRATEGY
-} from '../../constants'
 
 describe('createRouter', () => {
   it('should be created Vue Router v4 instance', () => {
@@ -24,11 +17,7 @@ describe('createRouter', () => {
     assert.isNotNull(router)
     assert.isDefined(router.isReady)
     // check router extending for internal
-    assert.equal(router.__defaultLocale, DEFAULT_LOCALE)
-    assert.equal(router.__strategy, DEFAULT_STRATEGY)
-    assert.equal(router.__trailingSlash, DEFAULT_TRAILING_SLASH)
-    assert.equal(router.__routesNameSeparator, DEFAULT_ROUTES_NAME_SEPARATOR)
-    assert.equal(router.__defaultLocaleRouteNameSuffix, DEFAULT_LOCALE_ROUTE_NAME_SUFFIX)
-    assert.deepEqual(router.__localeCodes, ['en', 'ja'])
+    const { localeCodes } = getGlobalOptions(router)
+    assert.deepEqual(localeCodes, ['en', 'ja'])
   })
 })

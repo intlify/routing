@@ -3,7 +3,6 @@ import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { localeHead } from '../compatibles'
 import { inBrowser, toRawRoute } from '../utils'
-import { DEFAULT_LOCALE, DEFAULT_STRATEGY } from '../constants'
 
 import type { Ref } from 'vue-demi'
 import type {
@@ -14,7 +13,7 @@ import type {
   Route
 } from '@intlify/vue-router-bridge'
 import type { I18nHeadOptions, I18nHeadMetaInfo } from '../compatibles'
-import type { I18nCommonRoutingOptions, ComposableOptions } from './types'
+import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
 
 /**
  * Use localize head meta
@@ -26,13 +25,12 @@ import type { I18nCommonRoutingOptions, ComposableOptions } from './types'
 export function useLocaleHead({
   addDirAttribute = false,
   addSeoAttributes = false,
-  strategy = DEFAULT_STRATEGY,
-  defaultLocale = DEFAULT_LOCALE,
+  strategy = undefined,
+  defaultLocale = undefined,
   route = useRoute(),
   router = useRouter(),
   i18n = useI18n()
-}: Pick<I18nCommonRoutingOptions, 'strategy' | 'defaultLocale'> &
-  ComposableOptions &
+}: Pick<I18nCommonRoutingOptionsWithComposable, 'strategy' | 'defaultLocale' | 'route' | 'router' | 'i18n'> &
   I18nHeadOptions = {}): Ref<I18nHeadMetaInfo> {
   type R = Router | VueRouter
   const _router = router as R
@@ -58,8 +56,8 @@ export function useLocaleHead({
         router,
         route: _route,
         i18n,
-        __defaultLocale: defaultLocale,
-        __strategy: strategy
+        defaultLocale,
+        strategy
       },
       [{ addDirAttribute, addSeoAttributes }]
     ) as I18nHeadMetaInfo

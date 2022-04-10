@@ -1,12 +1,6 @@
 import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
 import { getRouteBaseName, localePath, localeRoute, localeLocation, switchLocalePath } from '../compatibles'
-import {
-  DEFAULT_ROUTES_NAME_SEPARATOR,
-  DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  DEFAULT_LOCALE,
-  DEFAULT_STRATEGY
-} from '../constants'
 
 import type {
   Route,
@@ -17,19 +11,19 @@ import type {
   Router
 } from '@intlify/vue-router-bridge'
 import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { I18nCommonRoutingOptions } from './types'
+import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-function proxyForComposable<T extends Function>(options: I18nCommonRoutingOptions, target: Function): T {
+function proxyForComposable<T extends Function>(options: I18nCommonRoutingOptionsWithComposable, target: Function): T {
   const {
     router,
     route,
     i18n,
-    defaultLocale: __defaultLocale,
-    strategy: __strategy,
-    defaultLocaleRouteNameSuffix: __defaultLocaleRouteNameSuffix,
-    trailingSlash: __trailingSlash,
-    routesNameSeparator: __routesNameSeparator
+    defaultLocale,
+    strategy,
+    defaultLocaleRouteNameSuffix,
+    trailingSlash,
+    routesNameSeparator
   } = options
   return function (...args: unknown[]) {
     return Reflect.apply(
@@ -38,11 +32,11 @@ function proxyForComposable<T extends Function>(options: I18nCommonRoutingOption
         router,
         route,
         i18n,
-        __defaultLocale,
-        __strategy,
-        __defaultLocaleRouteNameSuffix,
-        __trailingSlash,
-        __routesNameSeparator
+        defaultLocale,
+        strategy,
+        defaultLocaleRouteNameSuffix,
+        trailingSlash,
+        routesNameSeparator
       },
       args
     )
@@ -59,12 +53,12 @@ function proxyForComposable<T extends Function>(options: I18nCommonRoutingOption
  */
 export function useRouteBaseName(
   givenRoute: Route | RouteLocationNormalizedLoaded = useRoute(),
-  { router = useRouter(), routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR }: I18nCommonRoutingOptions = {}
+  { router = useRouter(), routesNameSeparator = undefined }: I18nCommonRoutingOptionsWithComposable = {}
 ) {
   const proxy = {
     router,
     route: givenRoute,
-    __routesNameSeparator: routesNameSeparator
+    routesNameSeparator
   }
   return getRouteBaseName.call(proxy as any, givenRoute) // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -92,12 +86,12 @@ export function useLocalePath({
   router = useRouter(),
   route = useRoute(),
   i18n = useI18n(),
-  defaultLocale = DEFAULT_LOCALE,
-  defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
-  strategy = DEFAULT_STRATEGY,
-  trailingSlash = false
-}: I18nCommonRoutingOptions = {}): LocalePathFunction {
+  defaultLocale = undefined,
+  defaultLocaleRouteNameSuffix = undefined,
+  routesNameSeparator = undefined,
+  strategy = undefined,
+  trailingSlash = undefined
+}: I18nCommonRoutingOptionsWithComposable = {}): LocalePathFunction {
   return proxyForComposable<LocalePathFunction>(
     { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash },
     localePath
@@ -130,12 +124,12 @@ export function useLocaleRoute({
   router = useRouter(),
   route = useRoute(),
   i18n = useI18n(),
-  defaultLocale = DEFAULT_LOCALE,
-  defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
-  strategy = DEFAULT_STRATEGY,
-  trailingSlash = false
-}: I18nCommonRoutingOptions = {}): LocaleRouteFunction {
+  defaultLocale = undefined,
+  defaultLocaleRouteNameSuffix = undefined,
+  routesNameSeparator = undefined,
+  strategy = undefined,
+  trailingSlash = undefined
+}: I18nCommonRoutingOptionsWithComposable = {}): LocaleRouteFunction {
   return proxyForComposable<LocaleRouteFunction>(
     {
       router,
@@ -177,12 +171,12 @@ export function useLocaleLocation({
   router = useRouter(),
   route = useRoute(),
   i18n = useI18n(),
-  defaultLocale = DEFAULT_LOCALE,
-  defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
-  strategy = DEFAULT_STRATEGY,
-  trailingSlash = false
-}: I18nCommonRoutingOptions = {}): LocaleLocationFunction {
+  defaultLocale = undefined,
+  defaultLocaleRouteNameSuffix = undefined,
+  routesNameSeparator = undefined,
+  strategy = undefined,
+  trailingSlash = undefined
+}: I18nCommonRoutingOptionsWithComposable = {}): LocaleLocationFunction {
   return proxyForComposable<LocaleLocationFunction>(
     {
       router,
@@ -220,12 +214,12 @@ export function useSwitchLocalePath({
   router = useRouter(),
   route = useRoute(),
   i18n = useI18n(),
-  defaultLocale = DEFAULT_LOCALE,
-  defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
-  strategy = DEFAULT_STRATEGY,
-  trailingSlash = false
-}: I18nCommonRoutingOptions = {}): SwitchLocalePathFunction {
+  defaultLocale = undefined,
+  defaultLocaleRouteNameSuffix = undefined,
+  routesNameSeparator = undefined,
+  strategy = undefined,
+  trailingSlash = undefined
+}: I18nCommonRoutingOptionsWithComposable = {}): SwitchLocalePathFunction {
   return proxyForComposable<SwitchLocalePathFunction>(
     {
       router,

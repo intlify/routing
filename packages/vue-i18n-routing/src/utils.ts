@@ -2,12 +2,26 @@
 
 import { isRef, isVue2 } from 'vue-demi'
 import { isVueRouter4 } from '@intlify/vue-router-bridge'
+import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { isString, isSymbol, isFunction } from '@intlify/shared'
 
-import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
-import type { LocaleObject, Strategies, BaseUrlResolveHandler } from './types'
 import type { Ref } from 'vue-demi'
+import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
 import type { RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
+import type { LocaleObject, Strategies, BaseUrlResolveHandler, I18nRoutingOptions } from './types'
+
+export type I18nCommonRoutingOptions = Pick<
+  I18nRoutingOptions,
+  'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
+>
+
+export type ComposableOptions = {
+  route?: ReturnType<typeof useRoute>
+  router?: ReturnType<typeof useRouter>
+  i18n?: Composer
+}
+
+export type I18nCommonRoutingOptionsWithComposable = I18nCommonRoutingOptions & ComposableOptions
 
 export const inBrowser = typeof window !== 'undefined'
 

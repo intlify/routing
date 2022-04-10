@@ -2,13 +2,8 @@ import { isVue3, isRef, unref } from 'vue-demi'
 import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
-import {
-  STRATEGIES,
-  DEFAULT_ROUTES_NAME_SEPARATOR,
-  DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
-  DEFAULT_LOCALE,
-  DEFAULT_STRATEGY
-} from '../constants'
+import { STRATEGIES } from '../constants'
+import { getI18nRoutingOptions } from './utils'
 
 import type {
   Route,
@@ -29,8 +24,7 @@ export function getRouteBaseName(
   givenRoute?: Route | RouteLocationNormalizedLoaded
 ): string | undefined {
   const router = this.router
-  const routesNameSeparator =
-    router.__routesNameSeparator || this.__routesNameSeparator || DEFAULT_ROUTES_NAME_SEPARATOR
+  const { routesNameSeparator } = getI18nRoutingOptions(router, this)
   // prettier-ignore
   const route = givenRoute != null
     ? isRef(givenRoute)
@@ -41,7 +35,7 @@ export function getRouteBaseName(
     return
   }
   const name = getRouteName(route.name)
-  return name.split(routesNameSeparator!)[0]
+  return name.split(routesNameSeparator)[0]
 }
 
 export function localePath(
@@ -92,15 +86,8 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   const i18n = this.i18n
   // console.log('resolveRoute', i18n.locale, Object.keys(i18n))
   const _locale = locale || getLocale(i18n)
-  const defaultLocale = this.__defaultLocale || DEFAULT_LOCALE
-  const _defaultLocale = router.__defaultLocale || defaultLocale
-  // console.log('resolveRoute', isRef(i18n.locale), _locale, defaultLocale)
-  const _defaultLocaleRouteNameSuffix =
-    router.__defaultLocaleRouteNameSuffix || this.__defaultLocaleRouteNameSuffix || DEFAULT_LOCALE_ROUTE_NAME_SUFFIX
-  const _routesNameSeparator =
-    router.__routesNameSeparator || this.__routesNameSeparator || DEFAULT_ROUTES_NAME_SEPARATOR
-  const _strategy = router.__strategy || this.__strategy || DEFAULT_STRATEGY
-  const trailingSlash = router.__trailingSlash || this.__trailingSlash || false
+  const { routesNameSeparator, defaultLocale, defaultLocaleRouteNameSuffix, strategy, trailingSlash } =
+    getI18nRoutingOptions(router, this)
 
   // if route parameter is a string, check if it's a path or name of route.
   let _route = route
@@ -127,10 +114,10 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
     if (isString(resolvedRouteName)) {
       localizedRoute = {
         name: getLocaleRouteName(resolvedRouteName, _locale, {
-          defaultLocale: _defaultLocale,
-          strategy: _strategy,
-          routesNameSeparator: _routesNameSeparator,
-          defaultLocaleRouteNameSuffix: _defaultLocaleRouteNameSuffix
+          defaultLocale,
+          strategy,
+          routesNameSeparator,
+          defaultLocaleRouteNameSuffix
         }),
         params: resolvedRoute.params,
         query: resolvedRoute.query,
@@ -140,9 +127,9 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
       const isDefaultLocale = _locale === defaultLocale
       const isPrefixed =
         // don't prefix default locale
-        !(isDefaultLocale && RESOLVED_PREFIXED.has(_strategy)) &&
+        !(isDefaultLocale && RESOLVED_PREFIXED.has(strategy)) &&
         // no prefix for any language
-        !(_strategy === STRATEGIES.NO_PREFIX)
+        !(strategy === STRATEGIES.NO_PREFIX)
       // if route has a path defined but no name, resolve full route using the path
       if (isPrefixed) {
         localizedRoute.path = `/${_locale}${localizedRoute.path}`
@@ -153,10 +140,10 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
     }
   } else {
     localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale, {
-      defaultLocale: _defaultLocale,
-      strategy: _strategy,
-      routesNameSeparator: _routesNameSeparator,
-      defaultLocaleRouteNameSuffix: _defaultLocaleRouteNameSuffix
+      defaultLocale,
+      strategy,
+      routesNameSeparator,
+      defaultLocaleRouteNameSuffix
     })
 
     const { params } = localizedRoute

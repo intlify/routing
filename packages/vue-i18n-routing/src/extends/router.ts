@@ -23,7 +23,47 @@ import type {
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
 import type { I18n } from '@intlify/vue-i18n-bridge'
-import type { I18nRoute, I18nRoutingOptions } from '../types'
+import type { I18nRoute, I18nRoutingOptions, BaseUrlResolveHandler } from '../types'
+
+/**
+ * Global options for i18n routing
+ */
+export type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = Pick<
+  I18nRoutingOptions<BaseUrl>,
+  | 'defaultLocale'
+  | 'defaultDirection'
+  | 'defaultLocaleRouteNameSuffix'
+  | 'trailingSlash'
+  | 'routesNameSeparator'
+  | 'strategy'
+> & { localeCodes?: string[] }
+
+const optionsMap: Map<Router | VueRouter, I18nRoutingGlobalOptions> = new Map()
+
+/**
+ * Register global i18n routing options
+ *
+ * @param router - A router instance
+ * @param options - A global options
+ */
+export function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(
+  router: Router | VueRouter,
+  options: I18nRoutingGlobalOptions<BaseUrl>
+) {
+  if (!optionsMap.has(router)) {
+    optionsMap.set(router, options)
+  }
+}
+
+/**
+ * Get global i18n routing options
+ *
+ * @param router - A router instance
+ * @returns A global options
+ */
+export function getGlobalOptions(router: Router | VueRouter): I18nRoutingGlobalOptions {
+  return optionsMap.get(router) ?? {}
+}
 
 /**
  * Create a Vue Router instance
@@ -81,13 +121,15 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
   options.routes = localizedRoutes as any // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const router = createVueRouter(options, version)
-  router.__defaultLocale = defaultLocale
-  router.__localeCodes = localeCodes
-  router.__strategy = strategy
-  router.__trailingSlash = trailingSlash
-  router.__routesNameSeparator = routesNameSeparator
-  router.__defaultLocaleRouteNameSuffix = defaultLocaleRouteNameSuffix
-  router.__defaultDirection = defaultDirection
+  registerGlobalOptions(router, {
+    defaultLocale,
+    localeCodes,
+    strategy,
+    trailingSlash,
+    routesNameSeparator,
+    defaultLocaleRouteNameSuffix,
+    defaultDirection
+  })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const removableGuardListener = router.beforeEach((to, from, next) => {
