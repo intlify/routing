@@ -14,10 +14,11 @@ export { getLocale, setLocale, resolveBaseUrl, findBrowserLocale } from './utils
 export type {
   I18nCommonRoutingOptions,
   I18nCommonRoutingOptionsWithComposable,
+  ComposableOptions,
   FindBrowserLocaleOptions,
   BrowserLocale,
   TargetLocale,
   BrowserLocaleMatcher
 } from './utils'
 export { createRouter, createLocaleFromRouteGetter, registerGlobalOptions, getGlobalOptions } from './extends'
-export type { I18nRoutingGlobalOptions } from './extends'
+export type { I18nRoutingGlobalOptions, VueI18nRoutingPluginOptions } from './extends'

@@ -1,3 +1,4 @@
+import { isBoolean, isObject } from '@intlify/shared'
 import { ref, computed, isVue3, effectScope, isVue2 } from 'vue-demi'
 import { resolveBaseUrl, isVueI18n, getComposer } from '../utils'
 import { DEFAULT_BASE_URL } from '../constants'
@@ -47,6 +48,18 @@ function proxyVueInstance(target: Function): Function {
   }
 }
 
+/**
+ * An options of Vue I18n Routing Plugin
+ */
+export interface VueI18nRoutingPluginOptions {
+  /**
+   * Whether to inject some option APIs style methods into Vue instance
+   *
+   * @defaultValue `true`
+   */
+  inject?: boolean
+}
+
 export function extendI18n<TI18n extends I18n>(
   i18n: TI18n,
   { locales = [], localeCodes = [], baseUrl = DEFAULT_BASE_URL }: VueI18nExtendOptions = {}
@@ -79,19 +92,21 @@ export function extendI18n<TI18n extends I18n>(
       extendExportedGlobal(exported, composer)
     }
 
-    // TODO: should extend vue component instance, if plugin `options` has options.injection
-    // extend vue component instance
-    vue.mixin({
-      methods: {
-        resolveRoute: proxyVueInstance(resolveRoute),
-        localePath: proxyVueInstance(localePath),
-        localeRoute: proxyVueInstance(localeRoute),
-        localeLocation: proxyVueInstance(localeLocation),
-        switchLocalePath: proxyVueInstance(switchLocalePath),
-        getRouteBaseName: proxyVueInstance(getRouteBaseName),
-        localeHead: proxyVueInstance(localeHead)
-      }
-    })
+    const pluginOptions = isPluginOptions(options[0]) ? options[0] : { inject: true }
+    if (pluginOptions.inject) {
+      // extend vue component instance
+      vue.mixin({
+        methods: {
+          resolveRoute: proxyVueInstance(resolveRoute),
+          localePath: proxyVueInstance(localePath),
+          localeRoute: proxyVueInstance(localeRoute),
+          localeLocation: proxyVueInstance(localeLocation),
+          switchLocalePath: proxyVueInstance(switchLocalePath),
+          getRouteBaseName: proxyVueInstance(getRouteBaseName),
+          localeHead: proxyVueInstance(localeHead)
+        }
+      })
+    }
   }
 }
 
@@ -142,4 +157,8 @@ function extendVueI18n(vueI18n: VueI18n): void {
       return composer.__baseUrl
     }
   })
+}
+
+function isPluginOptions(options: any): options is VueI18nRoutingPluginOptions {
+  return isObject(options) && 'inject' in options && isBoolean(options.inject)
 }
