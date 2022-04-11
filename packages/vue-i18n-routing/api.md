@@ -24,9 +24,11 @@
   - [Strategies](#strategies)
   - [SwitchLocalePathFunction](#switchlocalepathfunction)
   - [TargetLocale](#targetlocale)
+  - [VueI18nExtendOptions](#vuei18nextendoptions)
 - [Function](#function)
   - [createLocaleFromRouteGetter](#createlocalefromroutegetter)
   - [createRouter](#createrouter)
+  - [extendI18n](#extendi18n)
   - [findBrowserLocale](#findbrowserlocale)
   - [getGlobalOptions](#getglobaloptions)
   - [getLocale](#getlocale)
@@ -36,6 +38,7 @@
   - [localePath](#localepath)
   - [localeRoute](#localeroute)
   - [localizeRoutes](#localizeroutes)
+  - [proxyVueInstance](#proxyvueinstance)
   - [registerGlobalOptions](#registerglobaloptions)
   - [resolveBaseUrl](#resolvebaseurl)
   - [resolveRoute](#resolveroute)
@@ -276,6 +279,8 @@ export declare type TargetLocale = Required<Pick<LocaleObject, 'code' | 'iso'>>;
 
 This type is used by [BrowserLocaleMatcher](#browserlocalematcher) first argument
 
+### VueI18nExtendOptions
+
 
 ## Function
 
@@ -306,6 +311,8 @@ export declare function createRouter<Options extends I18nRoutingOptions = I18nRo
 The routes of the created router instance are handled with i18n routing.
 
 At the Vue 2 will return a [Vue Router v3 instance](https://router.vuejs.org/api/#router-construction-options), and at the Vue 3 will return a [Vue Router v4 instance](https://next.router.vuejs.org/api/#createrouter).
+
+### extendI18n
 
 ### findBrowserLocale
 
@@ -401,6 +408,8 @@ export declare function localizeRoutes(routes: I18nRoute[], { defaultLocale, str
 #### Returns
 
  Localized routes
+
+### proxyVueInstance
 
 ### registerGlobalOptions
 

@@ -16,7 +16,7 @@ import type { App, EffectScope } from 'vue-demi'
 import type { I18n, Composer, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
 import type { I18nRoutingOptions, LocaleObject } from '../types'
 
-type VueI18nExtendOptions = Pick<I18nRoutingOptions, 'baseUrl'> & {
+export type VueI18nExtendOptions = Pick<I18nRoutingOptions, 'baseUrl'> & {
   locales?: string[] | LocaleObject[]
   localeCodes?: string[]
 }
@@ -25,7 +25,7 @@ type VueI18nExtendOptions = Pick<I18nRoutingOptions, 'baseUrl'> & {
 type Vue = any
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-function proxyVueInstance(target: Function): Function {
+export function proxyVueInstance(target: Function): Function {
   // `this` is the Vue instance
   return function (this: Vue) {
     return Reflect.apply(

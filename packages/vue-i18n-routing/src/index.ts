@@ -20,5 +20,12 @@ export type {
   TargetLocale,
   BrowserLocaleMatcher
 } from './utils'
-export { createRouter, createLocaleFromRouteGetter, registerGlobalOptions, getGlobalOptions } from './extends'
-export type { I18nRoutingGlobalOptions, VueI18nRoutingPluginOptions } from './extends'
+export {
+  createRouter,
+  createLocaleFromRouteGetter,
+  registerGlobalOptions,
+  getGlobalOptions,
+  extendI18n,
+  proxyVueInstance
+} from './extends'
+export type { I18nRoutingGlobalOptions, VueI18nRoutingPluginOptions, VueI18nExtendOptions } from './extends'
