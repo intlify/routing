@@ -41,25 +41,36 @@ export type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = Bas
 const optionsMap: Map<Router | VueRouter, I18nRoutingGlobalOptions> = new Map()
 
 /**
- * Register global i18n routing options
+ * The unregister handler of global options for i18n routing
+ */
+export type GlobalOptionsUnregisterHandler = () => boolean
+
+/**
+ * Register global i18n routing option registory
  *
- * @param router - A router instance
- * @param options - A global options
+ * @param router - A router instance, about router type
+ * @param options - A global options, about options type, see {@link I18nRoutingGlobalOptions}
+ *
+ * @returns - A {@link GlobalOptionsUnregisterHandler} to unregister the global options from registories, if registered, return it, else `null`
  */
 export function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(
   router: Router | VueRouter,
   options: I18nRoutingGlobalOptions<BaseUrl>
-) {
+): GlobalOptionsUnregisterHandler | null {
   if (!optionsMap.has(router)) {
     optionsMap.set(router, options)
+    return () => optionsMap.delete(router)
+  } else {
+    return null
   }
 }
 
 /**
  * Get global i18n routing options
  *
- * @param router - A router instance
- * @returns A global options
+ * @param router - A router instance, about router type
+ *
+ * @returns - {@link I18nRoutingGlobalOptions | global options} from i18n routing options registory, if registered, return it, else empty object
  */
 export function getGlobalOptions(router: Router | VueRouter): I18nRoutingGlobalOptions {
   return optionsMap.get(router) ?? {}
