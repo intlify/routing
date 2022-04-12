@@ -1,25 +1,29 @@
-import { describe, it, assert } from 'vitest'
+import { vi, describe, it, assert, afterEach, expect } from 'vitest'
 import { registerGlobalOptions, createRouter, getGlobalOptions } from '../router'
 import { createMemoryHistory } from '@intlify/vue-router-bridge'
 import { createI18n } from '@intlify/vue-i18n-bridge'
 import { createRouter as _createRouter } from '@intlify/vue-router-bridge'
-import { isEmptyObject } from '@intlify/shared'
 
 describe('registerGlobalOptions', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('should be worked', () => {
+    const spy = vi.spyOn(console, 'warn')
+
     const router = _createRouter({
       routes: [],
       history: createMemoryHistory()
     })
 
-    const unregister = registerGlobalOptions(router, { localeCodes: ['en', 'ja'] })
-    assert.isNotNull(unregister)
+    registerGlobalOptions(router, { localeCodes: ['en', 'ja'] })
     const { localeCodes } = getGlobalOptions(router)
     assert.deepEqual(localeCodes, ['en', 'ja'])
 
-    const result = unregister!()
-    assert.ok(result)
-    assert.ok(isEmptyObject(getGlobalOptions(router)))
+    registerGlobalOptions(router, { localeCodes: ['en', 'ja'] })
+    expect(spy).toHaveBeenCalledOnce()
+    expect(spy.mock.calls[0][0]).toContain('already registered global options')
   })
 })
 

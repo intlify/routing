@@ -1,10 +1,10 @@
 import VueRouter3 from '@intlify/vue-router-bridge'
 import { createRouter as _createRouter } from '@intlify/vue-router-bridge'
-import { isString, isObject } from '@intlify/shared'
+import { isString, isObject, makeSymbol } from '@intlify/shared'
 import { isVue2, isVue3 } from 'vue-demi'
 import { extendI18n } from './i18n'
 import { localizeRoutes } from '../resolve'
-import { getLocale, setLocale, getNormalizedLocales } from '../utils'
+import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -38,30 +38,25 @@ export type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = Bas
   | 'strategy'
 > & { localeCodes?: string[] }
 
-const optionsMap: Map<Router | VueRouter, I18nRoutingGlobalOptions> = new Map()
-
-/**
- * The unregister handler of global options for i18n routing
- */
-export type GlobalOptionsUnregisterHandler = () => boolean
+const GlobalOptionsRegistory = makeSymbol('vue-i18n-routing-gor')
 
 /**
  * Register global i18n routing option registory
  *
  * @param router - A router instance, about router type
  * @param options - A global options, about options type, see {@link I18nRoutingGlobalOptions}
- *
- * @returns - A {@link GlobalOptionsUnregisterHandler} to unregister the global options from registories, if registered, return it, else `null`
  */
 export function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(
   router: Router | VueRouter,
   options: I18nRoutingGlobalOptions<BaseUrl>
-): GlobalOptionsUnregisterHandler | null {
-  if (!optionsMap.has(router)) {
-    optionsMap.set(router, options)
-    return () => optionsMap.delete(router)
+): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const _options: I18nRoutingGlobalOptions | undefined = (router as any)[GlobalOptionsRegistory]
+  if (_options) {
+    warn('already registered global options')
   } else {
-    return null
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(router as any)[GlobalOptionsRegistory] = options
   }
 }
 
@@ -73,7 +68,8 @@ export function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = Ba
  * @returns - {@link I18nRoutingGlobalOptions | global options} from i18n routing options registory, if registered, return it, else empty object
  */
 export function getGlobalOptions(router: Router | VueRouter): I18nRoutingGlobalOptions {
-  return optionsMap.get(router) ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (router as any)[GlobalOptionsRegistory] ?? {}
 }
 
 /**

@@ -10,7 +10,6 @@
   - [ComputedRouteOptions](#computedrouteoptions)
   - [Directions](#directions)
   - [FindBrowserLocaleOptions](#findbrowserlocaleoptions)
-  - [GlobalOptionsUnregisterHandler](#globaloptionsunregisterhandler)
   - [I18nCommonRoutingOptions](#i18ncommonroutingoptions)
   - [I18nCommonRoutingOptionsWithComposable](#i18ncommonroutingoptionswithcomposable)
   - [I18nRoute](#i18nroute)
@@ -132,15 +131,6 @@ export declare type FindBrowserLocaleOptions = {
     matcher?: BrowserLocaleMatcher;
     comparer?: (a: BrowserLocale, b: BrowserLocale) => number;
 };
-```
-
-### GlobalOptionsUnregisterHandler
-
-The unregister handler of global options for i18n routing
-
-**Signature:**
-```typescript
-export declare type GlobalOptionsUnregisterHandler = () => boolean;
 ```
 
 ### I18nCommonRoutingOptions
@@ -427,7 +417,7 @@ Register global i18n routing option registory
 
 **Signature:**
 ```typescript
-export declare function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(router: Router | VueRouter, options: I18nRoutingGlobalOptions<BaseUrl>): GlobalOptionsUnregisterHandler | null;
+export declare function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(router: Router | VueRouter, options: I18nRoutingGlobalOptions<BaseUrl>): void;
 ```
 
 #### Parameters
@@ -436,10 +426,6 @@ export declare function registerGlobalOptions<BaseUrl extends BaseUrlResolveHand
 | --- | --- | --- |
 | router | Router &#124; VueRouter | A router instance, about router type |
 | options | I18nRoutingGlobalOptions&lt;BaseUrl&gt; | A global options, about options type, see [I18nRoutingGlobalOptions](#i18nroutingglobaloptions) |
-
-#### Returns
-
- - A [GlobalOptionsUnregisterHandler](#globaloptionsunregisterhandler) to unregister the global options from registories, if registered, return it, else `null`
 
 ### resolveBaseUrl
 
