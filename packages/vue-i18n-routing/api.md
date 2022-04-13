@@ -9,6 +9,10 @@
   - [ComposableOptions](#composableoptions)
   - [ComputedRouteOptions](#computedrouteoptions)
   - [Directions](#directions)
+  - [ExtendComposerHook](#extendcomposerhook)
+  - [ExtendExportedGlobalHook](#extendexportedglobalhook)
+  - [ExtendProperyDescripters](#extendproperydescripters)
+  - [ExtendVueI18nHook](#extendvuei18nhook)
   - [FindBrowserLocaleOptions](#findbrowserlocaleoptions)
   - [I18nCommonRoutingOptions](#i18ncommonroutingoptions)
   - [I18nCommonRoutingOptionsWithComposable](#i18ncommonroutingoptionswithcomposable)
@@ -51,6 +55,7 @@
   - [useRouteBaseName](#useroutebasename)
   - [useSwitchLocalePath](#useswitchlocalepath)
 - [Interface](#interface)
+  - [ExtendHooks](#extendhooks)
   - [I18nHeadMetaInfo](#i18nheadmetainfo)
   - [I18nHeadOptions](#i18nheadoptions)
   - [LocaleObject](#localeobject)
@@ -120,6 +125,14 @@ Direction
 ```typescript
 export declare type Directions = 'ltr' | 'rtl' | 'auto';
 ```
+
+### ExtendComposerHook
+
+### ExtendExportedGlobalHook
+
+### ExtendProperyDescripters
+
+### ExtendVueI18nHook
 
 ### FindBrowserLocaleOptions
 
@@ -584,6 +597,18 @@ export declare function useSwitchLocalePath({ router, route, i18n, defaultLocale
 
 
 ## Interface
+
+### ExtendHooks
+
+
+#### Properties
+
+##### onExtendComposer
+
+##### onExtendExportedGlobal
+
+##### onExtendVueI18n
+
 
 ### I18nHeadMetaInfo
 

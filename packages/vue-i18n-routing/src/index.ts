@@ -28,4 +28,13 @@ export {
   extendI18n,
   proxyVueInstance
 } from './extends'
-export type { I18nRoutingGlobalOptions, VueI18nRoutingPluginOptions, VueI18nExtendOptions } from './extends'
+export type {
+  I18nRoutingGlobalOptions,
+  VueI18nRoutingPluginOptions,
+  VueI18nExtendOptions,
+  ExtendComposerHook,
+  ExtendExportedGlobalHook,
+  ExtendVueI18nHook,
+  ExtendProperyDescripters,
+  ExtendHooks
+} from './extends'
