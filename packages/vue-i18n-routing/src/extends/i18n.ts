@@ -85,7 +85,7 @@ export function extendI18n<TI18n extends I18n>(
     const composer = getComposer(i18n)
 
     // extend global
-    scope.run(() => extendComposer(composer, { locales, localeCodes, baseUrl }))
+    scope.run(() => extendComposer(composer, { locales, localeCodes, baseUrl, hooks }))
     if (isVueI18n(i18n.global)) {
       extendVueI18n(i18n.global, hooks.onExtendVueI18n)
     }
