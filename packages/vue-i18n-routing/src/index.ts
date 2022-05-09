@@ -6,6 +6,8 @@
  */
 export const VERSION = __VERSION__
 
+export * from './constants'
+export * from './constants'
 export * from './compatibles'
 export * from './composables'
 export * from './resolve'

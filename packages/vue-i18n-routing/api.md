@@ -54,6 +54,16 @@
   - [useLocaleRoute](#uselocaleroute)
   - [useRouteBaseName](#useroutebasename)
   - [useSwitchLocalePath](#useswitchlocalepath)
+- [Variable](#variable)
+  - [DEFAULT_BASE_URL](#default_base_url)
+  - [DEFAULT_DETECTION_DIRECTION](#default_detection_direction)
+  - [DEFAULT_LOCALE_ROUTE_NAME_SUFFIX](#default_locale_route_name_suffix)
+  - [DEFAULT_LOCALE](#default_locale)
+  - [DEFAULT_ROUTES_NAME_SEPARATOR](#default_routes_name_separator)
+  - [DEFAULT_STRATEGY](#default_strategy)
+  - [DEFAULT_TRAILING_SLASH](#default_trailing_slash)
+  - [STRATEGIES](#strategies)
+  - [VERSION](#version)
 - [Interface](#interface)
   - [ExtendHooks](#extendhooks)
   - [I18nHeadMetaInfo](#i18nheadmetainfo)
@@ -63,8 +73,6 @@
   - [RouteLegacy](#routelegacy)
   - [SeoAttributesOptions](#seoattributesoptions)
   - [VueI18nRoutingPluginOptions](#vuei18nroutingpluginoptions)
-- [Variable](#variable)
-  - [VERSION](#version)
 
 ## TypeAlias
 
@@ -596,6 +604,38 @@ export declare function useSwitchLocalePath({ router, route, i18n, defaultLocale
  Returns a [SwitchLocalePathFunction](#switchlocalepathfunction)
 
 
+## Variable
+
+### DEFAULT_BASE_URL
+
+### DEFAULT_DETECTION_DIRECTION
+
+### DEFAULT_LOCALE_ROUTE_NAME_SUFFIX
+
+### DEFAULT_LOCALE
+
+### DEFAULT_ROUTES_NAME_SEPARATOR
+
+### DEFAULT_STRATEGY
+
+### DEFAULT_TRAILING_SLASH
+
+### STRATEGIES
+
+### VERSION
+
+Vue I18n Routing Version
+
+**Signature:**
+```typescript
+VERSION: string
+```
+
+#### Remarks
+
+Semver format. Same format as the package.json `version` field.
+
+
 ## Interface
 
 ### ExtendHooks
@@ -772,21 +812,5 @@ Whether to inject some option APIs style methods into Vue instance
 inject?: boolean;
 ```
 
-
-
-## Variable
-
-### VERSION
-
-Vue I18n Routing Version
-
-**Signature:**
-```typescript
-VERSION: string
-```
-
-#### Remarks
-
-Semver format. Same format as the package.json `version` field.
 
 
