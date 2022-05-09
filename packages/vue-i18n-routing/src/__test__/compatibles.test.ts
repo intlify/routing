@@ -145,8 +145,8 @@ describe('localePath', () => {
         // name
         assert.equal(vm.localePath('index', 'ja'), '/')
         assert.equal(vm.localePath('about'), '/about')
-        assert.equal(vm.localePath('not-found', 'ja'), '') // TOOD: check `@nuxtjs/i18n` behavior
-        assert.equal(vm.localePath('not-found'), '') // TOOD: check `@nuxtjs/i18n` behavior
+        assert.equal(vm.localePath('not-found', 'ja'), '/')
+        assert.equal(vm.localePath('not-found'), '/')
         // object
         assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/about')
       })

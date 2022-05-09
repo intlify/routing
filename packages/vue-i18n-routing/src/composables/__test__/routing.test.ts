@@ -149,8 +149,8 @@ describe('useLocalePath', () => {
         // name
         assert.equal(localePath('index', 'ja'), '/')
         assert.equal(localePath('about'), '/about')
-        assert.equal(localePath('not-found', 'ja'), '') // TOOD: check `@nuxtjs/i18n` behavior
-        assert.equal(localePath('not-found'), '') // TOOD: check `@nuxtjs/i18n` behavior
+        assert.equal(localePath('not-found', 'ja'), '/')
+        assert.equal(localePath('not-found'), '/')
         // object
         assert.equal(localePath({ name: 'about' }, 'ja'), '/about')
       }, [router, i18n])
