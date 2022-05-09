@@ -21,7 +21,7 @@ export interface RouteLegacy extends Pick<_Route, Exclude<keyof _Route, 'childre
 /**
  * Route config for vue-router v4
  */
-export interface Route {
+interface Route {
   name?: string
   path: string
   file?: string // for nuxt bridge & nuxt 3
@@ -173,5 +173,7 @@ export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlRe
    */
   routeOptionsResolver?: RouteOptionsResolver
 } & RouterOptions
+
+export type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

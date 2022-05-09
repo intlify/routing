@@ -69,7 +69,6 @@
   - [I18nHeadMetaInfo](#i18nheadmetainfo)
   - [I18nHeadOptions](#i18nheadoptions)
   - [LocaleObject](#localeobject)
-  - [Route](#route)
   - [RouteLegacy](#routelegacy)
   - [SeoAttributesOptions](#seoattributesoptions)
   - [VueI18nRoutingPluginOptions](#vuei18nroutingpluginoptions)
@@ -725,27 +724,6 @@ export interface LocaleObject extends Record<string, any>
 ##### iso
 
 ##### name
-
-
-### Route
-
-Route config for vue-router v4
-
-**Signature:**
-```typescript
-export interface Route 
-```
-
-
-#### Properties
-
-##### children
-
-##### file
-
-##### name
-
-##### path
 
 
 ### RouteLegacy
