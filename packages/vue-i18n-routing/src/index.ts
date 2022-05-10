@@ -28,6 +28,7 @@ export {
   registerGlobalOptions,
   getGlobalOptions,
   extendI18n,
+  getLocalesRegex,
   proxyVueInstance
 } from './extends'
 export type {

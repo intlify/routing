@@ -165,7 +165,7 @@ function createVueRouter(options: I18nRoutingOptions, version: number): VueRoute
   }
 }
 
-function getLocalesRegex(localeCodes: string[]) {
+export function getLocalesRegex(localeCodes: string[]) {
   return new RegExp(`^/(${localeCodes.join('|')})(?:/|$)`, 'i')
 }
 

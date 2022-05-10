@@ -36,6 +36,7 @@
   - [findBrowserLocale](#findbrowserlocale)
   - [getGlobalOptions](#getglobaloptions)
   - [getLocale](#getlocale)
+  - [getLocalesRegex](#getlocalesregex)
   - [getRouteBaseName](#getroutebasename)
   - [localeHead](#localehead)
   - [localeLocation](#localelocation)
@@ -392,6 +393,8 @@ export declare function getLocale(i18n: I18n | Composer | VueI18n): Locale;
 #### Returns
 
  A locale
+
+### getLocalesRegex
 
 ### getRouteBaseName
 
