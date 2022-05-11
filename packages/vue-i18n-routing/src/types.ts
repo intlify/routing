@@ -174,6 +174,6 @@ export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlRe
   routeOptionsResolver?: RouteOptionsResolver
 } & RouterOptions
 
-export type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
+export type { Route, RouteLocationNormalized, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 
 /* eslint-enable @typescript-eslint/no-explicit-any */
