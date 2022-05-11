@@ -48,7 +48,7 @@ export function getNormalizedLocales(locales: string[] | LocaleObject[]): Locale
   return normalized
 }
 
-function isI18nInstance(i18n: any): i18n is I18n {
+export function isI18nInstance(i18n: any): i18n is I18n {
   return i18n != null && 'global' in i18n && 'mode' in i18n
 }
 

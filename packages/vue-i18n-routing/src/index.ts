@@ -12,7 +12,17 @@ export * from './compatibles'
 export * from './composables'
 export * from './resolve'
 export * from './types'
-export { getLocale, setLocale, resolveBaseUrl, findBrowserLocale } from './utils'
+export {
+  getLocale,
+  setLocale,
+  resolveBaseUrl,
+  findBrowserLocale,
+  isComposer,
+  isExportedGlobalComposer,
+  isI18nInstance,
+  isLegacyVueI18n,
+  isVueI18n
+} from './utils'
 export type {
   I18nCommonRoutingOptions,
   I18nCommonRoutingOptionsWithComposable,

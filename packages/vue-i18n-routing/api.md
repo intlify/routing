@@ -38,6 +38,11 @@
   - [getLocale](#getlocale)
   - [getLocalesRegex](#getlocalesregex)
   - [getRouteBaseName](#getroutebasename)
+  - [isComposer](#iscomposer)
+  - [isExportedGlobalComposer](#isexportedglobalcomposer)
+  - [isI18nInstance](#isi18ninstance)
+  - [isLegacyVueI18n](#islegacyvuei18n)
+  - [isVueI18n](#isvuei18n)
   - [localeHead](#localehead)
   - [localeLocation](#localelocation)
   - [localePath](#localepath)
@@ -397,6 +402,16 @@ export declare function getLocale(i18n: I18n | Composer | VueI18n): Locale;
 ### getLocalesRegex
 
 ### getRouteBaseName
+
+### isComposer
+
+### isExportedGlobalComposer
+
+### isI18nInstance
+
+### isLegacyVueI18n
+
+### isVueI18n
 
 ### localeHead
 
