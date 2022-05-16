@@ -1,4 +1,4 @@
-import { isString } from '@intlify/shared'
+import { isString, assign } from '@intlify/shared'
 import { adjustRoutePathForTrailingSlash } from './utils'
 import {
   DEFAULT_LOCALE,
@@ -9,11 +9,6 @@ import {
 } from './constants'
 
 import type { Strategies, I18nRoute, I18nRoutingOptions, ComputedRouteOptions, RouteOptionsResolver } from './types'
-
-// type RouteOptions = {
-//   locales: string[]
-//   paths: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
-// }
 
 /**
  * Localize routes
@@ -62,7 +57,7 @@ export function localizeRoutes(
       return [route]
     }
 
-    // Resolve with route (page) options
+    // resolve with route (page) options
     let routeOptions: ComputedRouteOptions | null = null
     if (optionsResolver != null) {
       routeOptions = optionsResolver(route, allowedLocaleCodes)
@@ -71,11 +66,34 @@ export function localizeRoutes(
       }
     }
 
-    const targetLocales = allowedLocaleCodes
+    // component specific options
+    const componentOptions: ComputedRouteOptions = {
+      locales: _localeCodes,
+      paths: {}
+    }
+    if (routeOptions != null) {
+      assign(componentOptions, routeOptions)
+    }
+    assign(componentOptions, { locales: allowedLocaleCodes })
 
-    // TODO: component options
+    // double check locales to remove any locales not found in pageOptions.
+    // this is there to prevent children routes being localized even though they are disabled in the configuration.
+    if (
+      componentOptions.locales.length > 0 &&
+      routeOptions &&
+      routeOptions.locales != null &&
+      routeOptions.locales.length > 0
+    ) {
+      const filteredLocales = []
+      for (const locale of componentOptions.locales) {
+        if (routeOptions.locales.includes(locale)) {
+          filteredLocales.push(locale)
+        }
+      }
+      componentOptions.locales = filteredLocales
+    }
 
-    return targetLocales.reduce((_routes, locale) => {
+    return componentOptions.locales.reduce((_routes, locale) => {
       const { name } = route
       let { path } = route
       const localizedRoute = { ...route }
@@ -93,7 +111,10 @@ export function localizeRoutes(
         )
       }
 
-      // TODO: custom paths
+      // get custom path if any
+      if (componentOptions.paths && componentOptions.paths[locale]) {
+        path = componentOptions.paths[locale]
+      }
 
       // For 'prefix_and_default' strategy and default locale:
       // - if it's a parent page, add it with default locale suffix added (no suffix if page has children)

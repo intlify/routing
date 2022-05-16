@@ -72,7 +72,7 @@ export type ComputedRouteOptions = {
 /**
  * Resolver for route localizing options
  */
-export type RouteOptionsResolver = (route: I18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null
+export type RouteOptionsResolver = (route: I18nRoute, localeCodes: string[]) => ComputedRouteOptions | null
 
 /**
  * Options to initialize a VueRouter instance
