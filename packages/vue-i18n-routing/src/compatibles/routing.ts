@@ -2,7 +2,6 @@ import { isVue3, isRef, unref } from 'vue-demi'
 import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
-import { STRATEGIES } from '../constants'
 import { getI18nRoutingOptions } from './utils'
 
 import type {
@@ -17,7 +16,7 @@ import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { Strategies } from '../types'
 import type { RoutingProxy } from './types'
 
-const RESOLVED_PREFIXED = new Set<Strategies>([STRATEGIES.PREFIX_AND_DEFAULT, STRATEGIES.PREFIX_EXCEPT_DEFAULT])
+const RESOLVED_PREFIXED = new Set<Strategies>(['prefix_and_default', 'prefix_except_default'])
 
 export function getRouteBaseName(
   this: RoutingProxy,
@@ -129,7 +128,7 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
         // don't prefix default locale
         !(isDefaultLocale && RESOLVED_PREFIXED.has(strategy)) &&
         // no prefix for any language
-        !(strategy === STRATEGIES.NO_PREFIX)
+        !(strategy === 'no_prefix')
       // if route has a path defined but no name, resolve full route using the path
       if (isPrefixed) {
         localizedRoute.path = `/${_locale}${localizedRoute.path}`
