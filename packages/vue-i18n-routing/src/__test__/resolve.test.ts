@@ -152,6 +152,29 @@ describe('localizeRoutes', function () {
     })
   })
 
+  describe('strategy: "prefix_except_default"', function () {
+    it('should be localized routing', function () {
+      const routes: I18nRoute[] = [
+        {
+          path: '/',
+          name: 'home'
+        },
+        {
+          path: '/about',
+          name: 'about'
+        }
+      ]
+      const localeCodes = ['en', 'ja']
+      const localizedRoutes = localizeRoutes(routes, {
+        defaultLocale: 'en',
+        strategy: 'prefix_except_default',
+        locales: localeCodes
+      })
+
+      expect(localizedRoutes).toMatchSnapshot()
+    })
+  })
+
   describe('strategy: "prefix"', function () {
     it('should be localized routing', function () {
       const routes: I18nRoute[] = [

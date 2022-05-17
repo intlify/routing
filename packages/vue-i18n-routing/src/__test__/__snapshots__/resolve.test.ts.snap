@@ -159,6 +159,27 @@ exports[`localizeRoutes > strategy: "prefix_and_default" > should be localized r
 ]
 `;
 
+exports[`localizeRoutes > strategy: "prefix_except_default" > should be localized routing 1`] = `
+[
+  {
+    "name": "home___en",
+    "path": "/",
+  },
+  {
+    "name": "home___ja",
+    "path": "/ja",
+  },
+  {
+    "name": "about___en",
+    "path": "/about",
+  },
+  {
+    "name": "about___ja",
+    "path": "/ja/about",
+  },
+]
+`;
+
 exports[`localizeRoutes > trailing slash > should be localized routing 1`] = `
 [
   {
