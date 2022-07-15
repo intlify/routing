@@ -5,6 +5,8 @@ import i18n from './i18n'
 import { createRouter } from './router'
 import { castToVueI18n } from '@intlify/vue-i18n-bridge'
 
+import './assets/main.css'
+
 Vue.use(VueCompositionAPI)
 
 const router = createRouter(i18n)
