@@ -107,7 +107,7 @@
     "url": "https://github.com/intlify/routing/issues"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14.6"
   },
   "publishConfig": {
     "access": "public"
