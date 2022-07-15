@@ -179,7 +179,8 @@ describe('useLocaleRoute', () => {
       assert.include(localeRoute('/'), {
         fullPath: '/en',
         path: '/en',
-        name: 'not-found___en',
+        // name: 'not-found___en',
+        name: 'index___en',
         href: '/en'
       })
       assert.include(localeRoute('/about', 'ja'), {
@@ -251,7 +252,8 @@ describe('useLocaleLocation', () => {
       assert.include(localeLocation('/'), {
         fullPath: '/en',
         path: '/en',
-        name: 'not-found___en',
+        // name: 'not-found___en',
+        name: 'index___en',
         href: '/en'
       })
       assert.include(localeLocation('/about', 'ja'), {

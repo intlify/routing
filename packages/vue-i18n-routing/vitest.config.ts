@@ -1,9 +1,4 @@
-/// <reference types="vitest" />
-import { defineConfig } from 'vite'
-
-import type { AliasOptions } from 'vite'
-
-const alias: AliasOptions = {}
+import { defineConfig } from 'vitest/config'
 
 const TARGET = process.env.TEST_TARGET || 'vue3'
 const include =
@@ -13,13 +8,10 @@ const include =
 
 export default defineConfig({
   define: {
-    __VERSION__: '__VERSION__'
-  },
-  resolve: {
-    alias
+    __VERSION__: JSON.stringify('__VERSION__')
   },
   test: {
-    global: true,
+    globals: true,
     include,
     environment: 'happy-dom',
     testTimeout: 5000

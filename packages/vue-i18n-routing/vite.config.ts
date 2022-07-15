@@ -1,19 +1,23 @@
-import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'url'
 import dts from 'vite-plugin-dts'
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import rimraf from 'rimraf'
 
 import pkg from './package.json'
 
+// like `__dirname` of Node.js
+const currentDir = fileURLToPath(new URL('.', import.meta.url))
+
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    __VERSION__: `'${pkg.version}'`
+    __VERSION__: JSON.stringify(pkg.version)
   },
   build: {
     lib: {
-      entry: resolve(__dirname, './src/index.ts'),
+      entry: resolve(currentDir, './src/index.ts'),
       name: 'VueI18nRouting',
       formats: ['es', 'cjs', 'iife']
     },
@@ -30,8 +34,12 @@ export default defineConfig({
   },
   plugins: [
     dts({
+      // NOTE:
+      //  if vite-plugin-dts will fix the hoisting for multiple files, we should switch to it.
+      //  we're facing the broken file when some d.ts .files is hosted.
+      // rollupTypes: true,
       afterBuild: () => {
-        const extractorConfigPath = resolve(__dirname, `api-extractor.json`)
+        const extractorConfigPath = resolve(currentDir, `api-extractor.json`)
         const extractorConfig = ExtractorConfig.loadFileAndPrepare(extractorConfigPath)
         const extractorResult = Extractor.invoke(extractorConfig, {
           localBuild: true,
@@ -47,7 +55,7 @@ export default defineConfig({
           )
         }
 
-        rimraf.sync(resolve(__dirname, './dist/src'))
+        rimraf.sync(resolve(currentDir, './dist/src'))
       }
     })
   ]

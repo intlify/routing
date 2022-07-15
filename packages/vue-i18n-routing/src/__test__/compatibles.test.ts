@@ -182,7 +182,8 @@ describe('localeRoute', () => {
       assert.include(vm.localeRoute('/'), {
         fullPath: '/en',
         path: '/en',
-        name: 'not-found___en',
+        // name: 'not-found___en',
+        name: 'index___en',
         href: '/en'
       })
       assert.include(vm.localeRoute('/about', 'ja'), {
@@ -263,7 +264,8 @@ describe('localeLocation', () => {
       assert.include(vm.localeLocation('/'), {
         fullPath: '/en',
         path: '/en',
-        name: 'not-found___en',
+        // name: 'not-found___en',
+        name: 'index___en',
         href: '/en'
       })
       assert.include(vm.localeLocation('/about', 'ja'), {

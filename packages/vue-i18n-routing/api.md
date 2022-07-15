@@ -244,7 +244,7 @@ Resolver for route localizing options
 
 **Signature:**
 ```typescript
-export declare type RouteOptionsResolver = (route: I18nRoute, allowedLocaleCodes: string[]) => ComputedRouteOptions | null;
+export declare type RouteOptionsResolver = (route: I18nRoute, localeCodes: string[]) => ComputedRouteOptions | null;
 ```
 
 ### RoutingProxy
