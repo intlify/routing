@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 overrides:
   vite: ^3.0.0
-  vue-demi: ^0.12.1
+  vue-demi: ^0.13.4
   vue-i18n-routing: workspace:*
   '@intlify/vue-i18n-bridge': ^0.3.5
   '@intlify/vue-router-bridge': ^0.3.5
@@ -81,7 +81,7 @@ importers:
       vite-plugin-dts: ^0.9.6
       vitest: ^0.18.0
       vue: ^3.2.27
-      vue-demi: ^0.12.1
+      vue-demi: ^0.13.4
       vue-i18n: npm:vue-i18n@next
       vue-i18n-bridge: next
       vue-i18n-legacy: npm:vue-i18n@8
@@ -94,7 +94,7 @@ importers:
       '@intlify/vue-i18n-bridge': 0.3.6_vue-i18n@9.2.0-beta.37
       '@intlify/vue-router-bridge': 0.3.6_vue-router@4.1.2
       ufo: 0.7.11
-      vue-demi: 0.12.5_vue@3.2.37
+      vue-demi: 0.13.4_vue@3.2.37
     devDependencies:
       '@microsoft/api-extractor': 7.28.4
       api-docs-gen: 0.4.0
@@ -5961,8 +5961,8 @@ packages:
       - terser
     dev: true
 
-  /vue-demi/0.12.5_hn455vsswqh6jsixz5wzxonx6i:
-    resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
+  /vue-demi/0.13.4_hn455vsswqh6jsixz5wzxonx6i:
+    resolution: {integrity: sha512-KP4lq9uSz0KZbaqCllRhnxMV3mYRsRWJfdsAhZyt5bV5O1RTpoeDptBRV9NOa/JgOpfaA9ane88VF7OjWNK/DA==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
@@ -5977,8 +5977,8 @@ packages:
       vue: 2.6.14
     dev: false
 
-  /vue-demi/0.12.5_vue@3.2.37:
-    resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
+  /vue-demi/0.13.4_vue@3.2.37:
+    resolution: {integrity: sha512-KP4lq9uSz0KZbaqCllRhnxMV3mYRsRWJfdsAhZyt5bV5O1RTpoeDptBRV9NOa/JgOpfaA9ane88VF7OjWNK/DA==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
@@ -6281,7 +6281,7 @@ packages:
     id: file:packages/vue-i18n-routing
     name: vue-i18n-routing
     version: 0.0.0
-    engines: {node: '>= 12'}
+    engines: {node: '>= 14.6'}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       vue: ^2.6.14 || ^3.2.0
@@ -6305,7 +6305,7 @@ packages:
       '@intlify/vue-router-bridge': 0.3.6_vue-router@4.1.2
       ufo: 0.7.11
       vue: 3.2.37
-      vue-demi: 0.12.5_vue@3.2.37
+      vue-demi: 0.13.4_vue@3.2.37
       vue-i18n: 9.2.0-beta.37_vue@3.2.37
       vue-router: 4.1.2_vue@3.2.37
     dev: false
@@ -6315,7 +6315,7 @@ packages:
     id: file:packages/vue-i18n-routing
     name: vue-i18n-routing
     version: 0.0.0
-    engines: {node: '>= 12'}
+    engines: {node: '>= 14.6'}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       vue: ^2.6.14 || ^3.2.0
@@ -6340,7 +6340,7 @@ packages:
       '@vue/composition-api': 1.7.0_vue@2.6.14
       ufo: 0.7.11
       vue: 2.6.14
-      vue-demi: 0.12.5_hn455vsswqh6jsixz5wzxonx6i
+      vue-demi: 0.13.4_hn455vsswqh6jsixz5wzxonx6i
       vue-i18n: 8.27.2
       vue-i18n-bridge: 9.2.0-beta.37_vue@2.6.14
       vue-router: 3.5.4
