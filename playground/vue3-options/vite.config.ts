@@ -1,7 +1,8 @@
-import { fileURLToPath } from 'url'
+import { fileURLToPath, URL } from 'url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import vuei18n from '@intlify/vite-plugin-vue-i18n'
 
 // TODO: vue-i18n must be resolved with bundler or bundler plugin

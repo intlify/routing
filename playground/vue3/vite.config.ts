@@ -1,7 +1,8 @@
-import { fileURLToPath } from 'url'
+import { fileURLToPath, URL } from 'url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import vuei18n from '@intlify/vite-plugin-vue-i18n'
 
 // TODO: vue-i18n must be resolved with bundler or bundler plugin
@@ -12,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vuei18n({ include: fileURLToPath(new URL('./src/locales/**', import.meta.url)) })],
+  plugins: [vue(), vueJsx(), vuei18n({ include: fileURLToPath(new URL('./src/locales/**', import.meta.url)) })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
