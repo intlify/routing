@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n-bridge'
+import { useI18n } from '@intlify/vue-i18n-bridge'
 
 const { t } = useI18n()
 </script>

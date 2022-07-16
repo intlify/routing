@@ -77,7 +77,7 @@
   "pnpm": {
     "overrides": {
       "vite": "^3.0.0",
-      "vue-demi": "^0.13.4",
+      "vue-demi": "^0.13.5",
       "vue-i18n-routing": "workspace:*",
       "@intlify/vue-i18n-bridge": "^0.3.5",
       "@intlify/vue-router-bridge": "^0.3.5"
@@ -118,8 +118,8 @@
     "play:vue2:options": "pnpm switch:vue2 && pnpm --filter playground-vue2-options dev",
     "play:vue3": "pnpm switch:vue3 && pnpm --filter playground-vue3 dev",
     "play:vue3:options": "pnpm switch:vue3 && pnpm --filter playground-vue3-options dev",
-    "switch:vue2": "npx vue-i18n-switch 8 && npx vue-router-switch 3 && vue-demi-switch 2",
-    "switch:vue3": "npx vue-i18n-switch 9 && npx vue-router-switch 4 && vue-demi-switch 3",
+    "switch:vue2": "npx vue-demi-switch 2 && npx vue-i18n-switch 8 && npx vue-router-switch 3",
+    "switch:vue3": "npx vue-demi-switch 3 && npx vue-i18n-switch 9 && npx vue-router-switch 4",
     "preinstall": "node ./scripts/preinstall.mjs",
     "release": "./scripts/release.sh",
     "typecheck": "pnpm switch:vue3 && pnpm --filter vue-i18n-routing typecheck",

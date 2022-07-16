@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue'
-import { computed } from '@vue/composition-api'
-import { useI18n } from 'vue-i18n-bridge'
+import { computed } from 'vue'
+import { useI18n } from '@intlify/vue-i18n-bridge'
 import { useLocalePath, useSwitchLocalePath, useLocaleHead } from 'vue-i18n-routing'
 
 import type { LocaleObject } from 'vue-i18n-routing'
