@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@intlify/shared": "next",
-    "@intlify/vue-i18n-bridge": "^0.3.5",
-    "@intlify/vue-router-bridge": "^0.3.5",
+    "@intlify/vue-i18n-bridge": "edge",
+    "@intlify/vue-router-bridge": "edge",
     "ufo": "^0.7.9",
     "vue-demi": "^0.13.4"
   },
