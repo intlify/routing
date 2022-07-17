@@ -76,7 +76,7 @@ importers:
       api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
       typescript: ^4.7.4
-      ufo: ^0.7.9
+      ufo: ^0.8.5
       vite: ^3.0.0
       vite-plugin-dts: ^0.9.6
       vitest: ^0.18.0
@@ -93,7 +93,7 @@ importers:
       '@intlify/shared': 9.2.0-beta.39
       '@intlify/vue-i18n-bridge': 0.3.6_vue-i18n@9.2.0-beta.39
       '@intlify/vue-router-bridge': 0.3.6_vue-router@4.1.2
-      ufo: 0.7.11
+      ufo: 0.8.5
       vue-demi: 0.13.5_vue@3.2.37
     devDependencies:
       '@microsoft/api-extractor': 7.28.4
@@ -161,7 +161,7 @@ importers:
       '@intlify/vue-i18n-bridge': ^0.3.5
       '@intlify/vue-router-bridge': ^0.3.5
       '@types/node': ^18.0.4
-      '@vitejs/plugin-legacy': latest
+      '@vitejs/plugin-legacy': 1.8.2
       '@vue/composition-api': ^1.7.0
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
@@ -175,7 +175,7 @@ importers:
       vue-i18n-bridge: next
       vue-i18n-routing: workspace:*
       vue-router: ^3.5.3
-      vue-template-compiler: ^2.6.14
+      vue-template-compiler: 2.6.14
       vue-tsc: latest
     dependencies:
       '@intlify/vue-i18n-bridge': 0.3.6_3vkfiq6m775wl35rthw3il6w4u
@@ -188,15 +188,15 @@ importers:
       vue-router: 3.5.4
     devDependencies:
       '@types/node': 18.0.5
-      '@vitejs/plugin-legacy': 2.0.0_terser@5.14.2+vite@3.0.0
+      '@vitejs/plugin-legacy': 1.8.2_vite@3.0.0
       '@vue/tsconfig': 0.1.3_@types+node@18.0.5
       npm-run-all: 4.1.5
       terser: 5.14.2
       typescript: 4.7.4
       unplugin-vue2-script-setup: 0.11.2_mz2l6b26brxzisycrupoil4g7a
       vite: 3.0.0_terser@5.14.2
-      vite-plugin-vue2: 2.0.2_flv5dv7umriclo2gbrh6qojcte
-      vue-template-compiler: 2.7.7
+      vite-plugin-vue2: 2.0.2_dh3qnx6goiqtn2bbgn4flhb3ze
+      vue-template-compiler: 2.6.14
       vue-tsc: 0.38.8_typescript@4.7.4
     dependenciesMeta:
       vue-i18n-routing:
@@ -1642,6 +1642,20 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.30.6
       eslint-visitor-keys: 3.3.0
+    dev: true
+
+  /@vitejs/plugin-legacy/1.8.2_vite@3.0.0:
+    resolution: {integrity: sha512-NCOKU+pU+cxLMR9P9RTolEuOK+h+zYBXlknj+zGcKSj/NXBZYgA1GAH1FnO4zijoWRiTaiOm2ha9LQrELE7XHg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      vite: ^2.8.0
+    dependencies:
+      '@babel/standalone': 7.18.8
+      core-js: 3.23.4
+      magic-string: 0.26.2
+      regenerator-runtime: 0.13.9
+      systemjs: 6.12.1
+      vite: 3.0.0_terser@5.14.2
     dev: true
 
   /@vitejs/plugin-legacy/2.0.0_terser@5.14.2+vite@3.0.0:
@@ -5675,8 +5689,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ufo/0.7.11:
-    resolution: {integrity: sha512-IT3q0lPvtkqQ8toHQN/BkOi4VIqoqheqM1FnkNWT9y0G8B3xJhwnoKBu5OHx8zHDOvveQzfKuFowJ0VSARiIDg==}
+  /ufo/0.8.5:
+    resolution: {integrity: sha512-e4+UtA5IRO+ha6hYklwj6r7BjiGMxS0O+UaSg9HbaTefg4kMkzj4tXzEBajRR+wkxf+golgAWKzLbytCUDMJAA==}
     dev: false
 
   /unbox-primitive/1.0.2:
@@ -5803,7 +5817,7 @@ packages:
       vite: 3.0.0
     dev: true
 
-  /vite-plugin-vue2/2.0.2_flv5dv7umriclo2gbrh6qojcte:
+  /vite-plugin-vue2/2.0.2_dh3qnx6goiqtn2bbgn4flhb3ze:
     resolution: {integrity: sha512-Oo1iwc5Zo376s3MYXqS7j+KXs26EjiyWV8/dmI23SoorO3zaAgnBefR45Zme+QtM407tJ2MVq0mqfI10qA5+LQ==}
     peerDependencies:
       vite: ^2.0.0 || ^3.0.0
@@ -5838,8 +5852,8 @@ packages:
       slash: 3.0.0
       source-map: 0.7.4
       vite: 3.0.0_terser@5.14.2
-      vue-template-babel-compiler: 1.2.0_pgdnsbwk6g2o4qupm5edx466lq
-      vue-template-compiler: 2.7.7
+      vue-template-babel-compiler: 1.2.0_ev5jzj74xu2fombjvobqpq452a
+      vue-template-compiler: 2.6.14
     transitivePeerDependencies:
       - arc-templates
       - atpl
@@ -6136,7 +6150,7 @@ packages:
       '@vue/devtools-api': 6.2.1
       vue: 3.2.37
 
-  /vue-template-babel-compiler/1.2.0_pgdnsbwk6g2o4qupm5edx466lq:
+  /vue-template-babel-compiler/1.2.0_ev5jzj74xu2fombjvobqpq452a:
     resolution: {integrity: sha512-CScBSX1/wCdmmZ/Lvj/63p2CCVTS0FMj0F69VRBo73CuJrjvPAPGmeNJ7D/cwt/VS2PduowRWbO8N4Zh4Z3b0g==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -6154,9 +6168,16 @@ packages:
       '@babel/plugin-transform-spread': 7.18.6_@babel+core@7.18.6
       '@babel/types': 7.18.8
       deepmerge: 4.2.2
-      vue-template-compiler: 2.7.7
+      vue-template-compiler: 2.6.14
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vue-template-compiler/2.6.14:
+    resolution: {integrity: sha512-ODQS1SyMbjKoO1JBJZojSw6FE4qnh9rIpUZn2EUT86FKizx9uH5z6uXiIrm4/Nb/gwxTi/o17ZDEGWAXHvtC7g==}
+    dependencies:
+      de-indent: 1.0.2
+      he: 1.2.0
     dev: true
 
   /vue-template-compiler/2.7.7:
@@ -6376,7 +6397,7 @@ packages:
       '@intlify/shared': 9.2.0-beta.39
       '@intlify/vue-i18n-bridge': 0.3.6_vue-i18n@8.27.2
       '@intlify/vue-router-bridge': 0.3.6_vue-router@3.5.4
-      ufo: 0.7.11
+      ufo: 0.8.5
       vue: 2.7.7
       vue-demi: 0.13.5_vue@2.7.7
       vue-i18n: 8.27.2
@@ -6412,7 +6433,7 @@ packages:
       '@intlify/vue-i18n-bridge': 0.3.6_3vkfiq6m775wl35rthw3il6w4u
       '@intlify/vue-router-bridge': 0.3.6_c4wmvzyh6cwhk2je2bz4st4opm
       '@vue/composition-api': 1.7.0_vue@2.6.14
-      ufo: 0.7.11
+      ufo: 0.8.5
       vue: 2.6.14
       vue-demi: 0.13.5_hn455vsswqh6jsixz5wzxonx6i
       vue-i18n: 8.27.2
@@ -6447,7 +6468,7 @@ packages:
       '@intlify/shared': 9.2.0-beta.39
       '@intlify/vue-i18n-bridge': 0.3.6_vue-i18n@9.2.0-beta.39
       '@intlify/vue-router-bridge': 0.3.6_vue-router@4.1.2
-      ufo: 0.7.11
+      ufo: 0.8.5
       vue: 3.2.37
       vue-demi: 0.13.5_vue@3.2.37
       vue-i18n: 9.2.0-beta.39_vue@3.2.37
