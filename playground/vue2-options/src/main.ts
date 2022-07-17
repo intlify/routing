@@ -8,12 +8,12 @@ import './assets/main.css'
 
 const router = createRouter(i18n)
 
-Vue.use(castToVueI18n(i18n))
+Vue.use(i18n)
 
 const app = new Vue({
   // @ts-ignore TODO:
   router,
-  i18n,
+  i18n: castToVueI18n(i18n),
   render: h => h(App)
 })
 
