@@ -111,6 +111,18 @@ export function getLocales(i18n: I18n | VueI18n | Composer): string[] | LocaleOb
       : (target as any).locales // TODO:
 }
 
+export function getLocaleCodes(i18n: I18n | VueI18n | Composer): string[] {
+  const target: unknown = isI18nInstance(i18n) ? i18n.global : i18n
+  // prettier-ignore
+  return isComposer(target)
+    ? isVue2 && isLegacyVueI18n(i18n)
+      ? i18n.localeCodes
+      : (target as any).localeCodes.value
+    : isExportedGlobalComposer(target) || isVueI18n(target) || isLegacyVueI18n(target)
+      ? (target as any).localeCodes
+      : (target as any).localeCodes // TODO:
+}
+
 /**
  * Set a locale
  *

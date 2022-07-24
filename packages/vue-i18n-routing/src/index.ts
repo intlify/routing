@@ -14,6 +14,8 @@ export * from './resolve'
 export * from './types'
 export {
   getLocale,
+  getLocales,
+  getLocaleCodes,
   setLocale,
   resolveBaseUrl,
   findBrowserLocale,
