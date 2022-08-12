@@ -24,8 +24,8 @@
     }
   },
   "devDependencies": {
+    "@nexhome/yorkie": "^2.0.8",
     "@intlify/eslint-plugin-vue-i18n": "^1.3.0",
-    "@secretlint/secretlint-rule-preset-recommend": "^4.1.3",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
@@ -46,10 +46,8 @@
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "vite": "^3.0.0",
-    "secretlint": "^4.1.3",
     "typescript": "^4.7.4",
-    "vue-eslint-parser": "^8.0.1",
-    "yorkie": "^2.0.0"
+    "vue-eslint-parser": "^8.0.1"
   },
   "engines": {
     "node": ">= 14.6"
@@ -69,9 +67,6 @@
     "*.ts?(x)": [
       "prettier --parser=typescript --write",
       "eslint --fix --ext .ts"
-    ],
-    "*": [
-      "secretlint"
     ]
   },
   "pnpm": {
@@ -113,7 +108,6 @@
     "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
     "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
     "lint:fix": "run-p \"lint:codes --fix\" \"lint:i18n:vue3 --fix\" \"lint:i18n:vue2 --fix\"",
-    "lint:secret": "npx secretlint \"**/*\"",
     "play:vue2": "pnpm switch:vue2 && pnpm --filter playground-vue2 dev",
     "play:vue2:options": "pnpm switch:vue2 && pnpm --filter playground-vue2-options dev",
     "play:vue3": "pnpm switch:vue3 && pnpm --filter playground-vue3 dev",
@@ -127,7 +121,7 @@
     "test:unit": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter vue-i18n-routing test",
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm --filter vue-i18n-routing test",
     "test:watch": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter playground-vue3 test:watch",
-    "teest:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover"
+    "test:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover"
   },
   "workspaces": [
     "packages/*",
