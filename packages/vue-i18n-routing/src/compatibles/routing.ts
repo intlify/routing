@@ -30,7 +30,7 @@ export function getRouteBaseName(
       ? unref<Route | RouteLocationNormalizedLoaded>(givenRoute)
       : givenRoute
     : this.route
-  if (!route.name) {
+  if (route == null || !route.name) {
     return
   }
   const name = getRouteName(route.name)
