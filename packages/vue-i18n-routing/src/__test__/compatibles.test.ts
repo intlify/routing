@@ -88,6 +88,10 @@ describe('localePath', () => {
           assert.equal(vm.localePath('not-found'), '/en')
           // object
           assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/ja/about')
+          // omit name & path
+          assert.equal(vm.localePath({ params: { foo: 1 } }), '/en')
+          await router.push('/ja')
+          assert.equal(vm.localePath({ params: { foo: 1 } }), '/ja')
         })
 
         it('should be worked', async () => {

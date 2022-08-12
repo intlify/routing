@@ -138,6 +138,10 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
         : withoutTrailingSlash(localizedRoute.path, true)
     }
   } else {
+    if (!localizedRoute.name && !localizedRoute.path) {
+      localizedRoute.name = getRouteBaseName.call(this, this.route)
+    }
+
     localizedRoute.name = getLocaleRouteName(localizedRoute.name, _locale, {
       defaultLocale,
       strategy,
