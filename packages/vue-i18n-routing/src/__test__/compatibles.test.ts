@@ -92,35 +92,10 @@ describe('localePath', () => {
           assert.equal(vm.localePath({ params: { foo: 1 } }), '/en')
           await router.push('/ja')
           assert.equal(vm.localePath({ params: { foo: 1 } }), '/ja')
-        })
-
-        it('should be worked', async () => {
-          const i18n = createI18n({ legacy, locale: 'en' })
-          const router = createRouter(i18n, {
-            version: 4,
-            locales: ['en', 'ja'],
-            strategy,
-            routes: [
-              { path: '/', name: 'index', component: { template: '<div>index</div>' } },
-              { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
-              { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div>Not Found</div>' } }
-            ],
-            history: createMemoryHistory()
-          })
-          await router.push('/en')
-          const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
-
-          // path
-          assert.equal(vm.localePath('/'), '/en')
-          assert.equal(vm.localePath('/about', 'ja'), '/ja/about')
-          assert.equal(vm.localePath('/:pathMatch(.*)*', 'ja'), '/ja/:pathMatch(.*)*')
-          // name
-          assert.equal(vm.localePath('index', 'ja'), '/ja')
-          assert.equal(vm.localePath('about'), '/en/about')
-          assert.equal(vm.localePath('not-found', 'ja'), '/ja')
-          assert.equal(vm.localePath('not-found'), '/en')
-          // object
-          assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/ja/about')
+          // no define path
+          assert.equal(vm.localePath('/vue-i18n'), '/ja/vue-i18n')
+          // no define name
+          assert.equal(vm.localePath('vue-i18n'), '')
         })
       })
     })
@@ -153,6 +128,14 @@ describe('localePath', () => {
         assert.equal(vm.localePath('not-found'), '/')
         // object
         assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/about')
+        // omit name & path
+        assert.equal(vm.localePath({ params: { foo: 1 } }), '/')
+        await router.push('/ja')
+        assert.equal(vm.localePath({ params: { foo: 1 } }), '/')
+        // no define path
+        assert.equal(vm.localePath('/vue-i18n'), '/vue-i18n')
+        // no define
+        assert.equal(vm.localePath('vue-i18n'), '')
       })
     })
   }
@@ -234,6 +217,15 @@ describe('localeRoute', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
+      // no define path
+      assert.include(vm.localeRoute('/vue-i18n', 'ja'), {
+        fullPath: '/ja/vue-i18n',
+        path: '/ja/vue-i18n',
+        name: 'not-found___ja',
+        href: '/ja/vue-i18n'
+      })
+      // no define name
+      assert.isUndefined(vm.localeRoute('vue-i18n'))
     })
   }
 
@@ -316,6 +308,15 @@ describe('localeLocation', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
+      // no define path
+      assert.include(vm.localeLocation('/vue-i18n', 'ja'), {
+        fullPath: '/ja/vue-i18n',
+        path: '/ja/vue-i18n',
+        name: 'not-found___ja',
+        href: '/ja/vue-i18n'
+      })
+      // no define name
+      assert.isUndefined(vm.localeLocation('vue-i18n'))
     })
   }
 
@@ -350,6 +351,14 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('ja'), '/ja')
       assert.equal(vm.switchLocalePath('en'), '/en')
       assert.equal(vm.switchLocalePath('fr'), '/fr')
+      assert.equal(vm.switchLocalePath('vue-i18n'), '')
+
+      await router.push('/ja/about')
+
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about')
+      assert.equal(vm.switchLocalePath('en'), '/en/about')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/about')
+      assert.equal(vm.switchLocalePath('vue-i18n'), '')
     })
   }
 

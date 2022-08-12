@@ -1,4 +1,4 @@
-import { isVue3, isRef, unref } from 'vue-demi'
+import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
@@ -155,17 +155,25 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
     }
   }
 
-  const resolvedRoute = router.resolve(localizedRoute) as any
-  // prettier-ignore
-  if (isVue3
-    ? resolvedRoute.name // for vue-router v4
-    : resolvedRoute.route.name // for vue-router v3
-  ) {
-    return resolvedRoute
+  try {
+    const resolvedRoute = router.resolve(localizedRoute) as any
+    // prettier-ignore
+    if (isVue3
+      ? resolvedRoute.name // for vue-router v4
+      : resolvedRoute.route.name // for vue-router v3
+    ) {
+      return resolvedRoute
+    }
+    // if didn't resolve to an existing route then just return resolved route based on original input.
+    return (router as Router).resolve(route)
+  } catch (e: any) {
+    if (isVue3 && e.type === 1) {
+      // `1` is No match
+      return null
+    } else if (isVue2) {
+      return null
+    }
   }
-
-  // if didn't resolve to an existing route then just return resolved route based on original input.
-  return (router as Router).resolve(route)
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
