@@ -103,8 +103,10 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   let localizedRoute = assign({}, _route)
 
   if (localizedRoute.path && !localizedRoute.name) {
-    // TODO: should improve path resolving logic ..., especially for vue-router v4, console warning is occured by vue-router resolver
-    const _resolvedRoute = router.resolve(localizedRoute) as any
+    let _resolvedRoute = null
+    try {
+      _resolvedRoute = router.resolve(localizedRoute) as any
+    } catch {}
     // prettier-ignore
     const resolvedRoute = isVue3
       ? _resolvedRoute // for vue-router v4
