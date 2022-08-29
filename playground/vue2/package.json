@@ -14,7 +14,7 @@
     "vue-demi": "0.13.5",
     "vue-router": "^3.5.3",
     "vue-i18n": "^8",
-    "vue-i18n-bridge": "next",
+    "vue-i18n-bridge": "latest",
     "@intlify/vue-i18n-bridge": "edge",
     "@intlify/vue-router-bridge": "0.3.6-87b8aa7",
     "vue-i18n-routing": "workspace:*"
