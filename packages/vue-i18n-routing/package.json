@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@intlify/shared": "latest",
-    "@intlify/vue-i18n-bridge": "^0.4.0",
-    "@intlify/vue-router-bridge": "^0.4.0",
+    "@intlify/vue-i18n-bridge": "0.3.6",
+    "@intlify/vue-router-bridge": "0.3.6",
     "ufo": "^0.8.5",
-    "vue-demi": "^0.13.5"
+    "vue-demi": "0.13.5"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.28.4",
