@@ -8,8 +8,8 @@ on:
       - .github/labels.yml
       - .github/workflows/github-label-sync.yml
   workflow_dispatch:
-  permissions:
-    contents: write
+permissions:
+  contents: write
 
 jobs:
   build:
