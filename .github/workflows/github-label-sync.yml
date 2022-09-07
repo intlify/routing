@@ -8,17 +8,11 @@ on:
       - .github/labels.yml
       - .github/workflows/github-label-sync.yml
   workflow_dispatch:
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@v1
-        with:
-          app_id: ${{ secrets.INTLIFY_LABEL_SYNC_APP_ID }}
-          private_key: ${{ secrets.INTLIFY_LABEL_SYNC_PRIVATE }}
       - uses: r7kamura/github-label-sync-action@v0
-        env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
