@@ -9,6 +9,7 @@ on:
       - .github/workflows/github-label-sync.yml
   workflow_dispatch:
 permissions:
+  administration: write
   contents: write
 
 jobs:
