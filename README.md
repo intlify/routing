@@ -20,6 +20,10 @@ We're also grateful for the contributions of the Nuxt community 💚!
 - [ ] Support Vue 2.7
 - [ ] docs
 
+## 🙌 Contributing guidelines
+
+If you are interested in contributing to `@intlify/routing` project, I highly recommend checking out [the contributing guidelines](/CONTRIBUTING.md) here. You'll find all the relevant information such as [how to make a PR](/CONTRIBUTING.md#pull-request-guidelines), [how to setup development](/CONTRIBUTING.md#development-setup) etc., there.
+
 ## ©️ License
 
 [MIT](http://opensource.org/licenses/MIT)
