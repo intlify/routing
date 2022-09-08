@@ -16,19 +16,28 @@ jobs:
         os: [ubuntu-latest]
         node: [14]
     steps:
-      - uses: actions/checkout@v2
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
+      - name: Checkout codes
+        uses: actions/checkout@v3
         with:
-          version: 6.23.6
-      - uses: actions/setup-node@v2
+          ref: ${{ github.head_ref }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.9.3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           cache: 'pnpm'
-      - name: Install
+
+      - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Lint
+
+      - name: Lint codes
         run: pnpm lint
+
   test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -36,21 +45,31 @@ jobs:
         os: [ubuntu-latest]
         node: [14]
     steps:
-      - uses: actions/checkout@v2
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
+      - name: Checkout codes
+        uses: actions/checkout@v3
         with:
-          version: 6.23.6
-      - uses: actions/setup-node@v2
+          ref: ${{ github.head_ref }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.9.3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           cache: 'pnpm'
-      - name: Install
+
+      - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+
       - name: Build
         run: pnpm build
+
       - name: Test
         run: pnpm test
+
   edge-release:
     needs:
       - test
@@ -61,25 +80,29 @@ jobs:
         os: [ubuntu-latest]
         node: [14]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout codes
+        uses: actions/checkout@v2
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.23.6
-      - uses: actions/setup-node@v2
+          version: 7.9.3
+
+      - name: Setup node
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
           cache: 'pnpm'
-      - name: Install
+
+      - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Build
-        run: pnpm build
-      - name: Release Edge
+
+      - name: Release Edge version
         if: |
           github.event_name == 'push' &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !contains(github.event.head_commit.message, 'chore') &&
           !contains(github.event.head_commit.message, 'docs')
-        run: ./scripts/release.sh
+        run: ./scripts/release-edge.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}

@@ -1,12 +1,15 @@
 #!/bin/bash
 
-set -e
+set -xe
 
 # Restore all git changes
 git restore -s@ -SW  -- packages
 
 # Build packages
 pnpm build
+
+# Bump versions
+npx jiti ./scripts/bump.ts
 
 # Update token
 if [[ ! -z ${NODE_AUTH_TOKEN} ]] ; then
@@ -19,8 +22,7 @@ fi
 # Release packages
 for PKG in packages/* ; do
   pushd $PKG
-  TAG="latest"
-  echo "⚡ Publishing $PKG with tag $TAG"
-  npx npm@8.17.0 publish --tag $TAG --access public --tolerate-republish
-  popd > /dev/null
+  echo "⚡ Publishing $PKG with edge tag"
+  pnpm publish --access public --no-git-checks --tag edge
+  popd
 done
