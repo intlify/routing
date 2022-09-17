@@ -43,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate changelog
-        run: npx gh-changelogen --repo=kazupon/sandbox-github-releases --tag=${{ steps.split.outputs._2 }}
+        run: npx gh-changelogen --repo=intlify/routing --tag=${{ steps.split.outputs._2 }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
