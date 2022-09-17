@@ -1,5 +1,5 @@
 import { isString, assign } from '@intlify/shared'
-import { adjustRoutePathForTrailingSlash } from './utils'
+
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -7,6 +7,7 @@ import {
   DEFAULT_STRATEGY,
   DEFAULT_TRAILING_SLASH
 } from './constants'
+import { adjustRoutePathForTrailingSlash } from './utils'
 
 import type { Strategies, I18nRoute, I18nRoutingOptions, ComputedRouteOptions, RouteOptionsResolver } from './types'
 

@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'url'
-import dts from 'vite-plugin-dts'
+
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import rimraf from 'rimraf'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 import pkg from './package.json'
 

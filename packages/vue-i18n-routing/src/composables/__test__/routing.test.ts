@@ -1,10 +1,11 @@
-import { describe, it, assert } from 'vitest'
-import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { createI18n, useI18n } from '@intlify/vue-i18n-bridge'
-import { createRouter } from '../../extends/router'
-import { STRATEGIES } from '../../constants'
-import { useRouteBaseName, useLocalePath, useLocaleRoute, useLocaleLocation, useSwitchLocalePath } from '../routing'
+import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { describe, it, assert } from 'vitest'
+
 import { useSetup } from '../../../scripts/vitest'
+import { STRATEGIES } from '../../constants'
+import { createRouter } from '../../extends/router'
+import { useRouteBaseName, useLocalePath, useLocaleRoute, useLocaleLocation, useSwitchLocalePath } from '../routing'
 
 import type { Route } from '@intlify/vue-router-bridge'
 

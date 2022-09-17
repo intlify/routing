@@ -1,7 +1,10 @@
-import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
+import { useRoute, useRouter } from '@intlify/vue-router-bridge'
+
 import { getRouteBaseName, localePath, localeRoute, localeLocation, switchLocalePath } from '../compatibles'
 
+import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
+import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
   RawLocation,
@@ -10,8 +13,6 @@ import type {
   RouteLocationNormalizedLoaded,
   Router
 } from '@intlify/vue-router-bridge'
-import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function proxyForComposable<T extends Function>(options: I18nCommonRoutingOptionsWithComposable, target: Function): T {

@@ -1,8 +1,8 @@
-import { vi, describe, it, assert, afterEach, expect } from 'vitest'
-import { registerGlobalOptions, createRouter, getGlobalOptions } from '../router'
-import { createMemoryHistory } from '@intlify/vue-router-bridge'
 import { createI18n } from '@intlify/vue-i18n-bridge'
-import { createRouter as _createRouter } from '@intlify/vue-router-bridge'
+import { createMemoryHistory, createRouter as _createRouter } from '@intlify/vue-router-bridge'
+import { vi, describe, it, assert, afterEach, expect } from 'vitest'
+
+import { registerGlobalOptions, createRouter, getGlobalOptions } from '../router'
 
 describe('registerGlobalOptions', () => {
   afterEach(() => {

@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isRef, isVue2 } from 'vue-demi'
-import { isVueRouter4 } from '@intlify/vue-router-bridge'
-import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { isString, isSymbol, isFunction } from '@intlify/shared'
+import { isVueRouter4 } from '@intlify/vue-router-bridge'
+import { isRef, isVue2 } from 'vue-demi'
 
-import type { Ref } from 'vue-demi'
-import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
-import type { RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
 import type { LocaleObject, Strategies, BaseUrlResolveHandler, I18nRoutingOptions } from './types'
+import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@intlify/vue-i18n-bridge'
+import type { useRoute, useRouter, RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
+import type { Ref } from 'vue-demi'
 
 export type I18nCommonRoutingOptions = Pick<
   I18nRoutingOptions,
   'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
 >
 
-export type ComposableOptions = {
+export interface ComposableOptions {
   route?: ReturnType<typeof useRoute>
   router?: ReturnType<typeof useRouter>
   i18n?: Composer
@@ -214,7 +213,7 @@ export function resolveBaseUrl<Context = unknown>(baseUrl: string | BaseUrlResol
  * @remarks
  * This type is used by {@link FindBrowserLocaleOptions#sorter | sorter} in {@link findBrowserLocale} function
  */
-export type BrowserLocale = {
+export interface BrowserLocale {
   /**
    * The locale code, such as BCP 47 (e.g `en-US`), or `ja`
    */
@@ -252,7 +251,7 @@ export type BrowserLocaleMatcher = (locales: TargetLocale[], browserLocales: str
 /**
  * The options for {@link findBrowserLocale} function
  */
-export type FindBrowserLocaleOptions = {
+export interface FindBrowserLocaleOptions {
   matcher?: BrowserLocaleMatcher
   comparer?: (a: BrowserLocale, b: BrowserLocale) => number
 }

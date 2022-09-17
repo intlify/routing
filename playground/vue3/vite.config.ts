@@ -1,9 +1,9 @@
 import { fileURLToPath, URL } from 'url'
 
-import { defineConfig } from 'vite'
+import vuei18n from '@intlify/vite-plugin-vue-i18n'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vuei18n from '@intlify/vite-plugin-vue-i18n'
+import { defineConfig } from 'vite'
 
 // TODO: vue-i18n must be resolved with bundler or bundler plugin
 let modulePath = './node_modules/vue-i18n/dist/vue-i18n.esm-bundler.js'

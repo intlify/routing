@@ -1,4 +1,3 @@
-import { getGlobalOptions } from '../extends/router'
 import {
   DEFAULT_ROUTES_NAME_SEPARATOR,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -7,10 +6,11 @@ import {
   DEFAULT_TRAILING_SLASH,
   DEFAULT_STRATEGY
 } from '../constants'
+import { getGlobalOptions } from '../extends/router'
 
 import type { I18nRoutingGlobalOptions } from '../extends/router'
-import type { VueRouter, Router } from '@intlify/vue-router-bridge'
 import type { RoutingProxy } from './types'
+import type { VueRouter, Router } from '@intlify/vue-router-bridge'
 
 export function getI18nRoutingOptions(
   router: Router | VueRouter,

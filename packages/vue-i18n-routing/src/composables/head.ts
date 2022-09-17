@@ -1,10 +1,12 @@
-import { ref, watchEffect, isVue3, onUnmounted } from 'vue-demi'
-import { useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { useI18n } from '@intlify/vue-i18n-bridge'
+import { useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { ref, watchEffect, isVue3, onUnmounted } from 'vue-demi'
+
 import { localeHead } from '../compatibles'
 import { inBrowser, toRawRoute } from '../utils'
 
-import type { Ref } from 'vue-demi'
+import type { I18nHeadOptions, I18nHeadMetaInfo } from '../compatibles'
+import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
 import type {
   Router,
   VueRouter,
@@ -12,8 +14,7 @@ import type {
   RouteLocationNormalized,
   Route
 } from '@intlify/vue-router-bridge'
-import type { I18nHeadOptions, I18nHeadMetaInfo } from '../compatibles'
-import type { I18nCommonRoutingOptionsWithComposable } from '../utils'
+import type { Ref } from 'vue-demi'
 
 /**
  * Use localize head meta

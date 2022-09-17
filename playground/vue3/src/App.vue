@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
+import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useLocalePath, useSwitchLocalePath, useLocaleHead } from 'vue-i18n-routing'
-import { useHead } from '@vueuse/head'
+import { useRouter } from 'vue-router'
+
+import HelloWorld from '@/components/HelloWorld.vue'
 
 import type { LocaleObject } from 'vue-i18n-routing'
 

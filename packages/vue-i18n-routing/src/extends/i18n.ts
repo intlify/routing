@@ -1,7 +1,6 @@
 import { isBoolean, isObject } from '@intlify/shared'
 import { ref, computed, isVue3, effectScope, isVue2 } from 'vue-demi'
-import { resolveBaseUrl, isVueI18n, getComposer } from '../utils'
-import { DEFAULT_BASE_URL } from '../constants'
+
 import {
   localePath,
   localeRoute,
@@ -11,10 +10,12 @@ import {
   resolveRoute,
   localeHead
 } from '../compatibles'
+import { DEFAULT_BASE_URL } from '../constants'
+import { resolveBaseUrl, isVueI18n, getComposer } from '../utils'
 
-import type { App } from 'vue-demi'
-import type { I18n, Composer, VueI18n } from '@intlify/vue-i18n-bridge'
 import type { I18nRoutingOptions, LocaleObject } from '../types'
+import type { I18n, Composer, VueI18n } from '@intlify/vue-i18n-bridge'
+import type { App } from 'vue-demi'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Vue = any
@@ -55,7 +56,9 @@ export interface VueI18nRoutingPluginOptions {
   inject?: boolean
 }
 
-export type ExtendProperyDescripters = { [key: string]: Pick<PropertyDescriptor, 'get'> }
+export interface ExtendProperyDescripters {
+  [key: string]: Pick<PropertyDescriptor, 'get'>
+}
 export type ExtendComposerHook = (compser: Composer) => void
 export type ExtendVueI18nHook = (composer: Composer) => ExtendProperyDescripters
 export type ExtendExportedGlobalHook = (global: Composer) => ExtendProperyDescripters

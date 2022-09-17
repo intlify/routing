@@ -1,9 +1,14 @@
-import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
+import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
+
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
+
 import { getI18nRoutingOptions } from './utils'
 
+import type { Strategies } from '../types'
+import type { RoutingProxy } from './types'
+import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
   RawLocation,
@@ -12,9 +17,6 @@ import type {
   RouteLocationNormalizedLoaded,
   Router
 } from '@intlify/vue-router-bridge'
-import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { Strategies } from '../types'
-import type { RoutingProxy } from './types'
 
 const RESOLVED_PREFIXED = new Set<Strategies>(['prefix_and_default', 'prefix_except_default'])
 

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { localizeRoutes } from '../resolve'
+
 import { DEFAULT_ROUTES_NAME_SEPARATOR } from '../constants'
+import { localizeRoutes } from '../resolve'
 
 import type { I18nRoute } from '../types'
 

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { STRATEGIES } from './constants'
-
-import type { RouteConfig as __Route, RouterOptions } from '@intlify/vue-router-bridge'
+import type { STRATEGIES } from './constants'
 import type { Locale } from '@intlify/vue-i18n-bridge'
+import type { RouteConfig as __Route, RouterOptions } from '@intlify/vue-router-bridge'
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer U) => void ? U : never
 type _Route = UnionToIntersection<__Route>
@@ -64,7 +63,7 @@ export type BaseUrlResolveHandler<Context = unknown> = (context: Context) => str
  * @remarks
  * The route options that is compute the route to be localized on {@link localizeRoutes}
  */
-export type ComputedRouteOptions = {
+export interface ComputedRouteOptions {
   locales: readonly string[]
   paths: Record<string, string>
 }

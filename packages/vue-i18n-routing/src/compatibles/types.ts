@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Route, RouteLocationNormalizedLoaded, Router, VueRouter } from '@intlify/vue-router-bridge'
 import type { Strategies, Directions } from '../types'
+import type { Route, RouteLocationNormalizedLoaded, Router, VueRouter } from '@intlify/vue-router-bridge'
 
 /**
  * Routing Proxy
  */
-export type RoutingProxy = {
+export interface RoutingProxy {
   i18n: any
   getRouteBaseName: any
   localePath: any

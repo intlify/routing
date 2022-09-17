@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { vi, describe, it, assert, expect } from 'vitest'
 import { createI18n } from '@intlify/vue-i18n-bridge'
+import { vi, describe, it, assert, expect } from 'vitest'
 import { ref, nextTick } from 'vue-demi'
-import { extendI18n } from '../i18n'
+
 import { useSetup } from '../../../scripts/vitest'
+import { extendI18n } from '../i18n'
 
 import type { Ref } from 'vue-demi'
 import type { Composer, VueI18n } from 'vue-i18n'

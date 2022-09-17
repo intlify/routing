@@ -1,8 +1,9 @@
+import { castToVueI18n } from '@intlify/vue-i18n-bridge'
 import Vue from 'vue'
+
 import App from './App.vue'
 import i18n from './i18n'
 import { createRouter } from './router'
-import { castToVueI18n } from '@intlify/vue-i18n-bridge'
 
 import './assets/main.css'
 

@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { describe, it, assert, expect } from 'vitest'
+import { createI18n } from '@intlify/vue-i18n-bridge'
 import { createMemoryHistory } from '@intlify/vue-router-bridge'
-import { createI18n, I18n } from '@intlify/vue-i18n-bridge'
-import { createRouter } from '../extends/router'
-import { STRATEGIES } from '../constants'
+import { describe, it, assert, expect } from 'vitest'
+
 import { useSetup } from '../../scripts/vitest'
+import { STRATEGIES } from '../constants'
+import { createRouter } from '../extends/router'
+
+import type { I18n } from '@intlify/vue-i18n-bridge'
 
 describe('getRouteBaseName', () => {
   describe('vue-i18n composition mode', () => {

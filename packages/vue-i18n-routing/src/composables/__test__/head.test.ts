@@ -1,9 +1,10 @@
-import { describe, it, expect, assert } from 'vitest'
-import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
 import { createI18n, useI18n } from '@intlify/vue-i18n-bridge'
+import { createMemoryHistory, useRoute, useRouter } from '@intlify/vue-router-bridge'
+import { describe, it, expect, assert } from 'vitest'
+
+import { useSetup } from '../../../scripts/vitest'
 import { createRouter } from '../../extends/router'
 import { useLocaleHead } from '../head'
-import { useSetup } from '../../../scripts/vitest'
 
 describe('useLocaleHead', () => {
   it('should be worked', async () => {

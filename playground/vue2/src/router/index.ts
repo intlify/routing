@@ -1,5 +1,5 @@
-import Vue from 'vue'
 import VueRouter from '@intlify/vue-router-bridge'
+import Vue from 'vue'
 import { createRouter as _createRouter } from 'vue-i18n-routing'
 
 import HomeView from '../views/HomeView.vue'

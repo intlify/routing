@@ -1,7 +1,8 @@
 import { describe, it, assert, test } from 'vitest'
+
 import { adjustRoutePathForTrailingSlash, getLocaleRouteName, findBrowserLocale } from '../utils'
 
-import { BrowserLocale } from '../utils'
+import type { BrowserLocale } from '../utils'
 
 describe('adjustRouteDefinitionForTrailingSlash', function () {
   describe('pagePath: /foo/bar', function () {

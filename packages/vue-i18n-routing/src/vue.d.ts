@@ -1,3 +1,4 @@
+import type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 import type {
   LocalePathFunction,
   LocaleRouteFunction,
@@ -6,7 +7,6 @@ import type {
   I18nHeadOptions,
   I18nHeadMetaInfo
 } from 'vue-i18n-routing'
-import type { Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 
 interface I18nMixinAPI {
   /**

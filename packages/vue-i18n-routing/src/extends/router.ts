@@ -1,10 +1,7 @@
-import VueRouter3 from '@intlify/vue-router-bridge'
-import { createRouter as _createRouter } from '@intlify/vue-router-bridge'
 import { isString, isObject, makeSymbol } from '@intlify/shared'
+import VueRouter3, { createRouter as _createRouter } from '@intlify/vue-router-bridge'
 import { isVue2, isVue3 } from 'vue-demi'
-import { extendI18n } from './i18n'
-import { localizeRoutes } from '../resolve'
-import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
+
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -14,7 +11,13 @@ import {
   DEFAULT_DETECTION_DIRECTION,
   DEFAULT_BASE_URL
 } from '../constants'
+import { localizeRoutes } from '../resolve'
+import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
 
+import { extendI18n } from './i18n'
+
+import type { I18nRoute, I18nRoutingOptions, BaseUrlResolveHandler } from '../types'
+import type { I18n } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
   Router,
@@ -22,8 +25,6 @@ import type {
   RouteLocationNormalizedLoaded,
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
-import type { I18n } from '@intlify/vue-i18n-bridge'
-import type { I18nRoute, I18nRoutingOptions, BaseUrlResolveHandler } from '../types'
 
 /**
  * Global options for i18n routing

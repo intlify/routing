@@ -1,5 +1,6 @@
 import { DefineLocaleMessage } from 'vue-i18n' // eslint-disable-line @typescript-eslint/no-unused-vars
-import en from './en.json'
+
+import type en from './en.json'
 
 type MessageSchema = typeof en
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, vue/one-component-per-file */
 
 import { defineComponent, createApp, h, provide, ref } from 'vue-demi'
+
 import type { InjectionKey, Ref } from 'vue-demi'
 
 type InstanceType<V> = V extends { new (...arg: any[]): infer X } ? X : never
