@@ -14,13 +14,16 @@
     "@nexhome/yorkie": "^2.0.8",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.28.0",
-    "@typescript-eslint/parser": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "bumpp": "^8.2.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.19.0",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^8.7.1",
     "globby": "^12.0.2",
     "happy-dom": "^6.0.3",
@@ -47,13 +50,17 @@
     "*.{json,md,yml}": [
       "prettier --write"
     ],
-    "*.{js,vue}": [
+    "*.{js}": [
       "prettier --write",
-      "eslint --fix --ext .js,.vue"
+      "eslint --config .eslintrc.cjs --fix --ext .js,.vue"
+    ],
+    "*.{vue}": [
+      "prettier --write",
+      "eslint --config .eslintrc-i18n.cjs --fix --ext .vue"
     ],
     "*.ts?(x)": [
       "prettier --parser=typescript --write",
-      "eslint --fix --ext .ts"
+      "eslint --config .eslintrc.cjs --fix --ext .ts"
     ]
   },
   "pnpm": {
@@ -88,12 +95,12 @@
     "dev": "pnpm --filter vue-i18n-routing dev",
     "fix": "run-p lint:fix format:fix",
     "format:fix": "run-p \"format:prettier --write\"",
-    "format:prettier": "prettier --config .prettierrc --ignore-path .prettierignore '**/*.{js,json,html}'",
+    "format:prettier": "prettier --config .prettierrc --ignore-path .prettierignore --list-different '**/*.{js,json,html}'",
     "lint": "run-p lint:action lint:codes lint:i18n:*",
     "lint:action": "node-actionlint",
-    "lint:codes": "eslint --config .eslintrc.js --ext .js,.mjs,.ts,.vue ./packages",
-    "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
-    "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.js --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
+    "lint:codes": "eslint --config .eslintrc.cjs --ext .js,.mjs,.ts,.vue ./packages",
+    "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.cjs --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
+    "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.cjs --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
     "lint:fix": "run-p \"lint:codes --fix\" \"lint:i18n:vue3 --fix\" \"lint:i18n:vue2 --fix\"",
     "play:vue2": "pnpm switch:vue2 && pnpm --filter playground-vue2 dev",
     "play:vue2:options": "pnpm switch:vue2 && pnpm --filter playground-vue2-options dev",
@@ -113,5 +120,8 @@
   "workspaces": [
     "packages/*",
     "playground/*"
-  ]
+  ],
+  "dependencies": {
+    "@volar/language-core": "1.0.0-alpha.0"
+  }
 }

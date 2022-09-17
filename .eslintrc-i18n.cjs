@@ -13,7 +13,7 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ['plugin:@intlify/vue-i18n/recommended'],
+  extends: ['plugin:@intlify/vue-i18n/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
   plugins: ['@typescript-eslint'],
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -24,12 +24,48 @@ module.exports = {
     '@intlify/vue-i18n/no-raw-text': 'error',
     '@intlify/vue-i18n/no-dynamic-keys': 'warn',
     '@intlify/vue-i18n/no-missing-keys-in-other-locales': 'error',
-    '@intlify/vue-i18n/no-unused-keys': 'error'
+    '@intlify/vue-i18n/no-unused-keys': 'error',
+    'import/order': [
+      'warn',
+      {
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index', 'object', 'type'],
+        pathGroups: [
+          {
+            pattern: '{vue**}',
+            group: 'builtin',
+            position: 'before'
+          },
+          {
+            pattern: '{vite**}',
+            group: 'builtin',
+            position: 'before'
+          },
+          {
+            pattern: '@/**',
+            group: 'parent',
+            position: 'before'
+          }
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+        alphabetize: {
+          order: 'asc'
+        },
+        'newlines-between': 'always'
+      }
+    ]
   },
   settings: {
     'vue-i18n': {
       localeDir,
       messageSyntaxVersion
+    },
+    'import/resolver': {
+      /**
+       * NOTE: https://github.com/import-js/eslint-import-resolver-typescript#configuration
+       */
+      typescript: {
+        project: ['playground/**/tsconfig.json']
+      }
     }
   },
   overrides: [
