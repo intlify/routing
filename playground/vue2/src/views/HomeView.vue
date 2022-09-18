@@ -26,6 +26,6 @@ export default defineComponent({
       <router-link :to="localePath('/about')">{{ $t('App.about') }}</router-link>
     </nav>
     {{ switchableLocale }}
-    {{ localeHead({ addSeoAttributes: true }) }}
+    <code id="head">{{ localeHead({ addSeoAttributes: true }) }}</code>
   </main>
 </template>

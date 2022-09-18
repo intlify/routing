@@ -32,6 +32,7 @@
     "lint-staged": "^12.1.2",
     "npm-run-all": "^4.1.5",
     "pathe": "^0.3.2",
+    "pkg-types": "^0.3.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
@@ -111,6 +112,11 @@
     "test:unit": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter vue-i18n-routing test",
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm --filter vue-i18n-routing test",
     "test:watch": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter playground-vue3 test:watch",
-    "test:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover"
+    "test:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover",
+    "test:e2e": "run-p \"test:e2e:vue*\"",
+    "test:e2e:vue2": "cd playground/vue2 && npm test",
+    "test:e2e:vue2options": "cd playground/vue2-options && npm test",
+    "test:e2e:vue3": "cd playground/vue3 && npm test",
+    "test:e2e:vue3options": "cd playground/vue3-options && npm test"
   }
 }

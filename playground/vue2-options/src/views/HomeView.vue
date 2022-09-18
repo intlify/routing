@@ -13,6 +13,6 @@ export default defineComponent({
 <template>
   <main>
     <TheWelcome />
-    {{ localeHead({ addSeoAttributes: true }) }}
+    <code id="head">{{ localeHead({ addSeoAttributes: true }) }}</code>
   </main>
 </template>
