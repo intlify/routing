@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import rimraf from 'rimraf'
@@ -14,6 +14,8 @@ const currentDir = fileURLToPath(new URL('.', import.meta.url))
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
+    // https://github.com/vitejs/vite/pull/9130/files#diff-4a49b457ff0fce41061261711fc1d5e95385af670880cebae5fca2d4807103f0R193
+    'process.env.NODE_ENV': JSON.stringify('production'),
     __VERSION__: JSON.stringify(pkg.version)
   },
   build: {
