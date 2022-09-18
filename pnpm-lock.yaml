@@ -70,8 +70,8 @@ importers:
   packages/vue-i18n-routing:
     specifiers:
       '@intlify/shared': next
-      '@intlify/vue-i18n-bridge': 0.5.0
-      '@intlify/vue-router-bridge': 0.5.0
+      '@intlify/vue-i18n-bridge': ^0.6.0
+      '@intlify/vue-router-bridge': ^0.6.0
       '@microsoft/api-extractor': ^7.31.1
       api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
@@ -91,8 +91,8 @@ importers:
       vue2: npm:vue@2
     dependencies:
       '@intlify/shared': 9.3.0-beta.3
-      '@intlify/vue-i18n-bridge': 0.5.0_fidtr7vx2bgivg5rxwodpy726e
-      '@intlify/vue-router-bridge': 0.5.0_ki7ee6snyztq7jlrojcmofwiy4
+      '@intlify/vue-i18n-bridge': 0.6.0_fidtr7vx2bgivg5rxwodpy726e
+      '@intlify/vue-router-bridge': 0.6.0_ki7ee6snyztq7jlrojcmofwiy4
       ufo: 0.8.5
       vue-demi: 0.13.5_vue@3.2.37
     devDependencies:
@@ -333,15 +333,15 @@ packages:
       '@intlify/core-base': 9.3.0-beta.3
       '@intlify/shared': 9.3.0-beta.3
 
-  /@intlify/vue-i18n-bridge/0.5.0_fidtr7vx2bgivg5rxwodpy726e:
-    resolution: {integrity: sha512-ekVlSobXCaeQ1d2Sl30uPYOcP4KCxepgdgOxavk+3Wf96Y8HS3QrO9ECdi58gFE8Q2V+r4vR1Q52vJYpyRWJfw==}
+  /@intlify/vue-i18n-bridge/0.6.0_fidtr7vx2bgivg5rxwodpy726e:
+    resolution: {integrity: sha512-G/3uFJMHXpd3pcF0ldfQIWOncAQAsnINX9c3Z6dQBQGJ6WE//LfAASEIzAFggw1k8FKkvfE5or1IzEMOrwUNEQ==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
     peerDependencies:
       '@vue/composition-api': ^1.0.0-rc.1
-      vue-i18n: ^8.26.1 || ^9.2.0-beta.25
-      vue-i18n-bridge: ^9.2.0-beta.25
+      vue-i18n: ^8.26.1 || ^9.2.0-beta.25 || ^9.3.0-beta.3
+      vue-i18n-bridge: ^9.2.0-beta.25 || ^9.3.0-beta.3
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
@@ -354,8 +354,8 @@ packages:
       vue-i18n-bridge: 9.3.0-beta.3_vue@3.2.37
     dev: false
 
-  /@intlify/vue-router-bridge/0.5.0_ki7ee6snyztq7jlrojcmofwiy4:
-    resolution: {integrity: sha512-t5CAUeydUItnGwQ94PqyXagHUaAuzDj6gDs3EXHvyjyvWs57okVrhPJgkynuPn68hja5mkqYRahTGKGCylzrPQ==}
+  /@intlify/vue-router-bridge/0.6.0_ki7ee6snyztq7jlrojcmofwiy4:
+    resolution: {integrity: sha512-7vN5mHMtg8l/RfyDo7Oqm3AhNgM+TRZ1TzKWAImHDbKBOfouWNwvEEwUFU0evqB7j7j0awVt0MxPRDrgo8mkVQ==}
     engines: {node: '>= 12'}
     hasBin: true
     requiresBuild: true
