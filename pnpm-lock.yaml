@@ -66,6 +66,7 @@ importers:
       '@intlify/vue-i18n-bridge': ^0.6.0
       '@intlify/vue-router-bridge': ^0.6.0
       '@microsoft/api-extractor': ^7.31.1
+      '@vue/composition-api': ^1.7.0
       api-docs-gen: ^0.4.0
       rimraf: ^3.0.2
       typescript: ^4.8.3
@@ -84,12 +85,13 @@ importers:
       vue2: npm:vue@2
     dependencies:
       '@intlify/shared': 9.3.0-beta.3
-      '@intlify/vue-i18n-bridge': 0.6.0_fidtr7vx2bgivg5rxwodpy726e
-      '@intlify/vue-router-bridge': 0.6.0_ki7ee6snyztq7jlrojcmofwiy4
+      '@intlify/vue-i18n-bridge': 0.6.0_f3koqunn4bgwxi4gdhgdezraga
+      '@intlify/vue-router-bridge': 0.6.0_aseclk7wlb6kuxlitctpwqir7y
       ufo: 0.8.5
-      vue-demi: 0.13.5_vue@3.2.37
+      vue-demi: 0.13.5_3nmzzoefrdru4lagmst3ha3a3q
     devDependencies:
       '@microsoft/api-extractor': 7.31.1
+      '@vue/composition-api': 1.7.0_vue@3.2.37
       api-docs-gen: 0.4.0
       rimraf: 3.0.2
       typescript: 4.8.3
@@ -98,7 +100,7 @@ importers:
       vitest: 0.23.4
       vue: 3.2.37
       vue-i18n: 9.3.0-beta.3_vue@3.2.37
-      vue-i18n-bridge: 9.3.0-beta.3_vue@3.2.37
+      vue-i18n-bridge: 9.3.0-beta.3_3nmzzoefrdru4lagmst3ha3a3q
       vue-i18n-legacy: /vue-i18n/8.27.2_vue@3.2.37
       vue-router: 4.1.5_vue@3.2.37
       vue-router3: /vue-router/3.5.4_vue@3.2.37
@@ -326,7 +328,7 @@ packages:
       '@intlify/core-base': 9.3.0-beta.3
       '@intlify/shared': 9.3.0-beta.3
 
-  /@intlify/vue-i18n-bridge/0.6.0_fidtr7vx2bgivg5rxwodpy726e:
+  /@intlify/vue-i18n-bridge/0.6.0_f3koqunn4bgwxi4gdhgdezraga:
     resolution: {integrity: sha512-G/3uFJMHXpd3pcF0ldfQIWOncAQAsnINX9c3Z6dQBQGJ6WE//LfAASEIzAFggw1k8FKkvfE5or1IzEMOrwUNEQ==}
     engines: {node: '>= 12'}
     hasBin: true
@@ -343,11 +345,12 @@ packages:
       vue-i18n-bridge:
         optional: true
     dependencies:
+      '@vue/composition-api': 1.7.0_vue@3.2.37
       vue-i18n: 9.3.0-beta.3_vue@3.2.37
-      vue-i18n-bridge: 9.3.0-beta.3_vue@3.2.37
+      vue-i18n-bridge: 9.3.0-beta.3_3nmzzoefrdru4lagmst3ha3a3q
     dev: false
 
-  /@intlify/vue-router-bridge/0.6.0_ki7ee6snyztq7jlrojcmofwiy4:
+  /@intlify/vue-router-bridge/0.6.0_aseclk7wlb6kuxlitctpwqir7y:
     resolution: {integrity: sha512-7vN5mHMtg8l/RfyDo7Oqm3AhNgM+TRZ1TzKWAImHDbKBOfouWNwvEEwUFU0evqB7j7j0awVt0MxPRDrgo8mkVQ==}
     engines: {node: '>= 12'}
     hasBin: true
@@ -361,7 +364,8 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      vue-demi: 0.13.5_vue@3.2.37
+      '@vue/composition-api': 1.7.0_vue@3.2.37
+      vue-demi: 0.13.5_3nmzzoefrdru4lagmst3ha3a3q
       vue-router: 4.1.5_vue@3.2.37
     transitivePeerDependencies:
       - vue
@@ -767,6 +771,13 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.37
       '@vue/shared': 3.2.37
+
+  /@vue/composition-api/1.7.0_vue@3.2.37:
+    resolution: {integrity: sha512-hxOgLYR+wjuPX9bkP2pAPlqUs98XxBoa9DSLyp1z6+YR92wC42PZcZKs4d+VRtcv4udOv041Kss+F6ap5nj8YA==}
+    peerDependencies:
+      vue: '>= 2.5 < 2.7'
+    dependencies:
+      vue: 3.2.37
 
   /@vue/devtools-api/6.2.1:
     resolution: {integrity: sha512-OEgAMeQXvCoJ+1x8WyQuVZzFo0wcyCmUR3baRVLmKBo1LmYZWMlRiXlux5jd0fqVJu6PfDbOrZItVqUEzLobeQ==}
@@ -3956,7 +3967,7 @@ packages:
       - terser
     dev: true
 
-  /vue-demi/0.13.5_vue@3.2.37:
+  /vue-demi/0.13.5_3nmzzoefrdru4lagmst3ha3a3q:
     resolution: {integrity: sha512-tO3K2bML3AwiHmVHeKCq6HLef2st4zBXIV5aEkoJl6HZ+gJWxWv2O8wLH8qrA3SX3lDoTDHNghLX1xZg83MXvw==}
     engines: {node: '>=12'}
     hasBin: true
@@ -3968,6 +3979,7 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
+      '@vue/composition-api': 1.7.0_vue@3.2.37
       vue: 3.2.37
 
   /vue-eslint-parser/8.3.0_eslint@8.23.1:
@@ -4006,7 +4018,7 @@ packages:
       - supports-color
     dev: true
 
-  /vue-i18n-bridge/9.3.0-beta.3_vue@3.2.37:
+  /vue-i18n-bridge/9.3.0-beta.3_3nmzzoefrdru4lagmst3ha3a3q:
     resolution: {integrity: sha512-f6N2KVVLhZeYqHFXAuhJ/NDicm4s6UNShfLg5Af1Xs3wB+cYaYAwS6YVWBq0HfEeiQ8uEyjQbEm4/8H3vIsTsg==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -4018,8 +4030,9 @@ packages:
       '@intlify/core-base': 9.3.0-beta.3
       '@intlify/shared': 9.3.0-beta.3
       '@intlify/vue-devtools': 9.3.0-beta.3
+      '@vue/composition-api': 1.7.0_vue@3.2.37
       '@vue/devtools-api': 6.2.1
-      vue-demi: 0.13.5_vue@3.2.37
+      vue-demi: 0.13.5_3nmzzoefrdru4lagmst3ha3a3q
     transitivePeerDependencies:
       - vue
 

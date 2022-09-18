@@ -6,6 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc -p . --noEmit",
+    "switch:2": "vue-demi-switch 2 vue2 && vue-router-switch 3 vue-router3 && vue-i18n-switch 8 vue-i18n-legacy",
+    "switch:3": "vue-demi-switch 3 && vue-router-switch 4 && vue-i18n-switch 9",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cover": "vitest --coverage",
@@ -19,6 +21,7 @@
     "vue-demi": "0.13.5"
   },
   "devDependencies": {
+    "@vue/composition-api": "^1.7.0",
     "@microsoft/api-extractor": "^7.31.1",
     "api-docs-gen": "^0.4.0",
     "rimraf": "^3.0.2",
