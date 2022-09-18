@@ -99,6 +99,7 @@
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
   },
+  "funding": "https://github.com/sponsors/kazupon",
   "homepage": "https://github.com/intlify/routing/tree/main/packages/vue-i18n-routing#readme",
   "repository": {
     "type": "git",
