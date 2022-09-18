@@ -41,7 +41,7 @@ jobs:
       - name: Lint codes
         run: pnpm lint
 
-  test:
+  unit:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -107,8 +107,8 @@ jobs:
 
   edge-release:
     needs:
-      - test
       - lint
+      - unit
       - e2e
     runs-on: ${{ matrix.os }}
     strategy:
