@@ -65,6 +65,8 @@ describe('localePath', () => {
     ;[STRATEGIES.PREFIX_EXCEPT_DEFAULT, STRATEGIES.PREFIX_AND_DEFAULT, STRATEGIES.PREFIX].forEach(strategy => {
       describe(`route strategy: ${strategy}`, () => {
         it('should be worked', async () => {
+          const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
           const i18n = createI18n({ legacy, locale: 'en' })
           const router = createRouter(i18n, {
             version: 4,
@@ -92,19 +94,25 @@ describe('localePath', () => {
           // object
           assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/ja/about')
           // omit name & path
-          assert.equal(vm.localePath({ params: { foo: 1 } }), '/en')
+          assert.equal(vm.localePath({ state: { foo: 1 } }), '/en')
           await router.push('/ja')
-          assert.equal(vm.localePath({ params: { foo: 1 } }), '/ja')
+          assert.equal(vm.localePath({ state: { foo: 1 } }), '/ja')
           // no define path
           assert.equal(vm.localePath('/vue-i18n'), '/ja/vue-i18n')
           // no define name
           assert.equal(vm.localePath('vue-i18n'), '')
+
+          // for vue-router deprecation
+          // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+          expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
         })
       })
     })
 
     describe(`route strategy: ${STRATEGIES.NO_PREFIX}`, () => {
       it('should be worked', async () => {
+        const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
         const i18n = createI18n({ legacy, locale: 'en' })
         const router = createRouter(i18n, {
           version: 4,
@@ -132,13 +140,17 @@ describe('localePath', () => {
         // object
         assert.equal(vm.localePath({ name: 'about' }, 'ja'), '/about')
         // omit name & path
-        assert.equal(vm.localePath({ params: { foo: 1 } }), '/')
+        assert.equal(vm.localePath({ state: { foo: 1 } }), '/')
         await router.push('/ja')
-        assert.equal(vm.localePath({ params: { foo: 1 } }), '/')
+        assert.equal(vm.localePath({ state: { foo: 1 } }), '/')
         // no define path
         assert.equal(vm.localePath('/vue-i18n'), '/vue-i18n')
         // no define
         assert.equal(vm.localePath('vue-i18n'), '')
+
+        // for vue-router deprecation
+        // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+        expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
       })
     })
   }
@@ -155,6 +167,8 @@ describe('localePath', () => {
 describe('localeRoute', () => {
   function testLocaleRoute(i18n: I18n) {
     it('should return route', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
       const router = createRouter(i18n, {
         version: 4,
         locales: ['en', 'ja'],
@@ -229,6 +243,10 @@ describe('localeRoute', () => {
       })
       // no define name
       assert.isUndefined(vm.localeRoute('vue-i18n'))
+
+      // for vue-router deprecation
+      // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
     })
   }
 
@@ -246,6 +264,8 @@ describe('localeRoute', () => {
 describe('localeLocation', () => {
   function testLocaleLocation(i18n: I18n) {
     it('should return route', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
       const router = createRouter(i18n, {
         version: 4,
         locales: ['en', 'ja'],
@@ -320,6 +340,10 @@ describe('localeLocation', () => {
       })
       // no define name
       assert.isUndefined(vm.localeLocation('vue-i18n'))
+
+      // for vue-router deprecation
+      // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
     })
   }
 
@@ -337,6 +361,8 @@ describe('localeLocation', () => {
 describe('switchLocalePath', () => {
   function testSwtichLocalePath(i18n: I18n) {
     it('should be worked', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
       const router = createRouter(i18n, {
         version: 4,
         locales: ['en', 'ja', 'fr'],
@@ -362,6 +388,10 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('en'), '/en/about')
       assert.equal(vm.switchLocalePath('fr'), '/fr/about')
       assert.equal(vm.switchLocalePath('vue-i18n'), '')
+
+      // for vue-router deprecation
+      // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
     })
   }
 
@@ -379,6 +409,8 @@ describe('switchLocalePath', () => {
 describe('localeHead', () => {
   function testLocaleHead(i18n: I18n) {
     it('should be worked', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
       const router = createRouter(i18n, {
         version: 4,
         locales: [
@@ -411,6 +443,10 @@ describe('localeHead', () => {
       head = vm.localeHead({ addDirAttribute: true, addSeoAttributes: true })
       expect(head).toMatchSnapshot('ja')
       assert.equal(head.htmlAttrs.lang, 'ja-JP')
+
+      // for vue-router deprecation
+      // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      expect(warn).not.toHaveBeenCalledWith('Discarded invalid param(s)')
     })
   }
 

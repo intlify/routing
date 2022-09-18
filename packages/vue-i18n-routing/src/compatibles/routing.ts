@@ -126,6 +126,9 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
         query: resolvedRoute.query,
         hash: resolvedRoute.hash
       }
+      if (isVue3) {
+        localizedRoute.state = resolvedRoute.state
+      }
     } else {
       const isDefaultLocale = _locale === defaultLocale
       const isPrefixed =
@@ -153,9 +156,11 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
       defaultLocaleRouteNameSuffix
     })
 
-    const { params } = localizedRoute
-    if (params && params['0'] === undefined && params.pathMatch) {
-      params['0'] = params.pathMatch
+    if (isVue2) {
+      const { params } = localizedRoute
+      if (params && params['0'] === undefined && params.pathMatch) {
+        params['0'] = params.pathMatch
+      }
     }
   }
 
@@ -194,14 +199,19 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
 	  : (route as RouteLocationNormalizedLoaded) // for vue-router v4
   const langSwitchParams = {}
 
-  const baseRoute = assign({}, routeCopy, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const _baseRoute: any = {
     name,
     params: {
       ...params,
-      ...langSwitchParams,
-      0: params.pathMatch
+      ...langSwitchParams
     }
-  })
+  }
+  if (isVue2) {
+    _baseRoute.params[0] = params.pathMatch
+  }
+
+  const baseRoute = assign({}, routeCopy, _baseRoute)
   const path = localePath.call(this, baseRoute, locale)
 
   // TODO: for domainDifference here

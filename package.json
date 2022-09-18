@@ -67,9 +67,7 @@
     "overrides": {
       "vite": "^3.0.0",
       "vue-demi": "^0.13.5",
-      "vue-i18n-routing": "workspace:*",
-      "@intlify/vue-i18n-bridge": "0.3.6",
-      "@intlify/vue-router-bridge": "0.3.6"
+      "vue-i18n-routing": "workspace:*"
     }
   },
   "private": true,
@@ -77,7 +75,7 @@
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git"
   },
-  "packageManager": "pnpm@7.4.0",
+  "packageManager": "pnpm@7.11.0",
   "scripts": {
     "force": "pnpm build && pnpm clean && pnpm i --force",
     "build": "pnpm switch:vue3 && ./scripts/build.sh",
@@ -116,12 +114,5 @@
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm --filter vue-i18n-routing test",
     "test:watch": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter playground-vue3 test:watch",
     "test:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover"
-  },
-  "workspaces": [
-    "packages/*",
-    "playground/*"
-  ],
-  "dependencies": {
-    "@volar/language-core": "1.0.0-alpha.0"
   }
 }

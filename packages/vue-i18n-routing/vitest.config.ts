@@ -12,6 +12,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    clearMocks: true,
     include,
     environment: 'happy-dom',
     testTimeout: 5000
