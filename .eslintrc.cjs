@@ -66,7 +66,8 @@ module.exports = {
        * NOTE: https://github.com/import-js/eslint-import-resolver-typescript#configuration
        */
       typescript: {
-        project: ['packages/**/tsconfig.json', 'playground/**/tsconfig.json']
+        // project: ['tsconfig.json', 'packages/**/tsconfig.json', 'playground/**/tsconfig.json']
+        project: ['tsconfig.json', 'packages/**/tsconfig.json']
       }
     }
   }

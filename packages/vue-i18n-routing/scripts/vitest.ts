@@ -9,7 +9,7 @@ type VM<V> = InstanceType<V> & { unmount(): void }
 
 export function mount<V>(Comp: V, plugins: any[] = []) {
   const el = document.createElement('div')
-  const app = createApp(Comp)
+  const app = createApp(Comp as any)
 
   for (const plugin of plugins) {
     app.use(plugin)
@@ -44,7 +44,7 @@ export function useInjectedSetup<V>(setup: () => V, plugins: any[] = []) {
   })
 
   const Provider = defineComponent({
-    components: Comp,
+    components: { Comp },
     setup() {
       provide(Key, ref(1))
     },
