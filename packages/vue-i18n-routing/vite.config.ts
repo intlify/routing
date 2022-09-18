@@ -19,6 +19,7 @@ export default defineConfig({
     __VERSION__: JSON.stringify(pkg.version)
   },
   build: {
+    minify: false,
     lib: {
       entry: resolve(currentDir, './src/index.ts'),
       name: 'VueI18nRouting',
