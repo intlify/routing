@@ -94,7 +94,7 @@
     "fix": "run-p lint:fix format:fix",
     "format:fix": "run-p \"format:prettier --write\"",
     "format:prettier": "prettier --config .prettierrc --ignore-path .prettierignore --list-different '**/*.{js,json,html}'",
-    "lint": "run-p lint:action lint:codes lint:i18n:*",
+    "lint": "run-p lint:action lint:codes",
     "lint:action": "node-actionlint",
     "lint:codes": "eslint --config .eslintrc.cjs --ext .js,.mjs,.ts,.vue ./packages",
     "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.cjs --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
