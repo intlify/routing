@@ -5,9 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      // "vue-i18n-routing": ["./node_modules/vue-i18n-routing/dist/vue-i18n-routing.d.ts"],
     },
-    // NOTE: This monorepo will generate some type errors such as `this.$i18n`, `localeHead` and etc, but normal environments such as single repo will not generate errors.
     "types": ["vue-i18n-routing/types"]
   },
   "references": [

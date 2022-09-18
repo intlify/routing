@@ -1,9 +1,9 @@
-import { createWebHistory } from '@intlify/vue-router-bridge'
 import { createRouter as _createRouter } from 'vue-i18n-routing'
+import { createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 
-import type { I18n } from '@intlify/vue-i18n-bridge'
+import type { I18n } from 'vue-i18n'
 
 export function createRouter(i18n: I18n) {
   return _createRouter(i18n, {

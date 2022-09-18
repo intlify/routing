@@ -10,7 +10,7 @@ declare global {
     type Element = VNode
     type ElementClass = Vue
     interface IntrinsicElements {
-      [elem: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
+      [elem: string]: any
     }
   }
 }

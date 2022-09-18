@@ -1,23 +1,28 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
-      "@/*": ["./src/*"],
-      // "vue-i18n-routing": ["./node_modules/vue-i18n-routing/dist/vue-i18n-routing.d.ts"]
+      "@/*": ["src/*"]
     },
-    // NOTE: This monorepo will generate some type errors such as `this.$i18n`, `localeHead` and etc, but normal environments such as single repo will not generate errors.
-    "types": ["vue-i18n-routing/types"]
+    "types": [
+      "unplugin-vue2-script-setup/types",
+      "vue-i18n-routing/types"
+    ],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "skipLibCheck": true
   },
-
   "vueCompilerOptions": {
-    "target": 2.7
+    "experimentalCompatMode": 2
   },
-
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
-  ]
+  "include": ["vite.config.*", "env.d.ts", "src/**/*", "src/**/*.vue"]
 }

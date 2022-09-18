@@ -1,4 +1,4 @@
-import { createI18n } from '@intlify/vue-i18n-bridge'
+import { createI18n } from 'vue-i18n'
 
 import en from './locales/en.json'
 import ja from './locales/ja.json'

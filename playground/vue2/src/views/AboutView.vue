@@ -1,7 +1,13 @@
-<script setup lang="ts">
-import { useI18n } from '@intlify/vue-i18n-bridge'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useI18n } from 'vue-i18n-bridge'
 
-const { t } = useI18n()
+export default defineComponent({
+  setup() {
+    const { t } = useI18n()
+    return { t }
+  }
+})
 </script>
 
 <template>

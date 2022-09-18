@@ -1,6 +1,6 @@
-import VueRouter from '@intlify/vue-router-bridge'
 import Vue from 'vue'
 import { createRouter as _createRouter } from 'vue-i18n-routing'
+import VueRouter from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 
@@ -25,7 +25,6 @@ export function createRouter(i18n: I18n) {
         name: '日本語'
       }
     ],
-    // @ts-ignore TODO:
     mode: 'history',
     base: import.meta.env.BASE_URL,
     routes: [

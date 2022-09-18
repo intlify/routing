@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import VueRouter from '@intlify/vue-router-bridge'
 import { createRouter as _createRouter } from 'vue-i18n-routing'
+import VueRouter from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 
-import type { I18n } from '@intlify/vue-i18n-bridge'
+import type { I18n } from 'vue-i18n-bridge'
 
 Vue.use(VueRouter)
 

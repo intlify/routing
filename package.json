@@ -24,7 +24,7 @@
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^8.7.1",
+    "eslint-plugin-vue": "^9.5.1",
     "globby": "^12.0.2",
     "happy-dom": "^6.0.3",
     "jiti": "^1.14.0",
@@ -36,8 +36,7 @@
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "vite": "^3.0.0",
-    "vue-eslint-parser": "^8.0.1"
+    "vue-eslint-parser": "^9.1.0"
   },
   "engines": {
     "node": ">= 14.6"
@@ -63,13 +62,6 @@
       "eslint --config .eslintrc.cjs --fix --ext .ts"
     ]
   },
-  "pnpm": {
-    "overrides": {
-      "vite": "^3.0.0",
-      "vue-demi": "^0.13.5",
-      "vue-i18n-routing": "workspace:*"
-    }
-  },
   "private": true,
   "repository": {
     "type": "git",
@@ -77,22 +69,24 @@
   },
   "packageManager": "pnpm@7.11.0",
   "scripts": {
-    "force": "pnpm build && pnpm clean && pnpm i --force",
+    "force": "pnpm clean && pnpm i --force",
     "install:vue2": "cd playground/vue2 && npm i",
     "install:vue2options": "cd playground/vue2-options && npm i",
     "install:vue3": "cd playground/vue3 && npm i",
-    "install:vue3options": "cd playground/vue3-options && echo 'npm i'",
+    "install:vue3options": "cd playground/vue3-options && npm i",
     "play:setup": "run-p \"install:*\"",
     "play:vue2": "cd playground/vue2 && npm run dev",
     "play:vue2options": "cd playground/vue2-options && npm run dev",
     "play:vue3": "cd playground/vue3 && npm run dev",
-    "play:vue3options": "pnpm switch:vue3 && pnpm --filter playground-vue3-options dev",
+    "play:vue3options": "cd playground/vue3-options && npm run dev",
     "build": "pnpm switch:vue3 && ./scripts/build.sh",
+    "build:play": "run-p \"build:vue*\"",
     "build:vue2": "cd playground/vue2 && npm run build",
     "build:vue2options": "cd playground/vue2-options && npm run build",
     "build:vue3": "cd playground/vue3 && npm run build",
-    "clean": "run-p clean:*",
-    "clean:dist": "run-p clean:dist:* && rimraf node_modules/.pnpm",
+    "build:vue3options": "cd playground/vue3-options && npm run build",
+    "clean": "run-s clean:* && rimraf node_modules/.pnpm",
+    "clean:dist": "run-p clean:dist:*",
     "clean:dist:vue2": "rimraf playground/vue2/dist && rimraf playground/vue2-options/dist",
     "clean:dist:vue3": "rimraf playground/vue3/dist && rimraf playground/vue3-options/dist",
     "clean:mod": "run-p clean:mod:*",
@@ -114,7 +108,7 @@
     "lint:codes": "eslint --config .eslintrc.cjs --ext .js,.mjs,.ts,.vue ./packages",
     "lint:i18n:vue2": "cross-env LINT_I18N=vue2 eslint --config .eslintrc-i18n.cjs --ext .js,.mjs,.ts,.vue,.json ./playground/vue2",
     "lint:i18n:vue3": "cross-env LINT_I18N=vue3 eslint --config .eslintrc-i18n.cjs --ext .js,.mjs,.ts,.vue,.json ./playground/vue3",
-    "lint:fix": "run-p \"lint:codes --fix\" \"lint:i18n:vue3 --fix\" \"lint:i18n:vue2 --fix\"",
+    "lint:fix": "run-p \"lint:codes --fix\"",
     "test": "pnpm typecheck && run-s \"test:unit\" \"test:unit:vue2\"",
     "test:unit": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter vue-i18n-routing test",
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm --filter vue-i18n-routing test",

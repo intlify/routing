@@ -1,5 +1,5 @@
-import { createWebHistory } from '@intlify/vue-router-bridge'
 import { createRouter as _createRouter } from 'vue-i18n-routing'
+import { createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 

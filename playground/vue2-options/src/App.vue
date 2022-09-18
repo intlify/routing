@@ -1,6 +1,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+
 import HelloWorld from '@/components/HelloWorld.vue'
+
 import type { LocaleObject } from 'vue-i18n-routing'
 
 export default defineComponent({
