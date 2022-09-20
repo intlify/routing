@@ -152,27 +152,27 @@ function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extendExportedGlobal(exported: any, global: Composer, hook?: ExtendExportedGlobalHook) {
+function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedGlobalHook) {
   const properties: ExtendProperyDescripters[] = [
     {
       locales: {
         get() {
-          return global.locales.value
+          return g.locales.value
         }
       },
       localeCodes: {
         get() {
-          return global.localeCodes.value
+          return g.localeCodes.value
         }
       },
       __baseUrl: {
         get() {
-          return global.__baseUrl
+          return g.__baseUrl
         }
       }
     }
   ]
-  hook && properties.push(hook(global))
+  hook && properties.push(hook(g))
   for (const property of properties) {
     for (const [key, descriptor] of Object.entries(property)) {
       Object.defineProperty(exported, key, descriptor)
