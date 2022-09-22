@@ -11,7 +11,7 @@ import type { I18nHeadOptions, I18nHeadMetaInfo, MetaAttrs, RoutingProxy } from 
 
 export function localeHead(
   this: RoutingProxy,
-  { addDirAttribute = false, addSeoAttributes = false }: I18nHeadOptions = {}
+  { addDirAttribute = false, addSeoAttributes = false, identifierAttribute = 'hid' }: I18nHeadOptions = {}
 ): I18nHeadMetaInfo {
   const router = this.router
   const i18n = this.i18n
@@ -46,16 +46,22 @@ export function localeHead(
       metaObject.htmlAttrs.lang = currentLocaleIso
     }
 
-    addHreflangLinks.call(this, locales as LocaleObject[], i18n.__baseUrl, metaObject.link)
-    addCanonicalLinks.call(this, i18n.__baseUrl, metaObject.link, addSeoAttributes)
-    addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta)
-    addAlternateOgLocales(locales as LocaleObject[], currentLocaleIso, metaObject.meta)
+    addHreflangLinks.call(this, locales as LocaleObject[], i18n.__baseUrl, metaObject.link, identifierAttribute)
+    addCanonicalLinks.call(this, i18n.__baseUrl, metaObject.link, identifierAttribute, addSeoAttributes)
+    addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta, identifierAttribute)
+    addAlternateOgLocales(locales as LocaleObject[], currentLocaleIso, metaObject.meta, identifierAttribute)
   }
 
   return metaObject
 }
 
-function addHreflangLinks(this: RoutingProxy, locales: LocaleObject[], baseUrl: string, link: MetaAttrs) {
+function addHreflangLinks(
+  this: RoutingProxy,
+  locales: LocaleObject[],
+  baseUrl: string,
+  link: MetaAttrs,
+  identifierAttribute: NonNullable<I18nHeadOptions['identifierAttribute']>
+) {
   const router = this.router
   const { defaultLocale, strategy } = getI18nRoutingOptions(router, this)
   if (strategy === STRATEGIES.NO_PREFIX) {
@@ -84,7 +90,7 @@ function addHreflangLinks(this: RoutingProxy, locales: LocaleObject[], baseUrl: 
     const localePath = switchLocalePath.call(this, mapLocale.code)
     if (localePath) {
       link.push({
-        hid: `i18n-alt-${iso}`,
+        [identifierAttribute]: `i18n-alt-${iso}`,
         rel: 'alternate',
         href: toAbsoluteUrl(localePath, baseUrl),
         hreflang: iso
@@ -96,7 +102,7 @@ function addHreflangLinks(this: RoutingProxy, locales: LocaleObject[], baseUrl: 
     const localePath = switchLocalePath.call(this, defaultLocale)
     if (localePath) {
       link.push({
-        hid: 'i18n-xd',
+        [identifierAttribute]: 'i18n-xd',
         rel: 'alternate',
         href: toAbsoluteUrl(localePath, baseUrl),
         hreflang: 'x-default'
@@ -109,6 +115,7 @@ function addCanonicalLinks(
   this: RoutingProxy,
   baseUrl: string,
   link: MetaAttrs,
+  identifierAttribute: NonNullable<I18nHeadOptions['identifierAttribute']>,
   seoAttributesOptions: I18nHeadOptions['addSeoAttributes']
 ) {
   const route = this.route
@@ -145,14 +152,19 @@ function addCanonicalLinks(
     }
 
     link.push({
-      hid: 'i18n-can',
+      [identifierAttribute]: 'i18n-can',
       rel: 'canonical',
       href
     })
   }
 }
 
-function addCurrentOgLocale(currentLocale: LocaleObject, currentLocaleIso: string | undefined, meta: MetaAttrs) {
+function addCurrentOgLocale(
+  currentLocale: LocaleObject,
+  currentLocaleIso: string | undefined,
+  meta: MetaAttrs,
+  identifierAttribute: NonNullable<I18nHeadOptions['identifierAttribute']>
+) {
   const hasCurrentLocaleAndIso = currentLocale && currentLocaleIso
 
   if (!hasCurrentLocaleAndIso) {
@@ -160,14 +172,19 @@ function addCurrentOgLocale(currentLocale: LocaleObject, currentLocaleIso: strin
   }
 
   meta.push({
-    hid: 'i18n-og',
+    [identifierAttribute]: 'i18n-og',
     property: 'og:locale',
     // Replace dash with underscore as defined in spec: language_TERRITORY
     content: hypenToUnderscore(currentLocaleIso)
   })
 }
 
-function addAlternateOgLocales(locales: LocaleObject[], currentLocaleIso: string | undefined, meta: MetaAttrs) {
+function addAlternateOgLocales(
+  locales: LocaleObject[],
+  currentLocaleIso: string | undefined,
+  meta: MetaAttrs,
+  identifierAttribute: NonNullable<I18nHeadOptions['identifierAttribute']>
+) {
   const localesWithoutCurrent = locales.filter(locale => {
     const localeIso = locale.iso
     return localeIso && localeIso !== currentLocaleIso
@@ -175,7 +192,7 @@ function addAlternateOgLocales(locales: LocaleObject[], currentLocaleIso: string
 
   if (localesWithoutCurrent.length) {
     const alternateLocales = localesWithoutCurrent.map(locale => ({
-      hid: `i18n-og-alt-${locale.iso}`,
+      [identifierAttribute]: `i18n-og-alt-${locale.iso}`,
       property: 'og:locale:alternate',
       content: hypenToUnderscore(locale.iso!)
     }))

@@ -53,6 +53,12 @@ export interface I18nHeadOptions {
    * @defaultValue false
    */
   addSeoAttributes?: boolean | SeoAttributesOptions
+  /**
+   * Identifier attribute of `<meta>` tag
+   *
+   * @defaultValue 'hid'
+   */
+  identifierAttribute?: string
 }
 
 export type MetaAttrs = Record<string, any>
