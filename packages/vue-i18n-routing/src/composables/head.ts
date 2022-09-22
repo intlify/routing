@@ -26,6 +26,7 @@ import type { Ref } from 'vue-demi'
 export function useLocaleHead({
   addDirAttribute = false,
   addSeoAttributes = false,
+  identifierAttribute = 'hid',
   strategy = undefined,
   defaultLocale = undefined,
   route = useRoute(),
@@ -60,7 +61,7 @@ export function useLocaleHead({
         defaultLocale,
         strategy
       },
-      [{ addDirAttribute, addSeoAttributes }]
+      [{ addDirAttribute, addSeoAttributes, identifierAttribute }]
     ) as I18nHeadMetaInfo
   }
 
