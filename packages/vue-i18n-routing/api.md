@@ -22,6 +22,7 @@
   - [RouteOptionsResolver](#routeoptionsresolver)
   - [Strategies](#strategies)
   - [SwitchLocalePathFunction](#switchlocalepathfunction)
+  - [SwitchLocalePathIntercepter](#switchlocalepathintercepter)
   - [TargetLocale](#targetlocale)
   - [VueI18nExtendOptions](#vuei18nextendoptions)
 - [Interface](#interface)
@@ -81,6 +82,7 @@
   - [DEFAULT_STRATEGY](#default_strategy)
   - [DEFAULT_TRAILING_SLASH](#default_trailing_slash)
   - [DefaultPrefixable](#defaultprefixable)
+  - [DefaultSwitchLocalePathIntercepter](#defaultswitchlocalepathintercepter)
   - [STRATEGIES](#strategies)
   - [VERSION](#version)
 
@@ -151,6 +153,7 @@ export declare type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandl
   | 'routesNameSeparator'
   | 'strategy'
   | 'prefixable'
+  | 'switchLocalePathIntercepter'
 > & {
   localeCodes?: string[]
 }
@@ -175,6 +178,7 @@ export declare type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = B
   baseUrl?: string | BaseUrl
   routeOptionsResolver?: RouteOptionsResolver
   prefixable?: Prefixable
+  switchLocalePathIntercepter?: SwitchLocalePathIntercepter
 } & RouterOptions
 ```
 
@@ -258,6 +262,16 @@ Swtich locale path function
 
 ```typescript
 export declare type SwitchLocalePathFunction = (locale?: Locale) => string
+```
+
+### SwitchLocalePathIntercepter
+
+The intercept handler which is called in [switchLocalePath](#switchlocalepath) function
+
+**Signature:**
+
+```typescript
+export declare type SwitchLocalePathIntercepter = (path: string, locale: Locale) => string
 ```
 
 ### TargetLocale
@@ -569,6 +583,8 @@ export interface RoutingProxy
 ##### strategy
 
 ##### switchLocalePath
+
+##### switchLocalePathIntercepter
 
 ##### trailingSlash
 
@@ -1042,6 +1058,8 @@ Returns a [SwitchLocalePathFunction](#switchlocalepathfunction)
 ### DEFAULT_TRAILING_SLASH
 
 ### DefaultPrefixable
+
+### DefaultSwitchLocalePathIntercepter
 
 ### STRATEGIES
 

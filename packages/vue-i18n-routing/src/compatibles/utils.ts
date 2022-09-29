@@ -8,7 +8,7 @@ import {
 } from '../constants'
 import { getGlobalOptions } from '../extends/router'
 
-import { DefaultPrefixable } from './routing'
+import { DefaultPrefixable, DefaultSwitchLocalePathIntercepter } from './routing'
 
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { RoutingProxy } from './types'
@@ -25,7 +25,8 @@ export function getI18nRoutingOptions(
     strategy = DEFAULT_STRATEGY,
     trailingSlash = DEFAULT_TRAILING_SLASH,
     localeCodes = [],
-    prefixable = DefaultPrefixable
+    prefixable = DefaultPrefixable,
+    switchLocalePathIntercepter = DefaultSwitchLocalePathIntercepter
   }: I18nRoutingGlobalOptions = {}
 ): Required<I18nRoutingGlobalOptions> {
   const options = getGlobalOptions(router)
@@ -38,6 +39,8 @@ export function getI18nRoutingOptions(
     strategy: proxy.strategy || options.strategy || strategy,
     trailingSlash: proxy.trailingSlash || options.trailingSlash || trailingSlash,
     localeCodes: proxy.localeCodes || options.localeCodes || localeCodes,
-    prefixable: proxy.prefixable || options.prefixable || prefixable
+    prefixable: proxy.prefixable || options.prefixable || prefixable,
+    switchLocalePathIntercepter:
+      proxy.switchLocalePathIntercepter || options.switchLocalePathIntercepter || switchLocalePathIntercepter
   }
 }
