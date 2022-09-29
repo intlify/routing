@@ -8,6 +8,8 @@ import {
 } from '../constants'
 import { getGlobalOptions } from '../extends/router'
 
+import { DefaultPrefixable } from './routing'
+
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { RoutingProxy } from './types'
 import type { VueRouter, Router } from '@intlify/vue-router-bridge'
@@ -22,7 +24,8 @@ export function getI18nRoutingOptions(
     routesNameSeparator = DEFAULT_ROUTES_NAME_SEPARATOR,
     strategy = DEFAULT_STRATEGY,
     trailingSlash = DEFAULT_TRAILING_SLASH,
-    localeCodes = []
+    localeCodes = [],
+    prefixable = DefaultPrefixable
   }: I18nRoutingGlobalOptions = {}
 ): Required<I18nRoutingGlobalOptions> {
   const options = getGlobalOptions(router)
@@ -34,6 +37,7 @@ export function getI18nRoutingOptions(
     routesNameSeparator: proxy.routesNameSeparator || options.routesNameSeparator || routesNameSeparator,
     strategy: proxy.strategy || options.strategy || strategy,
     trailingSlash: proxy.trailingSlash || options.trailingSlash || trailingSlash,
-    localeCodes: proxy.localeCodes || options.localeCodes || localeCodes
+    localeCodes: proxy.localeCodes || options.localeCodes || localeCodes,
+    prefixable: proxy.prefixable || options.prefixable || prefixable
   }
 }

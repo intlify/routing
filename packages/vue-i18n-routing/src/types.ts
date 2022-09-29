@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { Prefixable } from './compatibles'
 import type { STRATEGIES } from './constants'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { RouteConfig as __Route, RouterOptions } from '@intlify/vue-router-bridge'
@@ -171,6 +172,12 @@ export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlRe
    * @defaultValue undefined
    */
   routeOptionsResolver?: RouteOptionsResolver
+  /**
+   * Whether to prefix the route path with the locale or not
+   *
+   * @defaultValue default prefix judgement hook (see {@link DefaultPrefixable})
+   */
+  prefixable?: Prefixable
 } & RouterOptions
 
 export type { Route, RouteLocationNormalized, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
