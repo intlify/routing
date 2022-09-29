@@ -7,7 +7,7 @@ import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 import { getI18nRoutingOptions } from './utils'
 
 import type { Strategies } from '../types'
-import type { RoutingProxy, PrefixableOptions } from './types'
+import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
@@ -193,6 +193,8 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
+export const DefaultSwitchLocalePathIntercepter: SwitchLocalePathIntercepter = (path: string) => path
+
 export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const route = this.route
   const name = getRouteBaseName.call(this, route)
@@ -219,9 +221,11 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   }
 
   const baseRoute = assign({}, routeCopy, _baseRoute)
-  const path = localePath.call(this, baseRoute, locale)
+  let path = localePath.call(this, baseRoute, locale)
 
-  // TODO: for domainDifference here
+  // custome locale path with intercepter
+  const { switchLocalePathIntercepter } = getI18nRoutingOptions(this.router, this)
+  path = switchLocalePathIntercepter(path, locale)
 
   return path
 }

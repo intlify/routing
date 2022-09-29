@@ -25,6 +25,7 @@ export interface RoutingProxy {
   trailingSlash?: boolean
   routesNameSeparator?: string
   prefixable?: Prefixable
+  switchLocalePathIntercepter?: SwitchLocalePathIntercepter
 }
 
 /**
@@ -96,5 +97,10 @@ export interface PrefixableOptions {
  * Route path prefix judgment logic in {@link resolveRoute} function
  */
 export type Prefixable = (optons: PrefixableOptions) => boolean
+
+/**
+ * The intercept handler which is called in {@link switchLocalePath} function
+ */
+export type SwitchLocalePathIntercepter = (path: string, locale: Locale) => string
 
 /* eslint-enable @typescript-eslint/no-explicit-any */
