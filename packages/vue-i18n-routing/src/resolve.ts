@@ -9,7 +9,30 @@ import {
 } from './constants'
 import { adjustRoutePathForTrailingSlash } from './utils'
 
-import type { Strategies, I18nRoute, I18nRoutingOptions, ComputedRouteOptions, RouteOptionsResolver } from './types'
+import type {
+  Strategies,
+  I18nRoute,
+  I18nRoutingOptions,
+  ComputedRouteOptions,
+  RouteOptionsResolver,
+  LocalizeRoutesPrefixableOptions
+} from './types'
+
+function prefixable(optons: LocalizeRoutesPrefixableOptions): boolean {
+  const { currentLocale, defaultLocale, strategy, isChild, path } = optons
+
+  const isDefaultLocale = currentLocale === defaultLocale
+  const isChildWithRelativePath = isChild && !path.startsWith('/')
+
+  // no need to add prefix if child's path is relative
+  return (
+    !isChildWithRelativePath &&
+    // skip default locale if strategy is 'prefix_except_default'
+    !(isDefaultLocale && strategy === 'prefix_except_default')
+  )
+}
+
+export const DefaultLocalizeRoutesPrefixable = prefixable
 
 /**
  * Localize routes
@@ -31,10 +54,17 @@ export function localizeRoutes(
     defaultLocaleRouteNameSuffix = DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
     includeUprefixedFallback = false,
     optionsResolver = undefined,
+    localizeRoutesPrefixable = DefaultLocalizeRoutesPrefixable,
     locales = []
   }: Pick<
     I18nRoutingOptions,
-    'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
+    | 'defaultLocale'
+    | 'strategy'
+    | 'locales'
+    | 'routesNameSeparator'
+    | 'trailingSlash'
+    | 'defaultLocaleRouteNameSuffix'
+    | 'localizeRoutesPrefixable'
   > & {
     includeUprefixedFallback?: boolean
     optionsResolver?: RouteOptionsResolver
@@ -149,12 +179,13 @@ export function localizeRoutes(
       const isChildWithRelativePath = isChild && !path.startsWith('/')
 
       // add route prefix
-      const shouldAddPrefix =
-        // no need to add prefix if child's path is relative
-        !isChildWithRelativePath &&
-        // skip default locale if strategy is 'prefix_except_default'
-        !(isDefaultLocale && strategy === 'prefix_except_default')
-
+      const shouldAddPrefix = localizeRoutesPrefixable({
+        isChild,
+        path,
+        currentLocale: locale,
+        defaultLocale,
+        strategy
+      })
       if (shouldAddPrefix) {
         path = `/${locale}${path}`
       }

@@ -75,6 +75,37 @@ export interface ComputedRouteOptions {
 export type RouteOptionsResolver = (route: I18nRoute, localeCodes: string[]) => ComputedRouteOptions | null
 
 /**
+ * Localize route path prefix judgment options used in {@link LocalizeRoutesPrefixable}
+ */
+export interface LocalizeRoutesPrefixableOptions {
+  /**
+   * Current locale
+   */
+  currentLocale: Locale
+  /**
+   * Default locale
+   */
+  defaultLocale: Locale
+  /**
+   * Curernt strategy
+   */
+  strategy: Strategies
+  /**
+   * Whether the route to be resolved is child or not
+   */
+  isChild: boolean
+  /**
+   * The path of route
+   */
+  path: string
+}
+
+/**
+ * Localize route path prefix judgment logic in {@link localizeRoutes} function
+ */
+export type LocalizeRoutesPrefixable = (options: LocalizeRoutesPrefixableOptions) => boolean
+
+/**
  * Options to initialize a VueRouter instance
  *
  * @remarks
@@ -184,6 +215,12 @@ export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlRe
    * @defaultValue {@link DefaultSwitchLocalePathIntercepter}
    */
   switchLocalePathIntercepter?: SwitchLocalePathIntercepter
+  /**
+   * Whether to prefix the localize route path with the locale or not
+   *
+   * @defaultValue {@link DefaultLocalizeRoutesPrefixable}
+   */
+  localizeRoutesPrefixable?: LocalizeRoutesPrefixable
 } & RouterOptions
 
 export type { Route, RouteLocationNormalized, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'

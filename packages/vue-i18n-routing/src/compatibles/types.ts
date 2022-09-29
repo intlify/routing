@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Strategies, Directions } from '../types'
+import type { Strategies, Directions, LocalizeRoutesPrefixableOptions } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { Route, RouteLocationNormalizedLoaded, Router, VueRouter } from '@intlify/vue-router-bridge'
 
@@ -78,20 +78,7 @@ export interface I18nHeadMetaInfo {
 /**
  * Route path prefix judgment options used in {@link Prefixable}
  */
-export interface PrefixableOptions {
-  /**
-   * Current locale
-   */
-  currentLocale: Locale
-  /**
-   * Default locale
-   */
-  defaultLocale: Locale
-  /**
-   * Curernt strategy
-   */
-  strategy: Strategies
-}
+export type PrefixableOptions = Pick<LocalizeRoutesPrefixableOptions, 'currentLocale' | 'defaultLocale' | 'strategy'>
 
 /**
  * Route path prefix judgment logic in {@link resolveRoute} function
