@@ -12,7 +12,7 @@ import {
   DEFAULT_DETECTION_DIRECTION,
   DEFAULT_BASE_URL
 } from '../constants'
-import { localizeRoutes } from '../resolve'
+import { localizeRoutes, DefaultLocalizeRoutesPrefixable } from '../resolve'
 import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
 
 import { extendI18n } from './i18n'
@@ -113,6 +113,7 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     routes,
     prefixable,
     switchLocalePathIntercepter,
+    localizeRoutesPrefixable,
     routeOptionsResolver: optionsResolver
   } = asDefaultVueI18nRouterOptions(options)
 
@@ -129,6 +130,7 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     trailingSlash,
     routesNameSeparator,
     defaultLocaleRouteNameSuffix,
+    localizeRoutesPrefixable,
     optionsResolver
   })
   options.routes = localizedRoutes as any // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -236,5 +238,6 @@ function asDefaultVueI18nRouterOptions(options: I18nRoutingOptions): Required<I1
   options.routes = options.routes ?? []
   options.prefixable = options.prefixable ?? DefaultPrefixable
   options.switchLocalePathIntercepter = options.switchLocalePathIntercepter ?? DefaultSwitchLocalePathIntercepter
+  options.localizeRoutesPrefixable = options.localizeRoutesPrefixable ?? DefaultLocalizeRoutesPrefixable
   return options as Required<I18nRoutingOptions>
 }
