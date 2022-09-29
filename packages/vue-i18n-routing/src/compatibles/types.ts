@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Strategies, Directions } from '../types'
+import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { Route, RouteLocationNormalizedLoaded, Router, VueRouter } from '@intlify/vue-router-bridge'
 
 /**
@@ -23,6 +24,7 @@ export interface RoutingProxy {
   defaultLocaleRouteNameSuffix?: string
   trailingSlash?: boolean
   routesNameSeparator?: string
+  prefixable?: Prefixable
 }
 
 /**
@@ -71,5 +73,28 @@ export interface I18nHeadMetaInfo {
   meta?: MetaAttrs[]
   link?: MetaAttrs[]
 }
+
+/**
+ * Route path prefix judgment options used in {@link Prefixable}
+ */
+export interface PrefixableOptions {
+  /**
+   * Current locale
+   */
+  currentLocale: Locale
+  /**
+   * Default locale
+   */
+  defaultLocale: Locale
+  /**
+   * Curernt strategy
+   */
+  strategy: Strategies
+}
+
+/**
+ * Route path prefix judgment logic in {@link resolveRoute} function
+ */
+export type Prefixable = (optons: PrefixableOptions) => boolean
 
 /* eslint-enable @typescript-eslint/no-explicit-any */

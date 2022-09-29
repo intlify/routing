@@ -2,6 +2,7 @@ import { isString, isObject, makeSymbol } from '@intlify/shared'
 import VueRouter3, { createRouter as _createRouter } from '@intlify/vue-router-bridge'
 import { isVue2, isVue3 } from 'vue-demi'
 
+import { DefaultPrefixable } from '../compatibles'
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_ROUTE_NAME_SUFFIX,
@@ -37,6 +38,7 @@ export type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = Bas
   | 'trailingSlash'
   | 'routesNameSeparator'
   | 'strategy'
+  | 'prefixable'
 > & { localeCodes?: string[] }
 
 const GlobalOptionsRegistory = makeSymbol('vue-i18n-routing-gor')
@@ -108,6 +110,7 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     defaultDirection,
     baseUrl,
     routes,
+    prefixable,
     routeOptionsResolver: optionsResolver
   } = asDefaultVueI18nRouterOptions(options)
 
@@ -136,7 +139,8 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     trailingSlash,
     routesNameSeparator,
     defaultLocaleRouteNameSuffix,
-    defaultDirection
+    defaultDirection,
+    prefixable
   })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -227,5 +231,6 @@ function asDefaultVueI18nRouterOptions(options: I18nRoutingOptions): Required<I1
   options.defaultDirection = options.defaultDirection ?? DEFAULT_DETECTION_DIRECTION
   options.baseUrl = options.baseUrl ?? DEFAULT_BASE_URL
   options.routes = options.routes ?? []
+  options.prefixable = options.prefixable ?? DefaultPrefixable
   return options as Required<I18nRoutingOptions>
 }

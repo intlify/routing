@@ -7,7 +7,7 @@ import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 import { getI18nRoutingOptions } from './utils'
 
 import type { Strategies } from '../types'
-import type { RoutingProxy } from './types'
+import type { RoutingProxy, PrefixableOptions } from './types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
@@ -19,6 +19,19 @@ import type {
 } from '@intlify/vue-router-bridge'
 
 const RESOLVED_PREFIXED = new Set<Strategies>(['prefix_and_default', 'prefix_except_default'])
+
+function prefixable(optons: PrefixableOptions): boolean {
+  const { currentLocale, defaultLocale, strategy } = optons
+  const isDefaultLocale = currentLocale === defaultLocale
+  // don't prefix default locale
+  return (
+    !(isDefaultLocale && RESOLVED_PREFIXED.has(strategy)) &&
+    // no prefix for any language
+    !(strategy === 'no_prefix')
+  )
+}
+
+export const DefaultPrefixable = prefixable
 
 export function getRouteBaseName(
   this: RoutingProxy,
@@ -87,7 +100,7 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   const i18n = this.i18n
   // console.log('resolveRoute', i18n.locale, Object.keys(i18n))
   const _locale = locale || getLocale(i18n)
-  const { routesNameSeparator, defaultLocale, defaultLocaleRouteNameSuffix, strategy, trailingSlash } =
+  const { routesNameSeparator, defaultLocale, defaultLocaleRouteNameSuffix, strategy, trailingSlash, prefixable } =
     getI18nRoutingOptions(router, this)
 
   // if route parameter is a string, check if it's a path or name of route.
@@ -130,14 +143,8 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
         localizedRoute.state = resolvedRoute.state
       }
     } else {
-      const isDefaultLocale = _locale === defaultLocale
-      const isPrefixed =
-        // don't prefix default locale
-        !(isDefaultLocale && RESOLVED_PREFIXED.has(strategy)) &&
-        // no prefix for any language
-        !(strategy === 'no_prefix')
       // if route has a path defined but no name, resolve full route using the path
-      if (isPrefixed) {
+      if (prefixable({ currentLocale: _locale, defaultLocale, strategy })) {
         localizedRoute.path = `/${_locale}${localizedRoute.path}`
       }
       localizedRoute.path = trailingSlash
