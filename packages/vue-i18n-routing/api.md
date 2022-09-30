@@ -147,8 +147,8 @@ Global options for i18n routing
 **Signature:**
 
 ```typescript
-export declare type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = Pick<
-  I18nRoutingOptions<BaseUrl>,
+export declare type I18nRoutingGlobalOptions<Context = unknown> = Pick<
+  I18nRoutingOptions<Context>,
   | 'defaultLocale'
   | 'defaultDirection'
   | 'defaultLocaleRouteNameSuffix'
@@ -169,7 +169,7 @@ Options to initialize a VueRouter instance
 **Signature:**
 
 ```typescript
-export declare type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
+export declare type I18nRoutingOptions<Context = unknown> = {
   version?: 3 | 4
   defaultLocale?: string
   locales?: string[] | LocaleObject[]
@@ -178,7 +178,7 @@ export declare type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = B
   routesNameSeparator?: string
   defaultLocaleRouteNameSuffix?: string
   defaultDirection?: Directions
-  baseUrl?: string | BaseUrl
+  baseUrl?: string | BaseUrlResolveHandler<Context>
   routeOptionsResolver?: RouteOptionsResolver
   prefixable?: Prefixable
   switchLocalePathIntercepter?: SwitchLocalePathIntercepter
@@ -867,9 +867,9 @@ Register global i18n routing option registory
 **Signature:**
 
 ```typescript
-export declare function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(
+export declare function registerGlobalOptions<Context = unknown>(
   router: Router | VueRouter,
-  options: I18nRoutingGlobalOptions<BaseUrl>
+  options: I18nRoutingGlobalOptions<Context>
 ): void
 ```
 
@@ -878,7 +878,7 @@ export declare function registerGlobalOptions<BaseUrl extends BaseUrlResolveHand
 | Parameter | Type                                    | Description                                                                                     |
 | --------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | router    | Router &#124; VueRouter                 | A router instance, about router type                                                            |
-| options   | I18nRoutingGlobalOptions&lt;BaseUrl&gt; | A global options, about options type, see [I18nRoutingGlobalOptions](#i18nroutingglobaloptions) |
+| options   | I18nRoutingGlobalOptions&lt;Context&gt; | A global options, about options type, see [I18nRoutingGlobalOptions](#i18nroutingglobaloptions) |
 
 ### resolveBaseUrl
 

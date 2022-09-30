@@ -1,5 +1,5 @@
 import { isBoolean, isObject } from '@intlify/shared'
-import { ref, computed, isVue3, effectScope, isVue2 } from 'vue-demi'
+import { ref, computed, watch, isVue3, effectScope, isVue2 } from 'vue-demi'
 
 import {
   localePath,
@@ -57,7 +57,7 @@ export interface VueI18nRoutingPluginOptions {
 }
 
 export interface ExtendProperyDescripters {
-  [key: string]: Pick<PropertyDescriptor, 'get' | 'set'>
+  [key: string]: Pick<PropertyDescriptor, 'get'>
 }
 export type ExtendComposerHook = (compser: Composer) => void
 export type ExtendVueI18nHook = (composer: Composer) => ExtendProperyDescripters
@@ -72,12 +72,13 @@ export interface ExtendHooks {
 export type VueI18nExtendOptions = Pick<I18nRoutingOptions, 'baseUrl'> & {
   locales?: string[] | LocaleObject[]
   localeCodes?: string[]
+  context?: unknown
   hooks?: ExtendHooks
 }
 
 export function extendI18n<TI18n extends I18n>(
   i18n: TI18n,
-  { locales = [], localeCodes = [], baseUrl = DEFAULT_BASE_URL, hooks = {} }: VueI18nExtendOptions = {}
+  { locales = [], localeCodes = [], baseUrl = DEFAULT_BASE_URL, hooks = {}, context = {} }: VueI18nExtendOptions = {}
 ) {
   const scope = effectScope()
 
@@ -88,7 +89,7 @@ export function extendI18n<TI18n extends I18n>(
     const composer = getComposer(i18n)
 
     // extend global
-    scope.run(() => extendComposer(composer, { locales, localeCodes, baseUrl, hooks }))
+    scope.run(() => extendComposer(composer, { locales, localeCodes, baseUrl, hooks, context }))
     if (isVueI18n(i18n.global)) {
       extendVueI18n(i18n.global, hooks.onExtendVueI18n)
     }
@@ -137,20 +138,23 @@ export function extendI18n<TI18n extends I18n>(
 }
 
 function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
-  const { locales, localeCodes, baseUrl } = options
+  const { locales, localeCodes, baseUrl, context } = options
 
   const _locales = ref<string[] | LocaleObject[]>(locales!)
   const _localeCodes = ref<string[]>(localeCodes!)
-  const _baseUrl = ref<string>(resolveBaseUrl(baseUrl!, {}))
+  const _baseUrl = ref<string>('')
 
   composer.locales = computed(() => _locales.value)
   composer.localeCodes = computed(() => _localeCodes.value)
-  composer.baseUrl = computed({
-    get: () => _baseUrl.value,
-    set: (url: string) => {
-      _baseUrl.value = url
-    }
-  })
+  composer.baseUrl = computed(() => _baseUrl.value)
+
+  watch(
+    composer.locale,
+    () => {
+      _baseUrl.value = resolveBaseUrl(baseUrl!, context)
+    },
+    { immediate: true }
+  )
 
   if (options.hooks && options.hooks.onExtendComposer) {
     options.hooks.onExtendComposer(composer)
@@ -174,9 +178,6 @@ function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedG
       baseUrl: {
         get() {
           return g.baseUrl.value
-        },
-        set(url: string) {
-          g.baseUrl.value = url
         }
       }
     }
@@ -206,9 +207,6 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
       baseUrl: {
         get() {
           return composer.baseUrl.value
-        },
-        set(url: string) {
-          composer.baseUrl.value = url
         }
       }
     }
