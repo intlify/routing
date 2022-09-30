@@ -23,7 +23,7 @@ export function localeHead(
     meta: []
   }
 
-  if (i18n.locales == null || i18n.__baseUrl == null) {
+  if (i18n.locales == null || i18n.baseUrl == null) {
     return metaObject
   }
 
@@ -46,8 +46,8 @@ export function localeHead(
       metaObject.htmlAttrs.lang = currentLocaleIso
     }
 
-    addHreflangLinks.call(this, locales as LocaleObject[], i18n.__baseUrl, metaObject.link, identifierAttribute)
-    addCanonicalLinks.call(this, i18n.__baseUrl, metaObject.link, identifierAttribute, addSeoAttributes)
+    addHreflangLinks.call(this, locales as LocaleObject[], i18n.baseUrl, metaObject.link, identifierAttribute)
+    addCanonicalLinks.call(this, i18n.baseUrl, metaObject.link, identifierAttribute, addSeoAttributes)
     addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta, identifierAttribute)
     addAlternateOgLocales(locales as LocaleObject[], currentLocaleIso, metaObject.meta, identifierAttribute)
   }

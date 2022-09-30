@@ -57,7 +57,7 @@ export interface VueI18nRoutingPluginOptions {
 }
 
 export interface ExtendProperyDescripters {
-  [key: string]: Pick<PropertyDescriptor, 'get'>
+  [key: string]: Pick<PropertyDescriptor, 'get' | 'set'>
 }
 export type ExtendComposerHook = (compser: Composer) => void
 export type ExtendVueI18nHook = (composer: Composer) => ExtendProperyDescripters
@@ -144,7 +144,7 @@ function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
 
   composer.locales = computed(() => _locales.value)
   composer.localeCodes = computed(() => _localeCodes.value)
-  composer.__baseUrl = resolveBaseUrl(baseUrl!, {})
+  composer.baseUrl = resolveBaseUrl(baseUrl!, {})
 
   if (options.hooks && options.hooks.onExtendComposer) {
     options.hooks.onExtendComposer(composer)
@@ -165,9 +165,12 @@ function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedG
           return g.localeCodes.value
         }
       },
-      __baseUrl: {
+      baseUrl: {
         get() {
-          return g.__baseUrl
+          return g.baseUrl
+        },
+        set(url: string) {
+          g.baseUrl = url
         }
       }
     }
@@ -194,9 +197,12 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
           return composer.localeCodes.value
         }
       },
-      __baseUrl: {
+      baseUrl: {
         get() {
-          return composer.__baseUrl
+          return composer.baseUrl
+        },
+        set(url: string) {
+          composer.baseUrl = url
         }
       }
     }

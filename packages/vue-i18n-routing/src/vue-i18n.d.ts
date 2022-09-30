@@ -12,7 +12,10 @@ export interface I18nRoutingCustomProperties {
    * List of locale codes
    */
   readonly localeCodes: string[]
-  readonly __baseUrl: string
+  /**
+   * Base URL that is used in generating canonical links
+   */
+  readonly baseUrl: string
 }
 
 declare module 'vue-i18n' {
