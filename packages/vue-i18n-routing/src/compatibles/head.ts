@@ -1,4 +1,5 @@
 import { isArray, isObject } from '@intlify/shared'
+import { unref } from 'vue-demi'
 
 import { STRATEGIES } from '../constants'
 import { getLocale, getLocales, getNormalizedLocales, warn } from '../utils'
@@ -46,8 +47,8 @@ export function localeHead(
       metaObject.htmlAttrs.lang = currentLocaleIso
     }
 
-    addHreflangLinks.call(this, locales as LocaleObject[], i18n.baseUrl, metaObject.link, identifierAttribute)
-    addCanonicalLinks.call(this, i18n.baseUrl, metaObject.link, identifierAttribute, addSeoAttributes)
+    addHreflangLinks.call(this, locales as LocaleObject[], unref(i18n.baseUrl), metaObject.link, identifierAttribute)
+    addCanonicalLinks.call(this, unref(i18n.baseUrl), metaObject.link, identifierAttribute, addSeoAttributes)
     addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta, identifierAttribute)
     addAlternateOgLocales(locales as LocaleObject[], currentLocaleIso, metaObject.meta, identifierAttribute)
   }

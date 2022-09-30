@@ -141,10 +141,16 @@ function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
 
   const _locales = ref<string[] | LocaleObject[]>(locales!)
   const _localeCodes = ref<string[]>(localeCodes!)
+  const _baseUrl = ref<string>(resolveBaseUrl(baseUrl!, {}))
 
   composer.locales = computed(() => _locales.value)
   composer.localeCodes = computed(() => _localeCodes.value)
-  composer.baseUrl = resolveBaseUrl(baseUrl!, {})
+  composer.baseUrl = computed({
+    get: () => _baseUrl.value,
+    set: (url: string) => {
+      _baseUrl.value = url
+    }
+  })
 
   if (options.hooks && options.hooks.onExtendComposer) {
     options.hooks.onExtendComposer(composer)
@@ -167,10 +173,10 @@ function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedG
       },
       baseUrl: {
         get() {
-          return g.baseUrl
+          return g.baseUrl.value
         },
         set(url: string) {
-          g.baseUrl = url
+          g.baseUrl.value = url
         }
       }
     }
@@ -199,10 +205,10 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
       },
       baseUrl: {
         get() {
-          return composer.baseUrl
+          return composer.baseUrl.value
         },
         set(url: string) {
-          composer.baseUrl = url
+          composer.baseUrl.value = url
         }
       }
     }

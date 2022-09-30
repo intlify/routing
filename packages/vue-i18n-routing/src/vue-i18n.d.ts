@@ -15,7 +15,7 @@ export interface I18nRoutingCustomProperties {
   /**
    * Base URL that is used in generating canonical links
    */
-  readonly baseUrl: string
+  baseUrl: string
 }
 
 declare module 'vue-i18n' {
