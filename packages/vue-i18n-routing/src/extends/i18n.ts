@@ -69,16 +69,22 @@ export interface ExtendHooks {
   onExtendVueI18n?: ExtendVueI18nHook
 }
 
-export type VueI18nExtendOptions = Pick<I18nRoutingOptions, 'baseUrl'> & {
+export type VueI18nExtendOptions<Context = unknown> = Pick<I18nRoutingOptions<Context>, 'baseUrl'> & {
   locales?: string[] | LocaleObject[]
   localeCodes?: string[]
-  context?: unknown
+  context?: Context
   hooks?: ExtendHooks
 }
 
-export function extendI18n<TI18n extends I18n>(
+export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
   i18n: TI18n,
-  { locales = [], localeCodes = [], baseUrl = DEFAULT_BASE_URL, hooks = {}, context = {} }: VueI18nExtendOptions = {}
+  {
+    locales = [],
+    localeCodes = [],
+    baseUrl = DEFAULT_BASE_URL,
+    hooks = {},
+    context = {} as Context
+  }: VueI18nExtendOptions<Context> = {}
 ) {
   const scope = effectScope()
 
@@ -137,7 +143,7 @@ export function extendI18n<TI18n extends I18n>(
   return scope
 }
 
-function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
+function extendComposer<Context = unknown>(composer: Composer, options: VueI18nExtendOptions<Context>) {
   const { locales, localeCodes, baseUrl, context } = options
 
   const _locales = ref<string[] | LocaleObject[]>(locales!)
@@ -151,7 +157,7 @@ function extendComposer(composer: Composer, options: VueI18nExtendOptions) {
   watch(
     composer.locale,
     () => {
-      _baseUrl.value = resolveBaseUrl(baseUrl!, context)
+      _baseUrl.value = resolveBaseUrl(baseUrl!, context!)
     },
     { immediate: true }
   )

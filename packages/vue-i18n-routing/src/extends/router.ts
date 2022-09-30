@@ -121,8 +121,6 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
   const localeCodes = normalizedLocaleCodes.map(l => l.code)
   const getLocaleFromRoute = createLocaleFromRouteGetter(localeCodes, routesNameSeparator, defaultLocaleRouteNameSuffix)
 
-  extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes })
-
   const localizedRoutes = localizeRoutes(routes as I18nRoute[], {
     locales,
     defaultLocale,
@@ -147,6 +145,8 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     prefixable,
     switchLocalePathIntercepter
   })
+
+  extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes, context: router })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const removableGuardListener = router.beforeEach((to, from, next) => {
