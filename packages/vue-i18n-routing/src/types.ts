@@ -111,7 +111,7 @@ export type LocalizeRoutesPrefixable = (options: LocalizeRoutesPrefixableOptions
  * @remarks
  * This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
  */
-export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = {
+export type I18nRoutingOptions<Context = unknown> = {
   /**
    * Vue Router version
    *
@@ -196,7 +196,7 @@ export type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlRe
    *
    * @defaultValue ''
    */
-  baseUrl?: string | BaseUrl
+  baseUrl?: string | BaseUrlResolveHandler<Context>
   /**
    * Route options resolver
    *

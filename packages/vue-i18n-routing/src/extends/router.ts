@@ -17,7 +17,7 @@ import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
 
 import { extendI18n } from './i18n'
 
-import type { I18nRoute, I18nRoutingOptions, BaseUrlResolveHandler } from '../types'
+import type { I18nRoute, I18nRoutingOptions } from '../types'
 import type { I18n } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
@@ -30,8 +30,8 @@ import type {
 /**
  * Global options for i18n routing
  */
-export type I18nRoutingGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler> = Pick<
-  I18nRoutingOptions<BaseUrl>,
+export type I18nRoutingGlobalOptions<Context = unknown> = Pick<
+  I18nRoutingOptions<Context>,
   | 'defaultLocale'
   | 'defaultDirection'
   | 'defaultLocaleRouteNameSuffix'
@@ -50,9 +50,9 @@ const GlobalOptionsRegistory = makeSymbol('vue-i18n-routing-gor')
  * @param router - A router instance, about router type
  * @param options - A global options, about options type, see {@link I18nRoutingGlobalOptions}
  */
-export function registerGlobalOptions<BaseUrl extends BaseUrlResolveHandler = BaseUrlResolveHandler>(
+export function registerGlobalOptions<Context = unknown>(
   router: Router | VueRouter,
-  options: I18nRoutingGlobalOptions<BaseUrl>
+  options: I18nRoutingGlobalOptions<Context>
 ): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _options: I18nRoutingGlobalOptions | undefined = (router as any)[GlobalOptionsRegistory]
