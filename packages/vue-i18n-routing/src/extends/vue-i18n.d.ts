@@ -1,5 +1,5 @@
 import type { LocaleObject } from '../types'
-import type { ComputedRef } from 'vue-demi'
+import type { ComputedRef, WritableComputedRef } from 'vue-demi'
 
 export interface ComposerCustomProperties {
   /**
@@ -13,7 +13,10 @@ export interface ComposerCustomProperties {
    * List of locale codes
    */
   localeCodes: ComputedRef<string[]>
-  __baseUrl: string
+  /**
+   * Base URL that is used in generating canonical links
+   */
+  baseUrl: WritableComputedRef<string>
 }
 declare module 'vue-i18n' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

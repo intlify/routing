@@ -17,8 +17,10 @@
   - [LocaleLocationFunction](#localelocationfunction)
   - [LocalePathFunction](#localepathfunction)
   - [LocaleRouteFunction](#localeroutefunction)
+  - [LocalizeRoutesPrefixable](#localizeroutesprefixable)
   - [MetaAttrs](#metaattrs)
   - [Prefixable](#prefixable)
+  - [PrefixableOptions](#prefixableoptions)
   - [RouteOptionsResolver](#routeoptionsresolver)
   - [Strategies](#strategies)
   - [SwitchLocalePathFunction](#switchlocalepathfunction)
@@ -35,7 +37,7 @@
   - [I18nHeadMetaInfo](#i18nheadmetainfo)
   - [I18nHeadOptions](#i18nheadoptions)
   - [LocaleObject](#localeobject)
-  - [PrefixableOptions](#prefixableoptions)
+  - [LocalizeRoutesPrefixableOptions](#localizeroutesprefixableoptions)
   - [RouteLegacy](#routelegacy)
   - [RoutingProxy](#routingproxy)
   - [SeoAttributesOptions](#seoattributesoptions)
@@ -81,6 +83,7 @@
   - [DEFAULT_ROUTES_NAME_SEPARATOR](#default_routes_name_separator)
   - [DEFAULT_STRATEGY](#default_strategy)
   - [DEFAULT_TRAILING_SLASH](#default_trailing_slash)
+  - [DefaultLocalizeRoutesPrefixable](#defaultlocalizeroutesprefixable)
   - [DefaultPrefixable](#defaultprefixable)
   - [DefaultSwitchLocalePathIntercepter](#defaultswitchlocalepathintercepter)
   - [STRATEGIES](#strategies)
@@ -179,6 +182,7 @@ export declare type I18nRoutingOptions<BaseUrl extends BaseUrlResolveHandler = B
   routeOptionsResolver?: RouteOptionsResolver
   prefixable?: Prefixable
   switchLocalePathIntercepter?: SwitchLocalePathIntercepter
+  localizeRoutesPrefixable?: LocalizeRoutesPrefixable
 } & RouterOptions
 ```
 
@@ -222,6 +226,16 @@ export declare type LocaleRouteFunction = (
 ) => Route | ReturnType<Router['resolve']> | undefined
 ```
 
+### LocalizeRoutesPrefixable
+
+Localize route path prefix judgment logic in [localizeRoutes](#localizeroutes) function
+
+**Signature:**
+
+```typescript
+export declare type LocalizeRoutesPrefixable = (options: LocalizeRoutesPrefixableOptions) => boolean
+```
+
 ### MetaAttrs
 
 ### Prefixable
@@ -232,6 +246,19 @@ Route path prefix judgment logic in [resolveRoute](#resolveroute) function
 
 ```typescript
 export declare type Prefixable = (optons: PrefixableOptions) => boolean
+```
+
+### PrefixableOptions
+
+Route path prefix judgment options used in [Prefixable](#prefixable)
+
+**Signature:**
+
+```typescript
+export declare type PrefixableOptions = Pick<
+  LocalizeRoutesPrefixableOptions,
+  'currentLocale' | 'defaultLocale' | 'strategy'
+>
 ```
 
 ### RouteOptionsResolver
@@ -476,14 +503,14 @@ export interface LocaleObject extends Record<string, any>
 
 ##### name
 
-### PrefixableOptions
+### LocalizeRoutesPrefixableOptions
 
-Route path prefix judgment options used in [Prefixable](#prefixable)
+Localize route path prefix judgment options used in [LocalizeRoutesPrefixable](#localizeroutesprefixable)
 
 **Signature:**
 
 ```typescript
-export interface PrefixableOptions
+export interface LocalizeRoutesPrefixableOptions
 ```
 
 #### Properties
@@ -506,6 +533,26 @@ Default locale
 
 ```typescript
 defaultLocale: Locale
+```
+
+##### isChild
+
+Whether the route to be resolved is child or not
+
+**Signature:**
+
+```typescript
+isChild: boolean
+```
+
+##### path
+
+The path of route
+
+**Signature:**
+
+```typescript
+path: string
 ```
 
 ##### strategy
@@ -777,10 +824,17 @@ export declare function localizeRoutes(
     defaultLocaleRouteNameSuffix,
     includeUprefixedFallback,
     optionsResolver,
+    localizeRoutesPrefixable,
     locales
   }?: Pick<
     I18nRoutingOptions,
-    'defaultLocale' | 'strategy' | 'locales' | 'routesNameSeparator' | 'trailingSlash' | 'defaultLocaleRouteNameSuffix'
+    | 'defaultLocale'
+    | 'strategy'
+    | 'locales'
+    | 'routesNameSeparator'
+    | 'trailingSlash'
+    | 'defaultLocaleRouteNameSuffix'
+    | 'localizeRoutesPrefixable'
   > & {
     includeUprefixedFallback?: boolean
     optionsResolver?: RouteOptionsResolver
@@ -790,10 +844,10 @@ export declare function localizeRoutes(
 
 #### Parameters
 
-| Parameter                                                                                                                                         | Type                                                                                                                                                                                 | Description |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| routes                                                                                                                                            | I18nRoute[]                                                                                                                                                                          | Some routes |
-| { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, locales } | Pick&lt;I18nRoutingOptions, 'defaultLocale' &#124; 'strategy' &#124; 'locales' &#124; 'routesNameSeparator' &#124; 'trailingSlash' &#124; 'defaultLocaleRouteNameSuffix'&gt; &amp; { |
+| Parameter                                                                                                                                                                   | Type                                                                                                                                                                                                                   | Description |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| routes                                                                                                                                                                      | I18nRoute[]                                                                                                                                                                                                            | Some routes |
+| { defaultLocale, strategy, trailingSlash, routesNameSeparator, defaultLocaleRouteNameSuffix, includeUprefixedFallback, optionsResolver, localizeRoutesPrefixable, locales } | Pick&lt;I18nRoutingOptions, 'defaultLocale' &#124; 'strategy' &#124; 'locales' &#124; 'routesNameSeparator' &#124; 'trailingSlash' &#124; 'defaultLocaleRouteNameSuffix' &#124; 'localizeRoutesPrefixable'&gt; &amp; { |
 
     includeUprefixedFallback?: boolean;
     optionsResolver?: RouteOptionsResolver;
@@ -1056,6 +1110,8 @@ Returns a [SwitchLocalePathFunction](#switchlocalepathfunction)
 ### DEFAULT_STRATEGY
 
 ### DEFAULT_TRAILING_SLASH
+
+### DefaultLocalizeRoutesPrefixable
 
 ### DefaultPrefixable
 
