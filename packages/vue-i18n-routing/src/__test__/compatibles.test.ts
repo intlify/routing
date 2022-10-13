@@ -387,6 +387,13 @@ describe('switchLocalePath', () => {
           {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
+            meta: {
+              [key]: {
+                en: { pathMatch: 'not-found-english' },
+                ja: { pathMatch: 'not-found-japanese' },
+                fr: { pathMatch: 'not-found-franch' }
+              }
+            },
             component: { template: '<div>Not Found</div>' }
           }
         ],
@@ -412,6 +419,11 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese')
       assert.equal(vm.switchLocalePath('en'), '/en/category/english')
       assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch')
+
+      await router.push('/ja/foo')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/not-found-japanese')
+      assert.equal(vm.switchLocalePath('en'), '/en/not-found-english')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/not-found-franch')
 
       // for vue-router deprecation
       // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
