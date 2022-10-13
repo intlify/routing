@@ -10,7 +10,8 @@ import {
   DEFAULT_STRATEGY,
   DEFAULT_TRAILING_SLASH,
   DEFAULT_DETECTION_DIRECTION,
-  DEFAULT_BASE_URL
+  DEFAULT_BASE_URL,
+  DEFAULT_DYNAMIC_PARAMS_KEY
 } from '../constants'
 import { localizeRoutes, DefaultLocalizeRoutesPrefixable } from '../resolve'
 import { getLocale, setLocale, getNormalizedLocales, warn } from '../utils'
@@ -40,6 +41,7 @@ export type I18nRoutingGlobalOptions<Context = unknown> = Pick<
   | 'strategy'
   | 'prefixable'
   | 'switchLocalePathIntercepter'
+  | 'dynamicRouteParamsKey'
 > & { localeCodes?: string[] }
 
 const GlobalOptionsRegistory = makeSymbol('vue-i18n-routing-gor')
@@ -114,6 +116,7 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     prefixable,
     switchLocalePathIntercepter,
     localizeRoutesPrefixable,
+    dynamicRouteParamsKey,
     routeOptionsResolver: optionsResolver
   } = asDefaultVueI18nRouterOptions(options)
 
@@ -143,7 +146,8 @@ export function createRouter(i18n: I18n, options = {} as I18nRoutingOptions) {
     defaultLocaleRouteNameSuffix,
     defaultDirection,
     prefixable,
-    switchLocalePathIntercepter
+    switchLocalePathIntercepter,
+    dynamicRouteParamsKey
   })
 
   extendI18n(i18n, { locales: normalizedLocaleCodes, baseUrl, localeCodes, context: router })
@@ -239,5 +243,6 @@ function asDefaultVueI18nRouterOptions(options: I18nRoutingOptions): Required<I1
   options.prefixable = options.prefixable ?? DefaultPrefixable
   options.switchLocalePathIntercepter = options.switchLocalePathIntercepter ?? DefaultSwitchLocalePathIntercepter
   options.localizeRoutesPrefixable = options.localizeRoutesPrefixable ?? DefaultLocalizeRoutesPrefixable
+  options.dynamicRouteParamsKey = options.dynamicRouteParamsKey ?? DEFAULT_DYNAMIC_PARAMS_KEY
   return options as Required<I18nRoutingOptions>
 }

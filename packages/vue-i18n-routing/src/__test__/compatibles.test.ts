@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { makeSymbol } from '@intlify/shared'
 import { createI18n } from '@intlify/vue-i18n-bridge'
 import { createMemoryHistory } from '@intlify/vue-router-bridge'
 import { describe, it, assert, expect } from 'vitest'
@@ -363,13 +364,31 @@ describe('switchLocalePath', () => {
     it('should be worked', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
+      const key = makeSymbol('i18n')
       const router = createRouter(i18n, {
         version: 4,
         locales: ['en', 'ja', 'fr'],
+        dynamicRouteParamsKey: key,
         routes: [
           { path: '/', name: 'index', component: { template: '<div>index</div>' } },
           { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
-          { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div>Not Found</div>' } }
+          {
+            path: '/category/:id',
+            name: 'category',
+            meta: {
+              [key]: {
+                en: { id: 'english' },
+                ja: { id: 'japanese' },
+                fr: { id: 'franch' }
+              }
+            },
+            component: { template: '<div>Category</div>' }
+          },
+          {
+            path: '/:pathMatch(.*)*',
+            name: 'not-found',
+            component: { template: '<div>Not Found</div>' }
+          }
         ],
         history: createMemoryHistory()
       })
@@ -388,6 +407,11 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('en'), '/en/about')
       assert.equal(vm.switchLocalePath('fr'), '/fr/about')
       assert.equal(vm.switchLocalePath('vue-i18n'), '')
+
+      await router.push('/ja/category/1')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese')
+      assert.equal(vm.switchLocalePath('en'), '/en/category/english')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch')
 
       // for vue-router deprecation
       // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22

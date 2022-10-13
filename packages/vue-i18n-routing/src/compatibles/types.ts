@@ -26,6 +26,7 @@ export interface RoutingProxy {
   routesNameSeparator?: string
   prefixable?: Prefixable
   switchLocalePathIntercepter?: SwitchLocalePathIntercepter
+  dynamicRouteParamsKey?: string | symbol
 }
 
 /**
