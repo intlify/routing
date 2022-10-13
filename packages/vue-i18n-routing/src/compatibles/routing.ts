@@ -2,11 +2,12 @@ import { isString, assign } from '@intlify/shared'
 import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
 import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 
+import { DEFAULT_DYNAMIC_PARAMS_KEY } from '../constants'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
 import { getI18nRoutingOptions } from './utils'
 
-import type { Strategies } from '../types'
+import type { Strategies, I18nRoutingOptions } from '../types'
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
@@ -15,7 +16,8 @@ import type {
   RouteLocation,
   RouteLocationRaw,
   RouteLocationNormalizedLoaded,
-  Router
+  Router,
+  RouteMeta
 } from '@intlify/vue-router-bridge'
 
 const RESOLVED_PREFIXED = new Set<Strategies>(['prefix_and_default', 'prefix_except_default'])
@@ -195,6 +197,29 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
 
 export const DefaultSwitchLocalePathIntercepter: SwitchLocalePathIntercepter = (path: string) => path
 
+function getLocalizableMetaFromDynamicParams(
+  route: Route | RouteLocationNormalizedLoaded,
+  key: Required<I18nRoutingOptions>['dynamicRouteParamsKey']
+): Record<Locale, unknown> {
+  const metaDefault = {}
+  if (key === DEFAULT_DYNAMIC_PARAMS_KEY) {
+    return metaDefault
+  }
+
+  // prettier-ignore
+  const meta = isVue3
+    ? (route as RouteLocationNormalizedLoaded).meta // for vue-router v4
+    : isRef<Route>(route) // for vue-router v3
+      ? route.value.meta || metaDefault
+      : route.meta || metaDefault
+
+  if (isRef<RouteMeta>(meta)) {
+    return (meta.value[key] || metaDefault) as Record<Locale, unknown>
+  } else {
+    return (meta[key] || metaDefault) as Record<Locale, unknown>
+  }
+}
+
 export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const route = this.route
   const name = getRouteBaseName.call(this, route)
@@ -202,11 +227,15 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
     return ''
   }
 
+  const { switchLocalePathIntercepter, dynamicRouteParamsKey } = getI18nRoutingOptions(this.router, this)
+
   // prettier-ignore
-  const { params, ...routeCopy } = !isVue3 && isRef<Route>(route)
-	  ? route.value // for vue-router v3
-	  : (route as RouteLocationNormalizedLoaded) // for vue-router v4
-  const langSwitchParams = {}
+  const { params, ...routeCopy } = isVue3
+    ? (route as RouteLocationNormalizedLoaded) // for vue-router v4
+    : isRef<Route>(route) // for vue-router v3
+      ? route.value
+      : route
+  const langSwitchParams = getLocalizableMetaFromDynamicParams(route, dynamicRouteParamsKey)[locale] || {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _baseRoute: any = {
@@ -224,7 +253,6 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   let path = localePath.call(this, baseRoute, locale)
 
   // custome locale path with intercepter
-  const { switchLocalePathIntercepter } = getI18nRoutingOptions(this.router, this)
   path = switchLocalePathIntercepter(path, locale)
 
   return path

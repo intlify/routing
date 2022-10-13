@@ -4,7 +4,8 @@ import {
   DEFAULT_LOCALE,
   DEFAULT_DETECTION_DIRECTION,
   DEFAULT_TRAILING_SLASH,
-  DEFAULT_STRATEGY
+  DEFAULT_STRATEGY,
+  DEFAULT_DYNAMIC_PARAMS_KEY
 } from '../constants'
 import { getGlobalOptions } from '../extends/router'
 
@@ -26,7 +27,8 @@ export function getI18nRoutingOptions(
     trailingSlash = DEFAULT_TRAILING_SLASH,
     localeCodes = [],
     prefixable = DefaultPrefixable,
-    switchLocalePathIntercepter = DefaultSwitchLocalePathIntercepter
+    switchLocalePathIntercepter = DefaultSwitchLocalePathIntercepter,
+    dynamicRouteParamsKey = DEFAULT_DYNAMIC_PARAMS_KEY
   }: I18nRoutingGlobalOptions = {}
 ): Required<I18nRoutingGlobalOptions> {
   const options = getGlobalOptions(router)
@@ -41,6 +43,7 @@ export function getI18nRoutingOptions(
     localeCodes: proxy.localeCodes || options.localeCodes || localeCodes,
     prefixable: proxy.prefixable || options.prefixable || prefixable,
     switchLocalePathIntercepter:
-      proxy.switchLocalePathIntercepter || options.switchLocalePathIntercepter || switchLocalePathIntercepter
+      proxy.switchLocalePathIntercepter || options.switchLocalePathIntercepter || switchLocalePathIntercepter,
+    dynamicRouteParamsKey: proxy.dynamicRouteParamsKey || options.dynamicRouteParamsKey || dynamicRouteParamsKey
   }
 }

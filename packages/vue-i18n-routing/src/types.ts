@@ -221,6 +221,12 @@ export type I18nRoutingOptions<Context = unknown> = {
    * @defaultValue {@link DefaultLocalizeRoutesPrefixable}
    */
   localizeRoutesPrefixable?: LocalizeRoutesPrefixable
+  /**
+   * The key which to access vue router meta object, when dynamic route params need localize.
+   *
+   * @defaultValue ''
+   */
+  dynamicRouteParamsKey?: string | symbol
 } & RouterOptions
 
 export type { Route, RouteLocationNormalized, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
