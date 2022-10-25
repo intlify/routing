@@ -86,6 +86,9 @@
       "require": "./dist/vue-i18n-routing.js",
       "types": "./dist/vue-i18n-routing.d.ts"
     },
+    "./vue-i18n": {
+      "types": "./dist/vue-i18n.d.ts"
+    },
     "./types": {
       "types": "./types.d.ts"
     },
