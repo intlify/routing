@@ -21,7 +21,6 @@
     "vue-demi": "^0.13.5"
   },
   "devDependencies": {
-    "@vue/composition-api": "^1.7.0",
     "@microsoft/api-extractor": "^7.31.1",
     "api-docs-gen": "^0.4.0",
     "typescript": "^4.8.3",
