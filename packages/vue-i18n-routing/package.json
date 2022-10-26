@@ -54,6 +54,9 @@
     },
     "vue-router": {
       "optional": true
+    },
+    "@vue/composition-api": {
+      "optional": true
     }
   },
   "optionalDependencies": {
