@@ -1,7 +1,7 @@
 {
   "name": "@intlify/routing",
   "description": "The i18n routing libraries",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
@@ -118,5 +118,8 @@
     "test:e2e:vue2options": "cd playground/vue2-options && npm test",
     "test:e2e:vue3": "cd playground/vue3 && npm test",
     "test:e2e:vue3options": "cd playground/vue3-options && npm test"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
