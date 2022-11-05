@@ -86,7 +86,6 @@ describe('localePath', () => {
           // path
           assert.equal(vm.localePath('/'), '/en')
           assert.equal(vm.localePath('/about', 'ja'), '/ja/about')
-          assert.equal(vm.localePath('/:pathMatch(.*)*', 'ja'), '/ja/:pathMatch(.*)*')
           // name
           assert.equal(vm.localePath('index', 'ja'), '/ja')
           assert.equal(vm.localePath('about'), '/en/about')
@@ -132,7 +131,6 @@ describe('localePath', () => {
         // path
         assert.equal(vm.localePath('/'), '/')
         assert.equal(vm.localePath('/about', 'ja'), '/about')
-        assert.equal(vm.localePath('/:pathMatch(.*)*', 'ja'), '/:pathMatch(.*)*')
         // name
         assert.equal(vm.localePath('index', 'ja'), '/')
         assert.equal(vm.localePath('about'), '/about')

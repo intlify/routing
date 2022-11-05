@@ -17,16 +17,16 @@
     "@intlify/shared": "next",
     "@intlify/vue-i18n-bridge": "^0.7.0",
     "@intlify/vue-router-bridge": "^0.7.0",
-    "ufo": "^0.8.5",
-    "vue-demi": "^0.13.5"
+    "ufo": "^0.8.6",
+    "vue-demi": "^0.13.11"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.31.1",
     "api-docs-gen": "^0.4.0",
-    "typescript": "^4.8.3",
-    "vite": "^3.1.2",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.2",
     "vite-plugin-dts": "^0.9.6",
-    "vitest": "^0.23.4",
+    "vitest": "^0.24.5",
     "vue": "^3.2.27",
     "vue-i18n": "npm:vue-i18n@next",
     "vue-i18n-bridge": "next",

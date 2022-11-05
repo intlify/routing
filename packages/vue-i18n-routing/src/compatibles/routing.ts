@@ -5,7 +5,7 @@ import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 import { DEFAULT_DYNAMIC_PARAMS_KEY } from '../constants'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
-import { getI18nRoutingOptions } from './utils'
+import { getI18nRoutingOptions, resolve } from './utils'
 
 import type { Strategies, I18nRoutingOptions } from '../types'
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
@@ -122,7 +122,7 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   if (localizedRoute.path && !localizedRoute.name) {
     let _resolvedRoute = null
     try {
-      _resolvedRoute = router.resolve(localizedRoute) as any
+      _resolvedRoute = resolve(router, localizedRoute, strategy, _locale)
     } catch {}
     // prettier-ignore
     const resolvedRoute = isVue3
