@@ -9,7 +9,7 @@ export function createRouter(i18n: I18n) {
   return _createRouter(i18n, {
     version: 4,
     defaultLocale: 'en',
-    strategy: 'prefix',
+    // strategy: 'prefix',
     // trailingSlash: true,
     baseUrl: 'https://localhost:3000',
     locales: [
