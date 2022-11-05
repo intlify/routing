@@ -112,7 +112,6 @@ describe('useLocalePath', () => {
           // path
           assert.equal(localePath('/'), '/en')
           assert.equal(localePath('/about', 'ja'), '/ja/about')
-          assert.equal(localePath('/:pathMatch(.*)*', 'ja'), '/ja/:pathMatch(.*)*')
           // name
           assert.equal(localePath('index', 'ja'), '/ja')
           assert.equal(localePath('about'), '/en/about')
@@ -146,7 +145,6 @@ describe('useLocalePath', () => {
         // path
         assert.equal(localePath('/'), '/')
         assert.equal(localePath('/about', 'ja'), '/about')
-        assert.equal(localePath('/:pathMatch(.*)*', 'ja'), '/:pathMatch(.*)*')
         // name
         assert.equal(localePath('index', 'ja'), '/')
         assert.equal(localePath('about'), '/about')
