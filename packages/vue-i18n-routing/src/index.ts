@@ -19,6 +19,7 @@ export {
   resolveBaseUrl,
   findBrowserLocale,
   isComposer,
+  getComposer,
   isExportedGlobalComposer,
   isI18nInstance,
   isLegacyVueI18n,
