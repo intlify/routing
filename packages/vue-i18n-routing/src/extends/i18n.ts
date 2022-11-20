@@ -1,4 +1,4 @@
-import { isBoolean, isObject } from '@intlify/shared'
+import { isBoolean, isObject, isFunction, assign } from '@intlify/shared'
 import { ref, computed, watch, isVue3, effectScope, isVue2 } from 'vue-demi'
 
 import {
@@ -98,22 +98,31 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
 
   const orgInstall = i18n.install
   i18n.install = (vue: Vue, ...options: unknown[]) => {
-    const pluginOptions = isPluginOptions(options[0]) ? options[0] : { inject: true }
+    const pluginOptions = isPluginOptions(options[0]) ? assign({}, options[0]) : { inject: true }
     if (pluginOptions.inject == null) {
       pluginOptions.inject = true
     }
+    const orgComposerExtend = pluginOptions.__composerExtend
     pluginOptions.__composerExtend = (c: Composer) => {
       const g = getComposer(i18n)
       c.locales = computed(() => g.locales.value)
       c.localeCodes = computed(() => g.localeCodes.value)
       c.baseUrl = computed(() => g.baseUrl.value)
+      if (isFunction(orgComposerExtend)) {
+        Reflect.apply(orgComposerExtend, pluginOptions, [c])
+      }
     }
     if (isVueI18n(i18n.global)) {
+      const orgVueI18nExtend = pluginOptions.__vueI18nExtend
       pluginOptions.__vueI18nExtend = (vueI18n: VueI18n) => {
         extendVueI18n(vueI18n, hooks.onExtendVueI18n)
+        if (isFunction(orgVueI18nExtend)) {
+          Reflect.apply(orgVueI18nExtend, pluginOptions, [vueI18n])
+        }
       }
     }
 
+    options[0] = pluginOptions
     Reflect.apply(orgInstall, i18n, [vue, ...options])
 
     const composer = getComposer(i18n)
@@ -254,5 +263,9 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPluginOptions(options: any): options is VueI18nRoutingPluginOptions {
-  return isObject(options) && 'inject' in options && isBoolean(options.inject)
+  return (
+    isObject(options) &&
+    ('inject' in options || '__composerExtend' in options || '__vueI18nExtend' in options) &&
+    isBoolean(options.inject)
+  )
 }
