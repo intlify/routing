@@ -11,7 +11,7 @@ import {
   localeHead
 } from '../compatibles'
 import { DEFAULT_BASE_URL } from '../constants'
-import { resolveBaseUrl, isVueI18n, getComposer } from '../utils'
+import { resolveBaseUrl, isVueI18n, getComposer, inBrowser } from '../utils'
 
 import type { I18nRoutingOptions, LocaleObject } from '../types'
 import type { I18n, Composer, VueI18n } from '@intlify/vue-i18n-bridge'
@@ -54,6 +54,14 @@ export interface VueI18nRoutingPluginOptions {
    * @defaultValue `true`
    */
   inject?: boolean
+  /**
+   * @internal
+   */
+  __composerExtend?: (composer: Composer) => void
+  /**
+   * @internal
+   */
+  __vueI18nExtend?: (vueI18n: VueI18n) => void
 }
 
 export interface ExtendProperyDescripters {
@@ -90,6 +98,22 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
 
   const orgInstall = i18n.install
   i18n.install = (vue: Vue, ...options: unknown[]) => {
+    const pluginOptions = isPluginOptions(options[0]) ? options[0] : { inject: true }
+    if (pluginOptions.inject == null) {
+      pluginOptions.inject = true
+    }
+    pluginOptions.__composerExtend = (c: Composer) => {
+      const g = getComposer(i18n)
+      c.locales = computed(() => g.locales.value)
+      c.localeCodes = computed(() => g.localeCodes.value)
+      c.baseUrl = computed(() => g.baseUrl.value)
+    }
+    if (isVueI18n(i18n.global)) {
+      pluginOptions.__vueI18nExtend = (vueI18n: VueI18n) => {
+        extendVueI18n(vueI18n, hooks.onExtendVueI18n)
+      }
+    }
+
     Reflect.apply(orgInstall, i18n, [vue, ...options])
 
     const composer = getComposer(i18n)
@@ -114,7 +138,6 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
       extendExportedGlobal(exported, composer, hooks.onExtendExportedGlobal)
     }
 
-    const pluginOptions = isPluginOptions(options[0]) ? options[0] : { inject: true }
     if (pluginOptions.inject) {
       // extend vue component instance
       vue.mixin({
@@ -154,13 +177,17 @@ function extendComposer<Context = unknown>(composer: Composer, options: VueI18nE
   composer.localeCodes = computed(() => _localeCodes.value)
   composer.baseUrl = computed(() => _baseUrl.value)
 
-  watch(
-    composer.locale,
-    () => {
-      _baseUrl.value = resolveBaseUrl(baseUrl!, context!)
-    },
-    { immediate: true }
-  )
+  if (inBrowser) {
+    watch(
+      composer.locale,
+      () => {
+        _baseUrl.value = resolveBaseUrl(baseUrl!, context!)
+      },
+      { immediate: true }
+    )
+  } else {
+    _baseUrl.value = resolveBaseUrl(baseUrl!, context!)
+  }
 
   if (options.hooks && options.hooks.onExtendComposer) {
     options.hooks.onExtendComposer(composer)
