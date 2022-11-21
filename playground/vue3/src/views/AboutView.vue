@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locales, localeCodes } = useI18n({
+  useScope: 'local'
+})
+// console.log('locales', locales, localeCodes)
 </script>
 
 <template>
