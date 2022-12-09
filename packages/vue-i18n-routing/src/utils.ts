@@ -67,7 +67,7 @@ export function isLegacyVueI18n(target: any): target is Pick<VueI18n, 'locale'> 
   return target != null && ('__VUE_I18N_BRIDGE__' in target || '_sync' in target)
 }
 
-export function getComposer(i18n: I18n | VueI18n): Composer {
+export function getComposer(i18n: I18n | VueI18n | Composer): Composer {
   // prettier-ignore
   return isI18nInstance(i18n)
     ? isComposer(i18n.global)

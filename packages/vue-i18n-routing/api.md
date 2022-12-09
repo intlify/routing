@@ -47,6 +47,7 @@
   - [createRouter](#createrouter)
   - [extendI18n](#extendi18n)
   - [findBrowserLocale](#findbrowserlocale)
+  - [getComposer](#getcomposer)
   - [getGlobalOptions](#getglobaloptions)
   - [getLocale](#getlocale)
   - [getLocaleCodes](#getlocalecodes)
@@ -78,6 +79,7 @@
 - [Variable](#variable)
   - [DEFAULT_BASE_URL](#default_base_url)
   - [DEFAULT_DETECTION_DIRECTION](#default_detection_direction)
+  - [DEFAULT_DYNAMIC_PARAMS_KEY](#default_dynamic_params_key)
   - [DEFAULT_LOCALE_ROUTE_NAME_SUFFIX](#default_locale_route_name_suffix)
   - [DEFAULT_LOCALE](#default_locale)
   - [DEFAULT_ROUTES_NAME_SEPARATOR](#default_routes_name_separator)
@@ -157,6 +159,7 @@ export declare type I18nRoutingGlobalOptions<Context = unknown> = Pick<
   | 'strategy'
   | 'prefixable'
   | 'switchLocalePathIntercepter'
+  | 'dynamicRouteParamsKey'
 > & {
   localeCodes?: string[]
 }
@@ -183,6 +186,7 @@ export declare type I18nRoutingOptions<Context = unknown> = {
   prefixable?: Prefixable
   switchLocalePathIntercepter?: SwitchLocalePathIntercepter
   localizeRoutesPrefixable?: LocalizeRoutesPrefixable
+  dynamicRouteParamsKey?: string | symbol
 } & RouterOptions
 ```
 
@@ -603,6 +607,8 @@ export interface RoutingProxy
 
 ##### defaultLocaleRouteNameSuffix
 
+##### dynamicRouteParamsKey
+
 ##### getRouteBaseName
 
 ##### i18n
@@ -740,6 +746,8 @@ export declare function findBrowserLocale(
 #### Returns
 
 The matched the locale code
+
+### getComposer
 
 ### getGlobalOptions
 
@@ -1100,6 +1108,8 @@ Returns a [SwitchLocalePathFunction](#switchlocalepathfunction)
 ### DEFAULT_BASE_URL
 
 ### DEFAULT_DETECTION_DIRECTION
+
+### DEFAULT_DYNAMIC_PARAMS_KEY
 
 ### DEFAULT_LOCALE_ROUTE_NAME_SUFFIX
 
