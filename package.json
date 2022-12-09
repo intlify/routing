@@ -1,7 +1,7 @@
 {
   "name": "@intlify/routing",
   "description": "The i18n routing libraries",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
