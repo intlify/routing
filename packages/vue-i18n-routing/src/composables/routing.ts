@@ -48,7 +48,7 @@ function proxyForComposable<T extends Function>(options: I18nCommonRoutingOption
  * Use route base name
  *
  * @param givenRoute - A route object, if not provided, the route is returned with `useRoute` will be used
- * @param options - An options, see about details {@link I18nRoutingOptions}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
  * @returns The route base name, if route name is not defined, return null
  */
@@ -79,7 +79,7 @@ export type LocalePathFunction = (route: RawLocation | RouteLocation, locale?: L
 /**
  * Use resolve locale path
  *
- * @param options - An options, see about details {@link I18nRoutingOptions}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
  * @returns Returns a {@link LocalePathFunction}
  */
@@ -117,7 +117,7 @@ export type LocaleRouteFunction = (
 /**
  * Use resolve locale route
  *
- * @param options - An options, see about details {@link I18nRoutingOptions}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
  * @returns Returns a {@link LocaleRouteFunction}
  */
@@ -164,7 +164,7 @@ export type LocaleLocationFunction = (
 /**
  * Use resolve locale location
  *
- * @param options - An options, see about details {@link I18nRoutingOptions}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
  * @returns Returns a {@link LocaleLocationFunction}
  */
@@ -207,7 +207,7 @@ export type SwitchLocalePathFunction = (locale?: Locale) => string
 /**
  * Use swtich locale path
  *
- * @param options - An options, see about details {@link I18nRoutingOptions}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
  * @returns Returns a {@link SwitchLocalePathFunction}
  */

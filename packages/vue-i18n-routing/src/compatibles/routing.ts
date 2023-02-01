@@ -220,6 +220,14 @@ function getLocalizableMetaFromDynamicParams(
   }
 }
 
+/**
+ * Returns path of the current route for specified locale
+ *
+ * @param this - A {@link RoutingProxy} instance
+ * @param locale - A locale
+ *
+ * @returns A path of the current route
+ */
 export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const route = this.route
   const name = getRouteBaseName.call(this, route)
