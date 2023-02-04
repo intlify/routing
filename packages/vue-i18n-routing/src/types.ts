@@ -10,6 +10,8 @@ type _Route = UnionToIntersection<__Route>
 
 /**
  * Route config for lagacy vue-router v3
+ *
+ * @public
  */
 export interface RouteLegacy extends Pick<_Route, Exclude<keyof _Route, 'children' | 'component'>> {
   chunkName?: string
@@ -20,6 +22,8 @@ export interface RouteLegacy extends Pick<_Route, Exclude<keyof _Route, 'childre
 
 /**
  * Route config for vue-router v4
+ *
+ * @public
  */
 interface Route {
   name?: string
@@ -30,21 +34,29 @@ interface Route {
 
 /**
  * Route config for vue-i18n-routing
+ *
+ * @public
  */
 export type I18nRoute = Route & RouteLegacy & { redirect?: string }
 
 /**
  * Routing strategy
+ *
+ * @public
  */
 export type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES]
 
 /**
  * Direction
+ *
+ * @public
  */
 export type Directions = 'ltr' | 'rtl' | 'auto'
 
 /**
  * Locale object
+ *
+ * @public
  */
 export interface LocaleObject extends Record<string, any> {
   code: Locale
@@ -56,6 +68,9 @@ export interface LocaleObject extends Record<string, any> {
   iso?: string
 }
 
+/**
+ * @public
+ */
 export type BaseUrlResolveHandler<Context = unknown> = (context: Context) => string
 
 /**
@@ -63,6 +78,8 @@ export type BaseUrlResolveHandler<Context = unknown> = (context: Context) => str
  *
  * @remarks
  * The route options that is compute the route to be localized on {@link localizeRoutes}
+ *
+ * @public
  */
 export interface ComputedRouteOptions {
   locales: readonly string[]
@@ -71,11 +88,15 @@ export interface ComputedRouteOptions {
 
 /**
  * Resolver for route localizing options
+ *
+ * @public
  */
 export type RouteOptionsResolver = (route: I18nRoute, localeCodes: string[]) => ComputedRouteOptions | null
 
 /**
  * Localize route path prefix judgment options used in {@link LocalizeRoutesPrefixable}
+ *
+ * @public
  */
 export interface LocalizeRoutesPrefixableOptions {
   /**
@@ -102,6 +123,8 @@ export interface LocalizeRoutesPrefixableOptions {
 
 /**
  * Localize route path prefix judgment logic in {@link localizeRoutes} function
+ *
+ * @public
  */
 export type LocalizeRoutesPrefixable = (options: LocalizeRoutesPrefixableOptions) => boolean
 
@@ -110,6 +133,8 @@ export type LocalizeRoutesPrefixable = (options: LocalizeRoutesPrefixableOptions
  *
  * @remarks
  * This options is extended from Vue Router `RouterOptioins`, so you can specify those options.
+ *
+ * @public
  */
 export type I18nRoutingOptions<Context = unknown> = {
   /**

@@ -9,17 +9,35 @@ import type { I18n, Composer, Locale, VueI18n, ExportedGlobalComposer } from '@i
 import type { useRoute, useRouter, RouteLocationNormalizedLoaded, Route } from '@intlify/vue-router-bridge'
 import type { Ref } from 'vue-demi'
 
+/**
+ * @public
+ */
 export type I18nCommonRoutingOptions = Pick<
   I18nRoutingOptions,
   'defaultLocale' | 'strategy' | 'defaultLocaleRouteNameSuffix' | 'trailingSlash' | 'locales' | 'routesNameSeparator'
 >
 
+/**
+ * @public
+ */
 export interface ComposableOptions {
+  /**
+   * vue-router route instance, which is returned with `useRoute`.
+   */
   route?: ReturnType<typeof useRoute>
+  /**
+   * vue-router router instance, which is returned with `useRouter`.
+   */
   router?: ReturnType<typeof useRouter>
+  /**
+   * vue-i18n Composer instance.
+   */
   i18n?: Composer
 }
 
+/**
+ * @public
+ */
 export type I18nCommonRoutingOptionsWithComposable = I18nCommonRoutingOptions & ComposableOptions
 
 export const inBrowser = typeof window !== 'undefined'

@@ -14,7 +14,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier'
   ],
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc'],
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -58,7 +58,8 @@ module.exports = {
         },
         'newlines-between': 'always'
       }
-    ]
+    ],
+    'tsdoc/syntax': 'warn',
   },
   settings: {
     'import/resolver': {

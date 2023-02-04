@@ -86,7 +86,7 @@ export function getGlobalOptions(router: Router | VueRouter): I18nRoutingGlobalO
  *
  * @returns A Vue Router instance
  *
- * @remakrs
+ * @remarks
  * You can create a vue router instance to be used by the Vue app.
  *
  * The routes of the created router instance are handled with i18n routing.
