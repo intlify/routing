@@ -24,6 +24,7 @@
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-tsdoc": "^0.2.17",
     "eslint-plugin-vue": "^9.7.0",
     "globby": "^12.2.0",
     "happy-dom": "^6.0.4",

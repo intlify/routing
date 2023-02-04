@@ -30,7 +30,9 @@ export interface RoutingProxy {
 }
 
 /**
- * SEO Attribute options
+ * SEO Attribute options.
+ *
+ * @public
  */
 export interface SeoAttributesOptions {
   /**
@@ -42,7 +44,9 @@ export interface SeoAttributesOptions {
 }
 
 /**
- * Options for {@link localeHead} function
+ * Options for {@link localeHead} function.
+ *
+ * @public
  */
 export interface I18nHeadOptions {
   /**
@@ -65,10 +69,17 @@ export interface I18nHeadOptions {
   identifierAttribute?: string
 }
 
+/**
+ * Meta attributes for head properties.
+ *
+ * @public
+ */
 export type MetaAttrs = Record<string, any>
 
 /**
- * I18n header meta info
+ * I18n header meta info.
+ *
+ * @public
  */
 export interface I18nHeadMetaInfo {
   htmlAttrs?: MetaAttrs

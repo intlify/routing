@@ -10,6 +10,16 @@ import { getI18nRoutingOptions } from './utils'
 import type { LocaleObject } from '../types'
 import type { I18nHeadOptions, I18nHeadMetaInfo, MetaAttrs, RoutingProxy } from './types'
 
+/**
+ * Returns localized head properties for locale-related aspects.
+ *
+ * @param this - A {@link RoutingProxy} instance.
+ * @param options - An options, see about details {@link I18nHeadOptions}.
+ *
+ * @returns The localized {@link I18nHeadMetaInfo | head properties}.
+ *
+ * @public
+ */
 export function localeHead(
   this: RoutingProxy,
   { addDirAttribute = false, addSeoAttributes = false, identifierAttribute = 'hid' }: I18nHeadOptions = {}

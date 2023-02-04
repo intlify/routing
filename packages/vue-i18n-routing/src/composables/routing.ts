@@ -45,12 +45,19 @@ function proxyForComposable<T extends Function>(options: I18nCommonRoutingOption
 }
 
 /**
- * Use route base name
+ * The `useRouteBaseName` composable returns the route base name.
  *
- * @param givenRoute - A route object, if not provided, the route is returned with `useRoute` will be used
- * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
+ * @remarks
+ * The `useRouteBaseName` is the composable function which is {@link getRouteBaseName} wrapper.
  *
- * @returns The route base name, if route name is not defined, return null
+ * @param givenRoute - A route object. if not provided, the route is returned with `useRoute` will be used internally
+ * @param options - An options, which has `router` and `routesNameSeparator` fields. see about details {@link I18nCommonRoutingOptionsWithComposable} for these option fields.
+ *
+ * @returns The route base name, if route name is not defined, return `null`.
+ *
+ * @see {@link getRouteBaseName}
+ *
+ * @public
  */
 export function useRouteBaseName(
   givenRoute: Route | RouteLocationNormalizedLoaded = useRoute(),
@@ -65,23 +72,33 @@ export function useRouteBaseName(
 }
 
 /**
- * Resolve locale path function
+ * The function that resolve locale path.
  *
- * @param route - A route location. The path or name of the route or an object for more complex routes
- * @param locale - A locale code, if not specified, uses the current locale
+ * @remarks
+ * The parameter sygnatures of this function is same as {@link localePath}.
  *
- * @returns Returns the localized URL for a given route
+ * @param route - A route location. The path or name of the route or an object for more complex routes.
+ * @param locale - A locale optional, if not specified, uses the current locale.
+ *
+ * @returns Returns the localized URL for a given route.
  *
  * @see {@link useLocalePath}
+ *
+ * @public
  */
 export type LocalePathFunction = (route: RawLocation | RouteLocation, locale?: Locale) => string
 
 /**
- * Use resolve locale path
+ * The `useLocalePath` composable returns function  that resolve the locale path.
  *
- * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
+ * @remarks
+ * The function returned by `useLocalePath` is the wrapper function with the same signature as {@link localePath}.
  *
- * @returns Returns a {@link LocalePathFunction}
+ * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}.
+ *
+ * @returns A {@link LocalePathFunction}.
+ *
+ * @public
  */
 export function useLocalePath({
   router = useRouter(),
@@ -100,14 +117,19 @@ export function useLocalePath({
 }
 
 /**
- * Resolve route fucntion
+ * The function that resolve route.
  *
- * @param route - A route location. The path or name of the route or an object for more complex routes
- * @param locale - A locale code, if not specified, uses the current locale
+ * @remarks
+ * The parameter sygnatures of this function is same as {@link localeRoute}.
  *
- * @returns Returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
+ * @param route - A route location. The path or name of the route or an object for more complex routes.
+ * @param locale - A locale optinal, if not specified, uses the current locale.
+ *
+ * @returns the route object for a given route, the route object is resolved by vue-router rather than just a full route path.
  *
  * @see {@link useLocaleRoute}
+ *
+ * @public
  */
 export type LocaleRouteFunction = (
   route: RawLocation | RouteLocationRaw,
@@ -115,11 +137,16 @@ export type LocaleRouteFunction = (
 ) => Route | ReturnType<Router['resolve']> | undefined
 
 /**
- * Use resolve locale route
+ * The `useLocaleRoute` composable returns function that resolve the locale route.
+ *
+ * @remarks
+ * The function returned by `useLocaleRoute` is the wrapper function with the same signature as {@link localeRoute}.
  *
  * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
- * @returns Returns a {@link LocaleRouteFunction}
+ * @returns A {@link LocaleRouteFunction}.
+ *
+ * @public
  */
 export function useLocaleRoute({
   router = useRouter(),
@@ -147,14 +174,19 @@ export function useLocaleRoute({
 }
 
 /**
- * Resolve locale location function
+ * The function that resolve locale location.
  *
- * @param route - A route location. The path or name of the route or an object for more complex routes
- * @param locale - A locale code, if not specified, uses the current locale
+ * @remarks
+ * The parameter sygnatures of this function is same as {@link localeLocation}.
  *
- * @returns Returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
+ * @param route - A route location. The path or name of the route or an object for more complex routes.
+ * @param locale - A locale optional, if not specified, uses the current locale.
+ *
+ * @returns the location object for a given route, the location object is resolved by vue-router rather than just a full route path.
  *
  * @see {@link useLocaleLocation}
+ *
+ * @public
  */
 export type LocaleLocationFunction = (
   route: RawLocation | RouteLocationRaw,
@@ -162,11 +194,16 @@ export type LocaleLocationFunction = (
 ) => Location | RouteLocation | undefined
 
 /**
- * Use resolve locale location
+ * The `useLocaleLocation` composable returns function that resolve the locale location.
+ *
+ * @remarks
+ * The function returned by `useLocaleLocation` is the wrapper function with the same signature as {@link localeLocation}.
  *
  * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
- * @returns Returns a {@link LocaleLocationFunction}
+ * @returns A {@link LocaleLocationFunction}.
+ *
+ * @public
  */
 export function useLocaleLocation({
   router = useRouter(),
@@ -194,22 +231,32 @@ export function useLocaleLocation({
 }
 
 /**
- * Swtich locale path function
+ * The functin that swtich locale path.
  *
- * @param locale - A locale code, if not specified, uses the current locale
+ * @remarks
+ * The parameter sygnatures of this function is same as {@link switchLocalePath}.
  *
- * @returns Returns a link to the current route in another language
+ * @param locale - A locale optional, if not specified, uses the current locale.
+ *
+ * @returns A link to the current route in another language.
  *
  * @see {@link useSwitchLocalePath}
+ *
+ * @public
  */
 export type SwitchLocalePathFunction = (locale?: Locale) => string
 
 /**
- * Use swtich locale path
+ * The `useSwitchLocalePath` composable returns function that resolve the locale location.
+ *
+ * @remarks
+ * The function returned by `useSwitchLocalePath` is the wrapper function with the same signature as {@link switchLocalePath}.
  *
  * @param options - An options, see about details {@link I18nCommonRoutingOptionsWithComposable}
  *
- * @returns Returns a {@link SwitchLocalePathFunction}
+ * @returns A {@link SwitchLocalePathFunction}.
+ *
+ * @public
  */
 export function useSwitchLocalePath({
   router = useRouter(),

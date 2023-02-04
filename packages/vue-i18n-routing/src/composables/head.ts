@@ -17,11 +17,13 @@ import type {
 import type { Ref } from 'vue-demi'
 
 /**
- * Use localize head meta
+ * The `useLocaleHead` composable returns localized head properties for locale-related aspects.
  *
- * @param options - An options, see about details {@link I18nHeadOptions}, {@link ComposableOptions}, {@link I18nCommonRoutingOptions}
+ * @param options - An options, see about details {@link I18nHeadOptions} and {@link I18nCommonRoutingOptionsWithComposable}
  *
- * @returns Genereated SEO head meta information
+ * @returns The localized {@link I18nHeadMetaInfo | head properties} with Vue `ref`.
+ *
+ * @public
  */
 export function useLocaleHead({
   addDirAttribute = false,

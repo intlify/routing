@@ -35,6 +35,19 @@ function prefixable(optons: PrefixableOptions): boolean {
 
 export const DefaultPrefixable = prefixable
 
+/**
+ * Returns base name of current (if argument not provided) or passed in route.
+ * 
+ * @remarks
+ * Base name is name of the route without locale suffix and other metadata added by nuxt i18n module
+
+ * @param this - A {@link RoutingProxy} instance.
+ * @param givenRoute - A route.
+ * 
+ * @returns The route base name. if cannot get, `undefined` is returned.
+ * 
+ * @public
+ */
 export function getRouteBaseName(
   this: RoutingProxy,
   givenRoute?: Route | RouteLocationNormalizedLoaded
@@ -54,6 +67,20 @@ export function getRouteBaseName(
   return name.split(routesNameSeparator)[0]
 }
 
+/**
+ * Returns localized path for passed in route.
+ *
+ * @remarks
+ * If locale is not specified, uses current locale.
+ *
+ * @param this - A {@link RoutingProxy} instance.
+ * @param route - A route.
+ * @param locale - A locale, optional.
+ *
+ * @returns A path of the current route.
+ *
+ * @public
+ */
 export function localePath(
   this: RoutingProxy,
   route: RawLocation | RouteLocationRaw,
@@ -68,6 +95,20 @@ export function localePath(
       : localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
 }
 
+/**
+ * Returns localized route for passed in `route` parameters.
+ *
+ * @remarks
+ * If `locale` is not specified, uses current locale.
+ *
+ * @param this - A {@link RoutingProxy} instance.
+ * @param route - A route.
+ * @param locale - A locale, optional.
+ *
+ * @returns A route. if cannot resolve, `undefined` is returned.
+ *
+ * @public
+ */
 export function localeRoute(
   this: RoutingProxy,
   route: RawLocation | RouteLocationRaw,
@@ -82,6 +123,20 @@ export function localeRoute(
       : resolved.route as Route
 }
 
+/**
+ * Returns localized location for passed in route parameters.
+ *
+ * @remarks
+ * If `locale` is not specified, uses current locale.
+ *
+ * @param this - A {@link RoutingProxy} instance.
+ * @param route - A route.
+ * @param locale - A locale, optional.
+ *
+ * @returns A route location. if cannot resolve, `undefined` is returned.
+ *
+ * @public
+ */
 export function localeLocation(
   this: RoutingProxy,
   route: RawLocation | RouteLocationRaw,
@@ -221,12 +276,14 @@ function getLocalizableMetaFromDynamicParams(
 }
 
 /**
- * Returns path of the current route for specified locale
+ * Returns path of the current route for specified locale.
  *
- * @param this - A {@link RoutingProxy} instance
+ * @param this - A {@link RoutingProxy} instance.
  * @param locale - A locale
  *
- * @returns A path of the current route
+ * @returns A path of the current route.
+ *
+ * @public
  */
 export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const route = this.route
