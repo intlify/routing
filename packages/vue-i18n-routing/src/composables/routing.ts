@@ -45,30 +45,47 @@ function proxyForComposable<T extends Function>(options: I18nCommonRoutingOption
 }
 
 /**
- * The `useRouteBaseName` composable returns the route base name.
+ * The function that resolves the route base name.
  *
  * @remarks
- * The `useRouteBaseName` is the composable function which is {@link getRouteBaseName} wrapper.
+ * The parameter signatures of this function is the same as {@link getRouteBaseName}.
  *
- * @param givenRoute - A route object. if not provided, the route is returned with `useRoute` will be used internally
- * @param options - An options, which has `router` and `routesNameSeparator` fields. see about details {@link I18nCommonRoutingOptionsWithComposable} for these option fields.
+ * @param givenRoute - A route location. The path or name of the route or an object for more complex routes.
  *
  * @returns The route base name, if route name is not defined, return `null`.
  *
- * @see {@link getRouteBaseName}
+ * @see {@link useRouteBaseName}
  *
  * @public
  */
-export function useRouteBaseName(
-  givenRoute: Route | RouteLocationNormalizedLoaded = useRoute(),
-  { router = useRouter(), routesNameSeparator = undefined }: I18nCommonRoutingOptionsWithComposable = {}
-) {
-  const proxy = {
-    router,
-    route: givenRoute,
-    routesNameSeparator
-  }
-  return getRouteBaseName.call(proxy as any, givenRoute) // eslint-disable-line @typescript-eslint/no-explicit-any
+export type RouteBaseNameFunction = (givenRoute?: Route | RouteLocationNormalizedLoaded) => string | undefined
+
+/**
+ * The `useRouteBaseName` composable returns a function which returns the route base name.
+ *
+ * @remarks
+ * The function returned by `useRouteBaseName` is the wrapper function with the same signature as {@link getRouteBaseName}.
+ *
+ * @param options - An options see about details {@link I18nCommonRoutingOptionsWithComposable}.
+ *
+ * @returns A {@link RouteBaseNameFunction}.
+ *
+ * @public
+ */
+export function useRouteBaseName({
+  router = useRouter(),
+  route = useRoute(),
+  i18n = useI18n(),
+  defaultLocale = undefined,
+  defaultLocaleRouteNameSuffix = undefined,
+  routesNameSeparator = undefined,
+  strategy = undefined,
+  trailingSlash = undefined
+}: I18nCommonRoutingOptionsWithComposable = {}): RouteBaseNameFunction {
+  return proxyForComposable<RouteBaseNameFunction>(
+    { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash },
+    getRouteBaseName
+  )
 }
 
 /**
