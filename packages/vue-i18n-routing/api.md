@@ -21,6 +21,7 @@
   - [MetaAttrs](#metaattrs)
   - [Prefixable](#prefixable)
   - [PrefixableOptions](#prefixableoptions)
+  - [RouteBaseNameFunction](#routebasenamefunction)
   - [RouteOptionsResolver](#routeoptionsresolver)
   - [Strategies](#strategies)
   - [SwitchLocalePathFunction](#switchlocalepathfunction)
@@ -263,6 +264,19 @@ Route path prefix judgment options used in [Prefixable](#prefixable)
 ```typescript
 export declare type PrefixableOptions = Pick<LocalizeRoutesPrefixableOptions, 'currentLocale' | 'defaultLocale' | 'strategy'>;
 ```
+
+### RouteBaseNameFunction
+
+The function that resolves the route base name.
+
+**Signature:**
+```typescript
+export declare type RouteBaseNameFunction = (givenRoute?: Route | RouteLocationNormalizedLoaded) => string | undefined;
+```
+
+#### Remarks
+
+The parameter signatures of this function is the same as [getRouteBaseName](#getroutebasename).
 
 ### RouteOptionsResolver
 
@@ -1139,27 +1153,26 @@ The function returned by `useLocaleRoute` is the wrapper function with the same 
 
 ### useRouteBaseName
 
-The `useRouteBaseName` composable returns the route base name.
+The `useRouteBaseName` composable returns a function which returns the route base name.
 
 **Signature:**
 ```typescript
-export declare function useRouteBaseName(givenRoute?: Route | RouteLocationNormalizedLoaded, { router, routesNameSeparator }?: I18nCommonRoutingOptionsWithComposable): string | undefined;
+export declare function useRouteBaseName({ router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash }?: I18nCommonRoutingOptionsWithComposable): RouteBaseNameFunction;
 ```
 
 #### Parameters
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| givenRoute | Route &#124; RouteLocationNormalizedLoaded | A route object. if not provided, the route is returned with `useRoute` will be used internally |
-| { router, routesNameSeparator } | I18nCommonRoutingOptionsWithComposable |  |
+| { router, route, i18n, defaultLocale, defaultLocaleRouteNameSuffix, routesNameSeparator, strategy, trailingSlash } | I18nCommonRoutingOptionsWithComposable |  |
 
 #### Returns
 
- The route base name, if route name is not defined, return `null`.
+ A [RouteBaseNameFunction](#routebasenamefunction).
 
 #### Remarks
 
-The `useRouteBaseName` is the composable function which is [getRouteBaseName](#getroutebasename) wrapper.
+The function returned by `useRouteBaseName` is the wrapper function with the same signature as [getRouteBaseName](#getroutebasename).
 
 ### useSwitchLocalePath
 
