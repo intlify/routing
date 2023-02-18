@@ -1,4 +1,4 @@
-import { isBoolean, isObject, isFunction, assign } from '@intlify/shared'
+import { isObject, isFunction, assign } from '@intlify/shared'
 import { ref, computed, watch, isVue3, effectScope, isVue2 } from 'vue-demi'
 
 import {
