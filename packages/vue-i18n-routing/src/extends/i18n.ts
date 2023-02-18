@@ -1,4 +1,4 @@
-import { isBoolean, isObject, isFunction, assign } from '@intlify/shared'
+import { isObject, isFunction, assign } from '@intlify/shared'
 import { ref, computed, watch, isVue3, effectScope, isVue2 } from 'vue-demi'
 
 import {
@@ -263,9 +263,5 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPluginOptions(options: any): options is VueI18nRoutingPluginOptions {
-  return (
-    isObject(options) &&
-    ('inject' in options || '__composerExtend' in options || '__vueI18nExtend' in options) &&
-    isBoolean(options.inject)
-  )
+  return isObject(options) && ('inject' in options || '__composerExtend' in options || '__vueI18nExtend' in options)
 }
