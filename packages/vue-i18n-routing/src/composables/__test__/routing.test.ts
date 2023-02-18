@@ -30,7 +30,8 @@ describe('useRouteBaseName', () => {
       await router.push('/en')
       useSetup(() => {
         const route = useRoute()
-        const name = useRouteBaseName(route)
+        const getRouteBaseName = useRouteBaseName()
+        const name = getRouteBaseName(route)
         assert.equal(name, 'home')
       }, [router, i18n])
     })
@@ -55,7 +56,8 @@ describe('useRouteBaseName', () => {
       })
       await router.push('/en')
       useSetup(() => {
-        const name = useRouteBaseName({} as Route)
+        const getRouteBaseName = useRouteBaseName()
+        const name = getRouteBaseName({} as Route)
         assert.equal(name, null)
       }, [router, i18n])
     })
@@ -82,7 +84,8 @@ describe('useRouteBaseName', () => {
       await router.push('/ja')
       useSetup(() => {
         const route = useRoute()
-        const name = useRouteBaseName(route, { routesNameSeparator: '---' })
+        const getRouteBaseName = useRouteBaseName({ route, routesNameSeparator: '---' })
+        const name = getRouteBaseName()
         assert.equal(name, 'home')
       }, [router, i18n])
     })
