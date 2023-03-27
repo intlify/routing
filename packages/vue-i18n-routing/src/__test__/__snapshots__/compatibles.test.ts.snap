@@ -39,6 +39,11 @@ exports[`localeHead > composition mode > should be worked > en 1`] = `
   ],
   "meta": [
     {
+      "content": "http://localhost:8080/en/about",
+      "hid": "i18n-og-url",
+      "property": "og:url",
+    },
+    {
       "content": "en_US",
       "hid": "i18n-og",
       "property": "og:locale",
@@ -90,6 +95,11 @@ exports[`localeHead > composition mode > should be worked > ja 1`] = `
     },
   ],
   "meta": [
+    {
+      "content": "http://localhost:8080/ja",
+      "hid": "i18n-og-url",
+      "property": "og:url",
+    },
     {
       "content": "ja_JP",
       "hid": "i18n-og",
@@ -143,6 +153,11 @@ exports[`localeHead > legacy mode > should be worked > en 1`] = `
   ],
   "meta": [
     {
+      "content": "http://localhost:8080/en/about",
+      "hid": "i18n-og-url",
+      "property": "og:url",
+    },
+    {
       "content": "en_US",
       "hid": "i18n-og",
       "property": "og:locale",
@@ -194,6 +209,11 @@ exports[`localeHead > legacy mode > should be worked > ja 1`] = `
     },
   ],
   "meta": [
+    {
+      "content": "http://localhost:8080/ja",
+      "hid": "i18n-og-url",
+      "property": "og:url",
+    },
     {
       "content": "ja_JP",
       "hid": "i18n-og",
