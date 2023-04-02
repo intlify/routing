@@ -58,7 +58,15 @@ export function localeHead(
     }
 
     addHreflangLinks.call(this, locales as LocaleObject[], unref(i18n.baseUrl), metaObject.link, identifierAttribute)
-    addCanonicalLinks.call(this, unref(i18n.baseUrl), metaObject.link, identifierAttribute, addSeoAttributes)
+    // eslint-disable-next-line prettier/prettier
+    addCanonicalLinksAndOgUrl.call(
+      this,
+      unref(i18n.baseUrl),
+      metaObject.link,
+      metaObject.meta,
+      identifierAttribute,
+      addSeoAttributes
+    )
     addCurrentOgLocale(currentLocale, currentLocaleIso, metaObject.meta, identifierAttribute)
     addAlternateOgLocales(locales as LocaleObject[], currentLocaleIso, metaObject.meta, identifierAttribute)
   }
@@ -122,10 +130,11 @@ function addHreflangLinks(
   }
 }
 
-function addCanonicalLinks(
+function addCanonicalLinksAndOgUrl(
   this: RoutingProxy,
   baseUrl: string,
   link: MetaAttrs,
+  meta: MetaAttrs,
   identifierAttribute: NonNullable<I18nHeadOptions['identifierAttribute']>,
   seoAttributesOptions: I18nHeadOptions['addSeoAttributes']
 ) {
@@ -166,6 +175,12 @@ function addCanonicalLinks(
       [identifierAttribute]: 'i18n-can',
       rel: 'canonical',
       href
+    })
+
+    meta.push({
+      [identifierAttribute]: 'i18n-og-url',
+      property: 'og:url',
+      content: href
     })
   }
 }
