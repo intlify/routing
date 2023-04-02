@@ -21,8 +21,6 @@ jobs:
     steps:
       - name: Checkout codes
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -53,8 +51,6 @@ jobs:
     steps:
       - name: Checkout codes
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -85,8 +81,6 @@ jobs:
     steps:
       - name: Checkout codes
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
