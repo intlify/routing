@@ -79,9 +79,9 @@ export function resolve(router: Router | VueRouter, route: any, strategy: Strate
     if (_route == null) {
       return route
     } else {
-      const _resolevableRoute = assign({}, _route)
-      _resolevableRoute.path = targetPath
-      return router.resolve(_resolevableRoute)
+      const _resolvableRoute = assign({}, route, _route)
+      _resolvableRoute.path = targetPath
+      return router.resolve(_resolvableRoute)
     }
   } else {
     return router.resolve(route)
