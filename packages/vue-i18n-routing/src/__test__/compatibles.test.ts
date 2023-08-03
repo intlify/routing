@@ -425,6 +425,11 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('en'), '/en/category/english')
       assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch')
 
+      await router.push('/ja/category/1?page=2')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese?page=2')
+      assert.equal(vm.switchLocalePath('en'), '/en/category/english?page=2')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch?page=2')
+
       await router.push('/ja/foo')
       assert.equal(vm.switchLocalePath('ja'), '/ja/not-found-japanese')
       assert.equal(vm.switchLocalePath('en'), '/en/not-found-english')

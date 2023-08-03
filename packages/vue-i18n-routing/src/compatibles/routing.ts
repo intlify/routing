@@ -295,7 +295,7 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const { switchLocalePathIntercepter, dynamicRouteParamsKey } = getI18nRoutingOptions(this.router, this)
 
   // prettier-ignore
-  const { params, ...routeCopy } = isVue3
+  const { params, query, ...routeCopy } = isVue3
     ? (route as RouteLocationNormalizedLoaded) // for vue-router v4
     : isRef<Route>(route) // for vue-router v3
       ? route.value
@@ -308,7 +308,8 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
     params: {
       ...params,
       ...langSwitchParams
-    }
+    },
+    query
   }
   if (isVue2) {
     _baseRoute.params[0] = params.pathMatch
