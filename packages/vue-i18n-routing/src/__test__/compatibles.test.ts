@@ -103,6 +103,9 @@ describe('localePath', () => {
           assert.equal(vm.localePath({ path: '/', query: { foo: 1 } }), '/ja?foo=1')
           assert.equal(vm.localePath({ name: 'about', query: { foo: 1 } }), '/ja/about?foo=1')
           assert.equal(vm.localePath({ path: '/about', query: { foo: 1 } }), '/ja/about?foo=1')
+          assert.equal(vm.localePath('/?foo=1'), '/ja?foo=1')
+          assert.equal(vm.localePath('/about?foo=1'), '/ja/about?foo=1')
+          assert.equal(vm.localePath('/about?foo=1&test=2'), '/ja/about?foo=1&test=2')
 
           // no define path
           assert.equal(vm.localePath('/vue-i18n'), '/ja/vue-i18n')
@@ -419,6 +422,11 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('en'), '/en/about')
       assert.equal(vm.switchLocalePath('fr'), '/fr/about')
       assert.equal(vm.switchLocalePath('vue-i18n'), '')
+
+      await router.push('/ja/about?foo=1&test=2')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about?foo=1&test=2')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/about?foo=1&test=2')
+      assert.equal(vm.switchLocalePath('en'), '/en/about?foo=1&test=2')
 
       await router.push('/ja/category/1')
       assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese')

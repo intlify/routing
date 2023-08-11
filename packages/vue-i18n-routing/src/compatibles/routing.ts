@@ -165,7 +165,9 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   if (isString(route)) {
     if (_route[0] === '/') {
       // if route parameter is a path, create route object with path.
-      _route = { path: route }
+      const [path, search] = route.split('?')
+      const query = Object.fromEntries(new URLSearchParams(search))
+      _route = { path, query }
     } else {
       // else use it as route name.
       _route = { name: route }
