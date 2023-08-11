@@ -7,8 +7,8 @@ import { getLocale, getLocales, getNormalizedLocales, warn } from '../utils'
 import { getRouteBaseName, switchLocalePath, localeRoute } from './routing'
 import { getI18nRoutingOptions } from './utils'
 
-import type { LocaleObject } from '../types'
 import type { I18nHeadOptions, I18nHeadMetaInfo, MetaAttrs, RoutingProxy } from './types'
+import type { LocaleObject } from '../types'
 
 /**
  * Returns localized head properties for locale-related aspects.

@@ -14,9 +14,9 @@ import { getGlobalOptions } from '../extends/router'
 
 import { DefaultPrefixable, DefaultSwitchLocalePathIntercepter } from './routing'
 
+import type { RoutingProxy } from './types'
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { Strategies } from '../types'
-import type { RoutingProxy } from './types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type { VueRouter, Router } from '@intlify/vue-router-bridge'
 

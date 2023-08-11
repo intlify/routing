@@ -44,7 +44,7 @@ export type I18nRoute = Route & RouteLegacy & { redirect?: string }
  *
  * @public
  */
-export type Strategies = typeof STRATEGIES[keyof typeof STRATEGIES]
+export type Strategies = (typeof STRATEGIES)[keyof typeof STRATEGIES]
 
 /**
  * Direction

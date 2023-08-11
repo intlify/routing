@@ -7,8 +7,8 @@ import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
 import { getI18nRoutingOptions, resolve } from './utils'
 
-import type { Strategies, I18nRoutingOptions } from '../types'
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
+import type { Strategies, I18nRoutingOptions } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
 import type {
   Route,
