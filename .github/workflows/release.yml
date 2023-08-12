@@ -17,15 +17,13 @@ jobs:
       - name: Checkout codes
         uses: actions/checkout@v3
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7.9.3
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
