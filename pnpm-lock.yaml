@@ -105,11 +105,11 @@ importers:
         specifier: ^1.0.0-rc.1
         version: 1.7.1(vue@3.3.4)
       ufo:
-        specifier: ^1.0.0
+        specifier: ^1.2.0
         version: 1.2.0
       vue-demi:
-        specifier: ^0.13.11
-        version: 0.13.11(@vue/composition-api@1.7.1)(vue@3.3.4)
+        specifier: ^0.14.5
+        version: 0.14.5(@vue/composition-api@1.7.1)(vue@3.3.4)
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.31.1

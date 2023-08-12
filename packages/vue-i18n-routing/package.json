@@ -17,8 +17,8 @@
     "@intlify/shared": "next",
     "@intlify/vue-i18n-bridge": "^0.8.0",
     "@intlify/vue-router-bridge": "^0.8.0",
-    "ufo": "^1.0.0",
-    "vue-demi": "^0.13.11"
+    "ufo": "^1.2.0",
+    "vue-demi": "^0.14.5"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.31.1",
