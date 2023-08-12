@@ -273,7 +273,8 @@ function getLocalizableMetaFromDynamicParams(
   if (isRef<RouteMeta>(meta)) {
     return (meta.value[key] || metaDefault) as Record<Locale, unknown>
   } else {
-    return (meta[key] || metaDefault) as Record<Locale, unknown>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return ((meta as any)[key] || metaDefault) as Record<Locale, unknown>
   }
 }
 
