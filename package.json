@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^1.4.1",
-    "@nexhome/yorkie": "^2.0.8",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.17.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -41,9 +40,6 @@
   },
   "engines": {
     "node": ">= 14.6"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
   },
   "license": "MIT",
   "lint-staged": {
@@ -97,6 +93,7 @@
     "switch:vue3": "pnpm --filter vue-i18n-routing switch:3",
     "docs:build": "pnpm --filter vue-i18n-routing build:docs",
     "preinstall": "node ./scripts/preinstall.mjs",
+    "prepare": "git config --local core.hooksPath .githooks",
     "release": "bumpp package.json packages/**/package.json --commit \"release: v\" --push --tag",
     "bump": "./scripts/bump.sh",
     "dev": "pnpm --filter vue-i18n-routing dev",
