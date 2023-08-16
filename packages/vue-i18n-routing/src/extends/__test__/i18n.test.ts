@@ -19,10 +19,29 @@ describe('extendI18n', () => {
         localeCodes: ['en', 'ja']
       })
 
-      useSetup(() => {}, [i18n])
+      const vm = useSetup(() => {}, [i18n])
       const composer = i18n.global as unknown as Composer
-      assert.deepEqual(composer.locales!.value, [{ code: 'en' }, { code: 'ja' }])
-      assert.deepEqual(composer.localeCodes!.value, ['en', 'ja'])
+      assert.deepEqual(composer.locales.value, [{ code: 'en' }, { code: 'ja' }])
+      assert.deepEqual(composer.localeCodes.value, ['en', 'ja'])
+
+      vm.unmount()
+    })
+  })
+
+  describe('vue-i18n v9: legacy mode', () => {
+    it('should be extended', () => {
+      const i18n = createI18n({ legacy: true, locale: 'en' })
+      extendI18n(i18n, {
+        locales: [{ code: 'en' }, { code: 'ja' }],
+        localeCodes: ['en', 'ja']
+      })
+
+      const vm = useSetup(() => {}, [i18n])
+      const vueI18n = i18n.global as unknown as VueI18n
+      assert.deepEqual(vueI18n.locales, [{ code: 'en' }, { code: 'ja' }])
+      assert.deepEqual(vueI18n.localeCodes, ['en', 'ja'])
+
+      vm.unmount()
     })
   })
 
@@ -52,8 +71,9 @@ describe('extendI18n', () => {
         })
         const vm = useSetup(() => {}, [i18n])
         const $i18n = (vm as any).$i18n
-
         const composer = i18n.global as unknown as Composer
+
+        // custom extending
         const foo = (composer as any).foo as Ref<string>
         assert.equal(foo.value, 'foo')
         assert.equal($i18n.foo, 'foo')
@@ -74,7 +94,7 @@ describe('extendI18n', () => {
         const vueI18nSpy = vi.fn()
         vueI18nSpy.mockImplementation(() => 'vue-i18n-foo')
 
-        const i18n = createI18n({ locale: 'en' })
+        const i18n = createI18n({ legacy: true, locale: 'en' })
         extendI18n(i18n, {
           locales: [{ code: 'en' }, { code: 'ja' }],
           localeCodes: ['en', 'ja'],
@@ -101,8 +121,9 @@ describe('extendI18n', () => {
         })
         const vm = useSetup(() => {}, [i18n])
         const $i18n = (vm as any).$i18n
-
         const vueI18n = i18n.global as unknown as VueI18n
+
+        // custom extending
         const foo = (vueI18n as any).foo as string
         assert.equal(foo, 'vue-i18n-foo')
         assert.equal($i18n.foo, 'vue-i18n-foo')
