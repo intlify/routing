@@ -14,7 +14,7 @@ import { DEFAULT_BASE_URL } from '../constants'
 import { resolveBaseUrl, isVueI18n, getComposer, inBrowser } from '../utils'
 
 import type { I18nRoutingOptions, LocaleObject } from '../types'
-import type { I18n, Composer, VueI18n } from '@intlify/vue-i18n-bridge'
+import type { I18n, Composer, VueI18n, VueI18nExtender, ComposerExtender, Disposer } from '@intlify/vue-i18n-bridge'
 import type { App } from 'vue-demi'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,11 +57,11 @@ export interface VueI18nRoutingPluginOptions {
   /**
    * @internal
    */
-  __composerExtend?: (composer: Composer) => void
+  __composerExtend?: ComposerExtender
   /**
    * @internal
    */
-  __vueI18nExtend?: (vueI18n: VueI18n) => void
+  __vueI18nExtend?: VueI18nExtender
 }
 
 export interface ExtendProperyDescripters {
@@ -103,21 +103,29 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
       pluginOptions.inject = true
     }
     const orgComposerExtend = pluginOptions.__composerExtend
-    pluginOptions.__composerExtend = (c: Composer) => {
-      const g = getComposer(i18n)
-      c.locales = computed(() => g.locales.value)
-      c.localeCodes = computed(() => g.localeCodes.value)
-      c.baseUrl = computed(() => g.baseUrl.value)
+    pluginOptions.__composerExtend = (localComposer: Composer) => {
+      const globalComposer = getComposer(i18n)
+      localComposer.locales = computed(() => globalComposer.locales.value)
+      localComposer.localeCodes = computed(() => globalComposer.localeCodes.value)
+      localComposer.baseUrl = computed(() => globalComposer.baseUrl.value)
+      let orgComposerDispose: Disposer | undefined
       if (isFunction(orgComposerExtend)) {
-        Reflect.apply(orgComposerExtend, pluginOptions, [c])
+        orgComposerDispose = Reflect.apply(orgComposerExtend, pluginOptions, [globalComposer])
+      }
+      return () => {
+        orgComposerDispose && orgComposerDispose()
       }
     }
-    if (isVueI18n(i18n.global)) {
+    if (i18n.mode === 'legacy') {
       const orgVueI18nExtend = pluginOptions.__vueI18nExtend
       pluginOptions.__vueI18nExtend = (vueI18n: VueI18n) => {
         extendVueI18n(vueI18n, hooks.onExtendVueI18n)
+        let orgVueI18nDispose: Disposer | undefined
         if (isFunction(orgVueI18nExtend)) {
-          Reflect.apply(orgVueI18nExtend, pluginOptions, [vueI18n])
+          orgVueI18nDispose = Reflect.apply(orgVueI18nExtend, pluginOptions, [vueI18n])
+        }
+        return () => {
+          orgVueI18nDispose && orgVueI18nDispose()
         }
       }
     }
@@ -125,13 +133,15 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
     options[0] = pluginOptions
     Reflect.apply(orgInstall, i18n, [vue, ...options])
 
-    const composer = getComposer(i18n)
+    const globalComposer = getComposer(i18n)
 
     // extend global
-    scope.run(() => extendComposer(composer, { locales, localeCodes, baseUrl, hooks, context }))
-    if (isVueI18n(i18n.global)) {
-      extendVueI18n(i18n.global, hooks.onExtendVueI18n)
-    }
+    scope.run(() => {
+      extendComposer(globalComposer, { locales, localeCodes, baseUrl, hooks, context })
+      if (i18n.mode === 'legacy' && isVueI18n(i18n.global)) {
+        extendVueI18n(i18n.global, hooks.onExtendVueI18n)
+      }
+    })
 
     // extend vue component instance for Vue 3
     const app = vue as App
@@ -140,11 +150,12 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
       ? isVue3
         ? app.config.globalProperties.$i18n
         : i18n
+      // for legacy mode
       : isVue2
         ? i18n
         : null
     if (exported) {
-      extendExportedGlobal(exported, composer, hooks.onExtendExportedGlobal)
+      extendExportedGlobal(exported, globalComposer, hooks.onExtendExportedGlobal)
     }
 
     if (pluginOptions.inject) {
@@ -162,7 +173,7 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
       })
     }
 
-    // release scope on unmounting
+    // dispose when app will be unmounting
     if (app.unmount) {
       const unmountApp = app.unmount
       app.unmount = () => {
@@ -203,37 +214,11 @@ function extendComposer<Context = unknown>(composer: Composer, options: VueI18nE
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedGlobalHook) {
-  const properties: ExtendProperyDescripters[] = [
-    {
-      locales: {
-        get() {
-          return g.locales.value
-        }
-      },
-      localeCodes: {
-        get() {
-          return g.localeCodes.value
-        }
-      },
-      baseUrl: {
-        get() {
-          return g.baseUrl.value
-        }
-      }
-    }
-  ]
-  hook && properties.push(hook(g))
-  for (const property of properties) {
-    for (const [key, descriptor] of Object.entries(property)) {
-      Object.defineProperty(exported, key, descriptor)
-    }
-  }
-}
-
-function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
-  const composer = getComposer(vueI18n)
+function extendProperyDescripters(
+  composer: Composer,
+  exported: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  hook?: ExtendVueI18nHook | ExtendExportedGlobalHook
+): void {
   const properties: ExtendProperyDescripters[] = [
     {
       locales: {
@@ -256,9 +241,19 @@ function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
   hook && properties.push(hook(composer))
   for (const property of properties) {
     for (const [key, descriptor] of Object.entries(property)) {
-      Object.defineProperty(vueI18n, key, descriptor)
+      Object.defineProperty(exported, key, descriptor)
     }
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extendExportedGlobal(exported: any, g: Composer, hook?: ExtendExportedGlobalHook) {
+  extendProperyDescripters(g, exported, hook)
+}
+
+function extendVueI18n(vueI18n: VueI18n, hook?: ExtendVueI18nHook): void {
+  const c = getComposer(vueI18n)
+  extendProperyDescripters(c, vueI18n, hook)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
