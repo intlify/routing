@@ -33,7 +33,7 @@ describe('useRouteBaseName', () => {
         const getRouteBaseName = useRouteBaseName()
         const name = getRouteBaseName(route)
         assert.equal(name, 'home')
-      }, [router, i18n])
+      }, [[router], [i18n]])
     })
   })
 
@@ -59,7 +59,7 @@ describe('useRouteBaseName', () => {
         const getRouteBaseName = useRouteBaseName()
         const name = getRouteBaseName({} as Route)
         assert.equal(name, null)
-      }, [router, i18n])
+      }, [[router], [i18n]])
     })
   })
 
@@ -87,7 +87,7 @@ describe('useRouteBaseName', () => {
         const getRouteBaseName = useRouteBaseName({ route, routesNameSeparator: '---' })
         const name = getRouteBaseName()
         assert.equal(name, 'home')
-      }, [router, i18n])
+      }, [[router], [i18n]])
     })
   })
 })
@@ -122,7 +122,7 @@ describe('useLocalePath', () => {
           assert.equal(localePath('not-found'), '/en')
           // object
           assert.equal(localePath({ name: 'about' }, 'ja'), '/ja/about')
-        }, [router, i18n])
+        }, [[router], [i18n]])
       })
     })
   })
@@ -155,7 +155,7 @@ describe('useLocalePath', () => {
         assert.equal(localePath('not-found'), '/')
         // object
         assert.equal(localePath({ name: 'about' }, 'ja'), '/about')
-      }, [router, i18n])
+      }, [[router], [i18n]])
     })
   })
 })
@@ -229,7 +229,7 @@ describe('useLocaleRoute', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
-    }, [router, i18n])
+    }, [[router], [i18n]])
   })
 })
 
@@ -302,7 +302,7 @@ describe('useLocaleLocation', () => {
         name: 'about___ja',
         href: '/ja/about'
       })
-    }, [router, i18n])
+    }, [[router], [i18n]])
   })
 })
 
@@ -333,7 +333,7 @@ describe('useSwitchLocalePath', () => {
       return {
         switchLocalePath: change
       }
-    }, [router, i18n])
+    }, [[router], [i18n]])
 
     await router.push('/ja')
     assert.equal(vm.switchLocalePath('ja'), '/ja')

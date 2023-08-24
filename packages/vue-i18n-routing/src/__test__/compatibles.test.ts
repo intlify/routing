@@ -30,7 +30,7 @@ describe('getRouteBaseName', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
       const name = vm.getRouteBaseName()
       assert.equal(name, 'home')
     })
@@ -54,7 +54,7 @@ describe('getRouteBaseName', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
       const name = vm.getRouteBaseName()
       assert.equal(name, 'home')
     })
@@ -81,7 +81,7 @@ describe('localePath', () => {
             history: createMemoryHistory()
           })
           await router.push('/en')
-          const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+          const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
 
           // path
           assert.equal(vm.localePath('/'), '/en')
@@ -136,7 +136,7 @@ describe('localePath', () => {
           history: createMemoryHistory()
         })
         await router.push('/')
-        const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+        const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
 
         // path
         assert.equal(vm.localePath('/'), '/')
@@ -189,7 +189,7 @@ describe('localeRoute', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
 
       // path
       assert.include(vm.localeRoute('/'), {
@@ -286,7 +286,7 @@ describe('localeLocation', () => {
         history: createMemoryHistory()
       })
       await router.push('/en')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
 
       // path
       assert.include(vm.localeLocation('/'), {
@@ -408,7 +408,7 @@ describe('switchLocalePath', () => {
         history: createMemoryHistory()
       })
       await router.push('/en/about')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
       await router.push('/ja')
 
       assert.equal(vm.switchLocalePath('ja'), '/ja')
@@ -482,7 +482,7 @@ describe('localeHead', () => {
         history: createMemoryHistory()
       })
       await router.push('/en/about')
-      const vm = useSetup(() => {}, [router, i18n]) as any // FIXME:
+      const vm = useSetup(() => {}, [[router], [i18n]]) as any // FIXME:
 
       let head = vm.localeHead({ addDirAttribute: true, addSeoAttributes: true })
       expect(head).toMatchSnapshot('en')

@@ -44,7 +44,7 @@ describe('useLocaleHead', () => {
           i18n,
           head
         }
-      }, [router, i18n])
+      }, [[router], [i18n]])
 
       await router.push('/ja')
       expect(vm.head).toMatchSnapshot(vm.i18n.locale.value)
@@ -87,7 +87,7 @@ describe('useLocaleHead', () => {
           i18n,
           head
         }
-      }, [router, i18n])
+      }, [[router], [i18n]])
 
       await router.push('/ja')
       for (const m of vm.head.meta || []) {

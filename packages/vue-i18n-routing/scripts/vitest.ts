@@ -6,13 +6,14 @@ import type { InjectionKey, Ref } from 'vue-demi'
 
 type InstanceType<V> = V extends { new (...arg: any[]): infer X } ? X : never
 type VM<V> = InstanceType<V> & { unmount(): void }
+type Plugins = [...any]
 
-export function mount<V>(Comp: V, plugins: any[] = []) {
+export function mount<V>(Comp: V, plugins: Plugins[] = []) {
   const el = document.createElement('div')
   const app = createApp(Comp as any)
 
   for (const plugin of plugins) {
-    app.use(plugin)
+    app.use(plugin[0], plugin[1])
   }
 
   // @ts-ignore
@@ -22,7 +23,7 @@ export function mount<V>(Comp: V, plugins: any[] = []) {
   return comp
 }
 
-export function useSetup<V>(setup: () => V, plugins: any[] = []) {
+export function useSetup<V>(setup: () => V, plugins: Plugins[] = []) {
   const Comp = defineComponent({
     setup,
     render() {
