@@ -110,7 +110,7 @@ export function extendI18n<Context = unknown, TI18n extends I18n = I18n>(
       localComposer.baseUrl = computed(() => globalComposer.baseUrl.value)
       let orgComposerDispose: Disposer | undefined
       if (isFunction(orgComposerExtend)) {
-        orgComposerDispose = Reflect.apply(orgComposerExtend, pluginOptions, [globalComposer])
+        orgComposerDispose = Reflect.apply(orgComposerExtend, pluginOptions, [localComposer])
       }
       return () => {
         orgComposerDispose && orgComposerDispose()

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createI18n } from '@intlify/vue-i18n-bridge'
+import { createI18n, useI18n } from '@intlify/vue-i18n-bridge'
 import { vi, describe, it, assert, expect } from 'vitest'
 import { ref, nextTick } from 'vue-demi'
 
@@ -19,7 +19,7 @@ describe('extendI18n', () => {
         localeCodes: ['en', 'ja']
       })
 
-      const vm = useSetup(() => {}, [i18n])
+      const vm = useSetup(() => {}, [[i18n]])
       const composer = i18n.global as unknown as Composer
       assert.deepEqual(composer.locales.value, [{ code: 'en' }, { code: 'ja' }])
       assert.deepEqual(composer.localeCodes.value, ['en', 'ja'])
@@ -36,7 +36,7 @@ describe('extendI18n', () => {
         localeCodes: ['en', 'ja']
       })
 
-      const vm = useSetup(() => {}, [i18n])
+      const vm = useSetup(() => {}, [[i18n]])
       const vueI18n = i18n.global as unknown as VueI18n
       assert.deepEqual(vueI18n.locales, [{ code: 'en' }, { code: 'ja' }])
       assert.deepEqual(vueI18n.localeCodes, ['en', 'ja'])
@@ -69,7 +69,7 @@ describe('extendI18n', () => {
             }
           }
         })
-        const vm = useSetup(() => {}, [i18n])
+        const vm = useSetup(() => {}, [[i18n]])
         const $i18n = (vm as any).$i18n
         const composer = i18n.global as unknown as Composer
 
@@ -119,7 +119,7 @@ describe('extendI18n', () => {
             }
           }
         })
-        const vm = useSetup(() => {}, [i18n])
+        const vm = useSetup(() => {}, [[i18n]])
         const $i18n = (vm as any).$i18n
         const vueI18n = i18n.global as unknown as VueI18n
 
@@ -132,6 +132,57 @@ describe('extendI18n', () => {
 
         vm.unmount()
       })
+    })
+  })
+
+  describe('__composerExtend include in plugin options', () => {
+    test('should be extended', async () => {
+      const extendFn = vi.fn()
+      const disposeFn = vi.fn()
+
+      const i18n = createI18n({ legacy: false, globalInjection: true, locale: 'en' })
+      extendI18n(i18n, {
+        locales: [{ code: 'en' }, { code: 'ja' }],
+        localeCodes: ['en', 'ja'],
+        hooks: {
+          onExtendComposer(composer: Composer) {
+            ;(composer as any).fn = extendFn
+          },
+          onExtendExportedGlobal(g) {
+            return {
+              fn: {
+                get() {
+                  return (g as any).fn
+                }
+              }
+            }
+          }
+        }
+      })
+      const pluginOptions = {
+        __composerExtend: (c: Composer) => {
+          ;(c as any).fn = (i18n.global as any).fn
+          return disposeFn
+        }
+      }
+      const vm = useSetup(() => {
+        const i18n = useI18n({
+          useScope: 'local'
+        })
+        ;(i18n as any).fn()
+        return {}
+      }, [[i18n, pluginOptions]])
+      const $i18n = (vm as any).$i18n
+      const composer = i18n.global as any
+
+      $i18n.fn()
+      composer.fn()
+
+      await nextTick()
+      expect(extendFn).toHaveBeenCalledTimes(3)
+
+      vm.unmount()
+      expect(disposeFn).toBeCalledTimes(1)
     })
   })
 })
