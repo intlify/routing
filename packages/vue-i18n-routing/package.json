@@ -1,7 +1,7 @@
 {
   "name": "vue-i18n-routing",
   "description": "The i18n routing with using vue-i18n",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
