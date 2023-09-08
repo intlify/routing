@@ -18,7 +18,7 @@ import type { RoutingProxy } from './types'
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { Strategies } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { VueRouter, Router } from '@intlify/vue-router-bridge'
+import type { VueRouter, Router, Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
 
 export function getI18nRoutingOptions(
   router: Router | VueRouter,
@@ -56,6 +56,21 @@ export function getI18nRoutingOptions(
 function split(str: string, index: number) {
   const result = [str.slice(0, index), str.slice(index)]
   return result
+}
+
+export function routeToObject(route: Route | RouteLocationNormalizedLoaded) {
+  const { fullPath, query, hash, name, path, params, meta, redirectedFrom, matched } = route
+  return {
+    fullPath,
+    params,
+    query,
+    hash,
+    name,
+    path,
+    meta,
+    matched,
+    redirectedFrom
+  }
 }
 
 /**
