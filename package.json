@@ -64,7 +64,6 @@
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git"
   },
-  "packageManager": "pnpm@8.6.0",
   "scripts": {
     "force": "pnpm clean && pnpm i --force",
     "install:vue2": "cd playground/vue2 && npm i",
