@@ -5,7 +5,7 @@ import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 import { DEFAULT_DYNAMIC_PARAMS_KEY } from '../constants'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
-import { getI18nRoutingOptions, resolve } from './utils'
+import { getI18nRoutingOptions, resolve, routeToObject } from './utils'
 
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
 import type { Strategies, I18nRoutingOptions } from '../types'
@@ -298,23 +298,24 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const { switchLocalePathIntercepter, dynamicRouteParamsKey } = getI18nRoutingOptions(this.router, this)
 
   // prettier-ignore
-  const { params, ...routeCopy } = isVue3
+  const routeValue = isVue3
     ? (route as RouteLocationNormalizedLoaded) // for vue-router v4
     : isRef<Route>(route) // for vue-router v3
       ? route.value
       : route
+  const routeCopy = routeToObject(routeValue)
   const langSwitchParams = getLocalizableMetaFromDynamicParams(route, dynamicRouteParamsKey)[locale] || {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _baseRoute: any = {
     name,
     params: {
-      ...params,
+      ...routeCopy.params,
       ...langSwitchParams
     }
   }
   if (isVue2) {
-    _baseRoute.params[0] = params.pathMatch
+    _baseRoute.params[0] = routeCopy.params.pathMatch
   }
 
   const baseRoute = assign({}, routeCopy, _baseRoute)
