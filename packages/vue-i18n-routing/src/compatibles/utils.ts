@@ -58,6 +58,11 @@ function split(str: string, index: number) {
   return result
 }
 
+/**
+ * NOTE:
+ * Nuxt route uses a proxy with getters for performance reasons (https://github.com/nuxt/nuxt/pull/21957).
+ * Spreading will result in an empty object, so we make a copy of the route by accessing each getter property by name.
+ */
 export function routeToObject(route: Route | RouteLocationNormalizedLoaded) {
   const { fullPath, query, hash, name, path, params, meta, redirectedFrom, matched } = route
   return {
