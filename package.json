@@ -64,7 +64,6 @@
     "type": "git",
     "url": "git+https://github.com/intlify/routing.git"
   },
-  "packageManager": "pnpm@8.6.0",
   "scripts": {
     "force": "pnpm clean && pnpm i --force",
     "install:vue2": "cd playground/vue2 && npm i",
@@ -111,9 +110,9 @@
     "test:unit:vue2": "pnpm switch:vue2 && cross-env TEST_TARGET=vue2 pnpm --filter vue-i18n-routing test",
     "test:watch": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 pnpm --filter playground-vue3 test:watch",
     "test:cover": "pnpm switch:vue3 && cross-env TEST_TARGET=vue3 && pnpm --filter playground-vue3 test:cover",
-    "test:e2e": "run-p \"test:e2e:vue*\"",
-    "test:e2e:vue2": "cd playground/vue2 && npm test",
-    "test:e2e:vue2options": "cd playground/vue2-options && npm test",
+    "test:e2e": "run-s \"test:e2e:vue*\"",
+    "test:e2e:vue2": "cd playground/vue2 && npx --no-install vue-demi-switch 2 && npx --no-install vue-i18n-switch 8 && npm test",
+    "test:e2e:vue2options": "cd playground/vue2-options && npx --no-install vue-demi-switch 2 && npx --no-install vue-i18n-switch 8 && npm test",
     "test:e2e:vue3": "cd playground/vue3 && npm test",
     "test:e2e:vue3options": "cd playground/vue3-options && npm test"
   },
