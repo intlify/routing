@@ -2,8 +2,6 @@
 
 The i18n routing with using vue-i18n
 
-WIP: 👷
-
 ## 🤝 API
 
 About details, See the [API References](./api.md)
