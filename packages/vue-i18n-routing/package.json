@@ -14,9 +14,9 @@
     "build:docs": "api-docs-gen ./temp/vue-i18n-routing.api.json -c ./docsgen.config.js -o ./ -g noprefix"
   },
   "dependencies": {
-    "@intlify/shared": "^9.3.0",
-    "@intlify/vue-i18n-bridge": "^0.9.0",
-    "@intlify/vue-router-bridge": "^0.9.0",
+    "@intlify/shared": "^9.4.0",
+    "@intlify/vue-i18n-bridge": "^1.0.0",
+    "@intlify/vue-router-bridge": "^1.0.0",
     "ufo": "^1.2.0",
     "vue-demi": "^0.14.5"
   },
@@ -28,7 +28,7 @@
     "vite-plugin-dts": "^3.5.1",
     "vitest": "^0.34.1",
     "vue": "^3.2.27",
-    "vue-i18n": "npm:vue-i18n@9.3.0-beta.26",
+    "vue-i18n": "npm:vue-i18n@9.4.0",
     "vue-i18n-bridge": "next",
     "vue-i18n-legacy": "npm:vue-i18n@8",
     "vue-router": "^4.1.5",
@@ -38,8 +38,8 @@
   },
   "peerDependencies": {
     "vue": "^2.6.14 || ^2.7.0 || ^3.2.0",
-    "vue-i18n": "^8.26.1 || ^9.2.0 || ^9.3.0",
-    "vue-i18n-bridge": "^9.2.0 || ^9.3.0",
+    "vue-i18n": "^8.26.1 || >=9.2.0",
+    "vue-i18n-bridge": ">=9.2.0",
     "vue-router": "^3.5.3 || ^3.6.0 || ^4.0.0",
     "@vue/composition-api": "^1.0.0-rc.1"
   },
