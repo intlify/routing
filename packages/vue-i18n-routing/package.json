@@ -14,9 +14,9 @@
     "build:docs": "api-docs-gen ./temp/vue-i18n-routing.api.json -c ./docsgen.config.js -o ./ -g noprefix"
   },
   "dependencies": {
-    "@intlify/shared": "^9.4.0",
-    "@intlify/vue-i18n-bridge": "^1.0.0",
-    "@intlify/vue-router-bridge": "^1.0.0",
+    "@intlify/shared": "^9.4.1",
+    "@intlify/vue-i18n-bridge": "^1.0.1",
+    "@intlify/vue-router-bridge": "^1.0.1",
     "ufo": "^1.2.0",
     "vue-demi": "^0.14.5"
   },
