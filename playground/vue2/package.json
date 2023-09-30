@@ -26,7 +26,7 @@
     "vite": "2.9.16",
     "playwright": "1.25.2",
     "vite-test-utils": "0.6.0",
-    "vitest": "^0.24.5",
+    "vitest": "^0.34.0",
     "vite-plugin-vue2": "2.0.3",
     "vue-template-compiler": "2.6.14",
     "vue-tsc": "0.40.13"
