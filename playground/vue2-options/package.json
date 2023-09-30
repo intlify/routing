@@ -29,6 +29,6 @@
     "vitest": "^0.24.5",
     "vite-plugin-vue2": "2.0.3",
     "vue-template-compiler": "2.6.14",
-    "vue-tsc": "0.30.1"
+    "vue-tsc": "0.40.13"
   }
 }
