@@ -25,7 +25,7 @@
     "typescript": "^4.8.3",
     "vite": "3.2.7",
     "playwright": "1.25.2",
-    "vite-test-utils": "0.5.2",
+    "vite-test-utils": "0.6.0",
     "vitest": "^0.24.5",
     "vue-tsc": "0.40.13"
   }
