@@ -27,6 +27,6 @@
     "playwright": "1.25.2",
     "vite-test-utils": "0.5.2",
     "vitest": "^0.24.5",
-    "vue-tsc": "0.40.3"
+    "vue-tsc": "0.40.13"
   }
 }
