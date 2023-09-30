@@ -145,8 +145,8 @@ importers:
         specifier: ^4.1.5
         version: 4.2.4(vue@3.3.4)
       vue-router3:
-        specifier: npm:vue-router@3.5.4
-        version: /vue-router@3.5.4(vue@3.3.4)
+        specifier: npm:vue-router@3.6.5
+        version: /vue-router@3.6.5(vue@3.3.4)
       vue-template-compiler:
         specifier: ^2.6.14
         version: 2.7.14
@@ -571,6 +571,11 @@ packages:
   /@intlify/shared@9.4.1:
     resolution: {integrity: sha512-A51elBmZWf1FS80inf/32diO9DeXoqg9GR9aUDHFcfHoNDuT46Q+fpPOdj8jiJnSHSBh8E1E+6qWRhAZXdK3Ng==}
     engines: {node: '>= 16'}
+
+  /@intlify/shared@9.5.0:
+    resolution: {integrity: sha512-tAxV14LMXZDZbu32XzLMTsowNlgJNmLwWHYzvMUl6L8gvQeoYiZONjY7AUsqZW8TOZDX9lfvF6adPkk9FSRdDA==}
+    engines: {node: '>= 16'}
+    dev: true
 
   /@intlify/vue-devtools@9.2.2:
     resolution: {integrity: sha512-+dUyqyCHWHb/UcvY1MlIpO87munedm3Gn6E9WWYdWrMuYLcoIoOEVDWSS8xSwtlPU+kA+MEQTP6Q1iI/ocusJg==}
@@ -1259,7 +1264,7 @@ packages:
     engines: {node: '>= 12'}
     hasBin: true
     dependencies:
-      '@intlify/shared': 9.4.1
+      '@intlify/shared': 9.5.0
       '@microsoft/api-extractor-model': 7.27.6(@types/node@18.17.4)
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
@@ -4667,8 +4672,8 @@ packages:
       '@vue/devtools-api': 6.5.0
       vue: 3.3.4
 
-  /vue-router@3.5.4(vue@3.3.4):
-    resolution: {integrity: sha512-x+/DLAJZv2mcQ7glH2oV9ze8uPwcI+H+GgTgTmb5I55bCgY3+vXWIsqbYUzbBSZnwFHEJku4eoaH/x98veyymQ==}
+  /vue-router@3.6.5(vue@3.3.4):
+    resolution: {integrity: sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ==}
     peerDependencies:
       vue: ^2
     dependencies:
