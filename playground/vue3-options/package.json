@@ -14,7 +14,7 @@
     "vue-router": "4.1.2",
     "vue-i18n": "^9.3.0",
     "@vueuse/head": "0.9.8",
-    "vue-i18n-routing": "0.10.0"
+    "vue-i18n-routing": "0.13.4"
   },
   "devDependencies": {
     "@types/node": "^18.0.4",
