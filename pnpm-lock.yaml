@@ -54,8 +54,8 @@ importers:
         specifier: ^9.17.0
         version: 9.17.0(eslint@8.47.0)
       globby:
-        specifier: ^12.2.0
-        version: 12.2.0
+        specifier: ^13.0.0
+        version: 13.2.2
       happy-dom:
         specifier: ^6.0.4
         version: 6.0.4
@@ -1301,11 +1301,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /array-union@3.0.1:
-    resolution: {integrity: sha512-1OvF9IbWwaeiM9VhzYXVQacMibxpXOMYVNIvMtKRyX9SImBXpKcFr8XvFDeEslCyuH/t6KRt7HEO94AlP8Iatw==}
-    engines: {node: '>=12'}
-    dev: true
-
   /array.prototype.findlastindex@1.2.2:
     resolution: {integrity: sha512-tb5thFFlUcp7NdNF6/MpDk/1r/4awWG1FIz3YqDf+/zJSTezBb+/5WViH41obXULHVpDzoiCLpJ/ZO9YbJMsdw==}
     engines: {node: '>= 0.4'}
@@ -2510,11 +2505,10 @@ packages:
       slash: 3.0.0
     dev: true
 
-  /globby@12.2.0:
-    resolution: {integrity: sha512-wiSuFQLZ+urS9x2gGPl1H5drc5twabmm4m2gTR27XDFyjUHJUNsS8o/2aKyIF6IoBaR630atdher0XJ5g6OMmA==}
+  /globby@13.2.2:
+    resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
-      array-union: 3.0.1
       dir-glob: 3.0.1
       fast-glob: 3.3.1
       ignore: 5.2.4
