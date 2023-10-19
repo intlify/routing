@@ -18,7 +18,7 @@ import type { RoutingProxy } from './types'
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { Strategies } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { VueRouter, Router, Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
+import type { VueRouter, Router, Route, RouteLocationNormalizedLoaded, RouteLocation } from '@intlify/vue-router-bridge'
 
 export function getI18nRoutingOptions(
   router: Router | VueRouter,
@@ -75,6 +75,29 @@ export function routeToObject(route: Route | RouteLocationNormalizedLoaded) {
     meta,
     matched,
     redirectedFrom
+  }
+}
+
+/**
+ * This function maps the response of `router.resolve` to properly encode the path.
+ *
+ * @param route - the {@link RouteLocation} provided by `router.resolve`.
+ * @returns a {@link RouteLocation} with URL encoded `fullPath`, `path` and `href` properties.
+ */
+export function resolvedRouteToObject(
+  route: RouteLocation & {
+    href: string
+  }
+): RouteLocation & {
+  href: string
+} {
+  const encodedPath = encodeURI(route.path)
+  const queryString = route.fullPath.indexOf('?') >= 0 ? route.fullPath.substring(route.fullPath.indexOf('?')) : ''
+  return {
+    ...route,
+    fullPath: encodedPath + queryString,
+    path: encodedPath,
+    href: encodedPath + queryString
   }
 }
 
