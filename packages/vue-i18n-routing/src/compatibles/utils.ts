@@ -84,23 +84,37 @@ export function routeToObject(route: Route | RouteLocationNormalizedLoaded) {
  * @param route - the {@link RouteLocation} provided by `router.resolve`.
  * @returns a {@link RouteLocation} with URL encoded `fullPath`, `path` and `href` properties.
  */
-export function resolvedRouteToObject(
-  route: RouteLocation & {
-    href: string
-  }
-): RouteLocation & {
-  href: string
-} {
-  const encodedPath = encodeURI(route.path)
-  const queryString = route.fullPath.indexOf('?') >= 0 ? route.fullPath.substring(route.fullPath.indexOf('?')) : ''
-  return {
-    ...route,
+type ResolvedRoute = ReturnType<Router['resolve']> | ReturnType<VueRouter['resolve']>['route']
+type BridgeRoute = ResolvedRoute | { route: ResolvedRoute }
+
+export function isV4Route(val: BridgeRoute): val is ResolvedRoute {
+  return isVue3
+}
+
+export function resolveBridgeRoute(val: BridgeRoute) {
+  return isV4Route(val) ? val : val.route
+}
+
+/**
+ * This function maps the response of `router.resolve` to properly encode the path.
+ *
+ * @param route - the {@link RouteLocation} provided by `router.resolve`.
+ * @returns a {@link RouteLocation} with URL encoded `fullPath`, `path` and `href` properties.
+ */
+export function resolvedRouteToObject(route: BridgeRoute): BridgeRoute {
+  const r = resolveBridgeRoute(route)
+
+  const encodedPath = encodeURI(r.path)
+  const queryString = r.fullPath.indexOf('?') >= 0 ? r.fullPath.substring(r.fullPath.indexOf('?')) : ''
+  const resolvedObject = {
+    ...r,
     fullPath: encodedPath + queryString,
     path: encodedPath,
     href: encodedPath + queryString
   }
-}
 
+  return isVue3 ? resolvedObject : { ...route, route: resolvedObject }
+}
 /**
  * NOTE:
  * vue-router v4.x `router.resolve` for a non exists path will output a warning.
