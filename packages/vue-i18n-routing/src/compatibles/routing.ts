@@ -5,7 +5,7 @@ import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 import { DEFAULT_DYNAMIC_PARAMS_KEY } from '../constants'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
-import { getI18nRoutingOptions, resolve, routeToObject } from './utils'
+import { getI18nRoutingOptions, isV4Route, resolve, resolvedRouteToObject, routeToObject } from './utils'
 
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
 import type { Strategies, I18nRoutingOptions } from '../types'
@@ -231,9 +231,9 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   }
 
   try {
-    const resolvedRoute = router.resolve(localizedRoute) as any
+    const resolvedRoute = resolvedRouteToObject(router.resolve(localizedRoute))
     // prettier-ignore
-    if (isVue3
+    if (isV4Route(resolvedRoute)
       ? resolvedRoute.name // for vue-router v4
       : resolvedRoute.route.name // for vue-router v3
     ) {
@@ -321,7 +321,7 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
   const baseRoute = assign({}, routeCopy, _baseRoute)
   let path = localePath.call(this, baseRoute, locale)
 
-  // custome locale path with intercepter
+  // custom locale path with interceptor
   path = switchLocalePathIntercepter(path, locale)
 
   return path

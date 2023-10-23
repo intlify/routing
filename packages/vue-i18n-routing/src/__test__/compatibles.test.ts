@@ -393,6 +393,11 @@ describe('switchLocalePath', () => {
             component: { template: '<div>Category</div>' }
           },
           {
+            path: '/count/:id',
+            name: 'count',
+            component: { template: '<div>Category</div>' }
+          },
+          {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
             meta: {
@@ -428,10 +433,30 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('fr'), '/fr/about?foo=1&test=2')
       assert.equal(vm.switchLocalePath('en'), '/en/about?foo=1&test=2')
 
+      await router.push('/ja/about?foo=bär&four=四&foo=bar')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/about?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('en'), '/en/about?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+
+      await router.push('/ja/about?foo=bär&four=四')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about?foo=b%C3%A4r&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/about?foo=b%C3%A4r&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('en'), '/en/about?foo=b%C3%A4r&four=%E5%9B%9B')
+
       await router.push('/ja/category/1')
       assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese')
       assert.equal(vm.switchLocalePath('en'), '/en/category/english')
       assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch')
+
+      await router.push('/ja/count/三')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/count/%E4%B8%89')
+      assert.equal(vm.switchLocalePath('en'), '/en/count/%E4%B8%89')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/count/%E4%B8%89')
+
+      await router.push('/ja/count/三?foo=bär&four=四&foo=bar')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('en'), '/en/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
 
       await router.push('/ja/foo')
       assert.equal(vm.switchLocalePath('ja'), '/ja/not-found-japanese')
