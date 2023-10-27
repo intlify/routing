@@ -1,4 +1,5 @@
 import { assign, isArray } from '@intlify/shared'
+import { parsePath } from 'ufo'
 import { isVue3 } from 'vue-demi'
 
 import {
@@ -104,13 +105,14 @@ export function resolveBridgeRoute(val: BridgeRoute) {
 export function resolvedRouteToObject(route: BridgeRoute): BridgeRoute {
   const r = resolveBridgeRoute(route)
 
+  const { search, hash } = parsePath(r.fullPath)
+
   const encodedPath = encodeURI(r.path)
-  const queryString = r.fullPath.indexOf('?') >= 0 ? r.fullPath.substring(r.fullPath.indexOf('?')) : ''
   const resolvedObject = {
     ...r,
-    fullPath: encodedPath + queryString,
+    fullPath: encodedPath + search + hash,
     path: encodedPath,
-    href: encodedPath + queryString
+    href: encodedPath + search + hash
   }
 
   return isVue3 ? resolvedObject : { ...route, route: resolvedObject }
