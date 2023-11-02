@@ -194,7 +194,7 @@ export function getRouteName(routeName?: string | symbol | null) {
 }
 
 export function getLocaleRouteName(
-  routeName: string | null,
+  routeName: symbol | string | null | undefined,
   locale: Locale,
   {
     defaultLocale,

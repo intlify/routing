@@ -1,24 +1,28 @@
 import { isString, assign } from '@intlify/shared'
-import { withTrailingSlash, withoutTrailingSlash } from 'ufo'
+import {
+  type Route,
+  type RawLocation,
+  type RouteLocationRaw,
+  type RouteLocationNormalizedLoaded,
+  type Router,
+  type RouteMeta,
+  type RouteLocationNamedRaw,
+  type RouteLocationPathRaw,
+  type RouteLocation,
+  type Location
+} from '@intlify/vue-router-bridge'
+import { parsePath, parseQuery, withTrailingSlash, withoutTrailingSlash } from 'ufo'
 import { isVue3, isRef, unref, isVue2 } from 'vue-demi'
 
 import { DEFAULT_DYNAMIC_PARAMS_KEY } from '../constants'
 import { getLocale, getLocaleRouteName, getRouteName } from '../utils'
 
-import { getI18nRoutingOptions, isV4Route, resolve, resolvedRouteToObject, routeToObject } from './utils'
+import { getI18nRoutingOptions, isV4Route, resolve, routeToObject } from './utils'
 
 import type { RoutingProxy, PrefixableOptions, SwitchLocalePathIntercepter } from './types'
+import type { ResolveV3, ResolveV4 } from './utils'
 import type { Strategies, I18nRoutingOptions } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
-import type {
-  Route,
-  RawLocation,
-  RouteLocation,
-  RouteLocationRaw,
-  RouteLocationNormalizedLoaded,
-  Router,
-  RouteMeta
-} from '@intlify/vue-router-bridge'
 
 const RESOLVED_PREFIXED = new Set<Strategies>(['prefix_and_default', 'prefix_except_default'])
 
@@ -90,8 +94,8 @@ export function localePath(
   // prettier-ignore
   return localizedRoute == null
     ? ''
-    : isVue3
-      ? localizedRoute.redirectedFrom || localizedRoute.fullPath
+    : isV4Route(localizedRoute)
+      ? localizedRoute.redirectedFrom?.fullPath || localizedRoute.fullPath
       : localizedRoute.route.redirectedFrom || localizedRoute.route.fullPath
 }
 
@@ -118,9 +122,9 @@ export function localeRoute(
   // prettier-ignore
   return resolved == null
     ? undefined
-    : isVue3
-      ? resolved as ReturnType<Router['resolve']> 
-      : resolved.route as Route
+    : isV4Route(resolved)
+      ? resolved
+      : resolved.route
 }
 
 /**
@@ -141,50 +145,55 @@ export function localeLocation(
   this: RoutingProxy,
   route: RawLocation | RouteLocationRaw,
   locale?: Locale // TODO: locale should be more type inference (completion)
-): Location | RouteLocation | undefined {
+): Location | (RouteLocation & { href: string }) | undefined {
   const resolved = resolveRoute.call(this, route, locale)
   // prettier-ignore
   return resolved == null
     ? undefined
-      : isVue3
+      : isV4Route(resolved)
         ? resolved
         : resolved.location
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): any {
+export function resolveRoute(this: RoutingProxy, route: RawLocation | RouteLocationRaw, locale?: Locale) {
   const router = this.router
   const i18n = this.i18n
-  // console.log('resolveRoute', i18n.locale, Object.keys(i18n))
   const _locale = locale || getLocale(i18n)
   const { routesNameSeparator, defaultLocale, defaultLocaleRouteNameSuffix, strategy, trailingSlash, prefixable } =
     getI18nRoutingOptions(router, this)
 
   // if route parameter is a string, check if it's a path or name of route.
-  let _route = route
+  let _route: RouteLocationPathRaw | RouteLocationNamedRaw
   if (isString(route)) {
-    if (_route[0] === '/') {
+    if (route[0] === '/') {
       // if route parameter is a path, create route object with path.
-      const [path, search] = route.split('?')
-      const query = Object.fromEntries(new URLSearchParams(search))
-      _route = { path, query }
+      const { pathname: path, search, hash } = parsePath(route)
+      const query = parseQuery(search)
+      _route = { path, query, hash }
     } else {
       // else use it as route name.
       _route = { name: route }
     }
+  } else {
+    _route = route
   }
 
-  let localizedRoute = assign({}, _route)
+  let localizedRoute = assign({} as RouteLocationPathRaw | RouteLocationNamedRaw, _route)
 
-  if (localizedRoute.path && !localizedRoute.name) {
+  const isRouteLocationPathRaw = (val: RouteLocationPathRaw | RouteLocationNamedRaw): val is RouteLocationPathRaw =>
+    'path' in val && !!val.path && !('name' in val)
+
+  if (isRouteLocationPathRaw(localizedRoute)) {
     let _resolvedRoute = null
     try {
       _resolvedRoute = resolve(router, localizedRoute, strategy, _locale)
     } catch {}
+
     // prettier-ignore
     const resolvedRoute = isVue3
-      ? _resolvedRoute // for vue-router v4
-      : _resolvedRoute.route // for vue-router v3
+      ? _resolvedRoute as ResolveV4 // for vue-router v4
+      : (_resolvedRoute as ResolveV3).route // for vue-router v3
+
     const resolvedRouteName = getRouteBaseName.call(this, resolvedRoute)
     if (isString(resolvedRouteName)) {
       localizedRoute = {
@@ -197,21 +206,24 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
         params: resolvedRoute.params,
         query: resolvedRoute.query,
         hash: resolvedRoute.hash
-      }
+      } as RouteLocationNamedRaw
+
       if (isVue3) {
-        localizedRoute.state = resolvedRoute.state
+        // @ts-expect-error
+        localizedRoute.state = (resolvedRoute as ResolveV4).state
       }
     } else {
       // if route has a path defined but no name, resolve full route using the path
       if (prefixable({ currentLocale: _locale, defaultLocale, strategy })) {
         localizedRoute.path = `/${_locale}${localizedRoute.path}`
       }
+
       localizedRoute.path = trailingSlash
         ? withTrailingSlash(localizedRoute.path, true)
         : withoutTrailingSlash(localizedRoute.path, true)
     }
   } else {
-    if (!localizedRoute.name && !localizedRoute.path) {
+    if (!localizedRoute.name && !('path' in localizedRoute)) {
       localizedRoute.name = getRouteBaseName.call(this, this.route)
     }
 
@@ -231,26 +243,28 @@ export function resolveRoute(this: RoutingProxy, route: any, locale?: Locale): a
   }
 
   try {
-    const resolvedRoute = resolvedRouteToObject(router.resolve(localizedRoute))
-    // prettier-ignore
-    if (isV4Route(resolvedRoute)
-      ? resolvedRoute.name // for vue-router v4
-      : resolvedRoute.route.name // for vue-router v3
+    const resolvedRoute = router.resolve(localizedRoute)
+    if (
+      isV4Route(resolvedRoute)
+        ? resolvedRoute.name // for vue-router v4
+        : resolvedRoute.route.name // for vue-router v3
     ) {
       return resolvedRoute
     }
+
     // if didn't resolve to an existing route then just return resolved route based on original input.
-    return (router as Router).resolve(route)
-  } catch (e: any) {
-    if (isVue3 && e.type === 1) {
-      // `1` is No match
+    return router.resolve(route)
+  } catch (e: unknown) {
+    if (isVue2) {
       return null
-    } else if (isVue2) {
+    }
+
+    if (isVue3 && typeof e === 'object' && 'type' in e! && e.type === 1) {
+      // `1` is No match
       return null
     }
   }
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export const DefaultSwitchLocalePathIntercepter: SwitchLocalePathIntercepter = (path: string) => path
 
