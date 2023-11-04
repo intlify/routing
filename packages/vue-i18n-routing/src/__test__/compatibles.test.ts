@@ -76,6 +76,11 @@ describe('localePath', () => {
             routes: [
               { path: '/', name: 'index', component: { template: '<div>index</div>' } },
               { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
+              {
+                path: '/path/:param',
+                name: 'as-a-test',
+                component: { template: '<div>Testing</div>' }
+              },
               { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div>Not Found</div>' } }
             ],
             history: createMemoryHistory()
@@ -106,6 +111,12 @@ describe('localePath', () => {
           assert.equal(vm.localePath('/?foo=1'), '/ja?foo=1')
           assert.equal(vm.localePath('/about?foo=1'), '/ja/about?foo=1')
           assert.equal(vm.localePath('/about?foo=1&test=2'), '/ja/about?foo=1&test=2')
+          assert.equal(vm.localePath('/path/as a test?foo=bar sentence'), '/ja/path/as a test?foo=bar+sentence')
+          assert.equal(
+            vm.localePath('/path/as%20a%20test?foo=bar%20sentence'),
+            '/ja/path/as%20a%20test?foo=bar+sentence'
+          )
+          assert.equal(vm.localePath({ path: '/about', hash: '#foo=bar' }), '/ja/about#foo=bar')
 
           // no define path
           assert.equal(vm.localePath('/vue-i18n'), '/ja/vue-i18n')
@@ -398,6 +409,11 @@ describe('switchLocalePath', () => {
             component: { template: '<div>Category</div>' }
           },
           {
+            path: '/as a test',
+            name: 'as-a-test',
+            component: { template: '<div>Testing</div>' }
+          },
+          {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
             meta: {
@@ -443,20 +459,28 @@ describe('switchLocalePath', () => {
       assert.equal(vm.switchLocalePath('fr'), '/fr/about?foo=b%C3%A4r&four=%E5%9B%9B')
       assert.equal(vm.switchLocalePath('en'), '/en/about?foo=b%C3%A4r&four=%E5%9B%9B')
 
+      await router.push('/ja/about#foo=bar')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about#foo=bar')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/about#foo=bar')
+      assert.equal(vm.switchLocalePath('en'), '/en/about#foo=bar')
+
+      await router.push('/ja/about?foo=é')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/about?foo=%C3%A9')
+
       await router.push('/ja/category/1')
       assert.equal(vm.switchLocalePath('ja'), '/ja/category/japanese')
       assert.equal(vm.switchLocalePath('en'), '/en/category/english')
       assert.equal(vm.switchLocalePath('fr'), '/fr/category/franch')
 
       await router.push('/ja/count/三')
-      assert.equal(vm.switchLocalePath('ja'), '/ja/count/%E4%B8%89')
-      assert.equal(vm.switchLocalePath('en'), '/en/count/%E4%B8%89')
-      assert.equal(vm.switchLocalePath('fr'), '/fr/count/%E4%B8%89')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/count/三')
+      assert.equal(vm.switchLocalePath('en'), '/en/count/三')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/count/三')
 
       await router.push('/ja/count/三?foo=bär&four=四&foo=bar')
-      assert.equal(vm.switchLocalePath('ja'), '/ja/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
-      assert.equal(vm.switchLocalePath('fr'), '/fr/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
-      assert.equal(vm.switchLocalePath('en'), '/en/count/%E4%B8%89?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('ja'), '/ja/count/三?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('fr'), '/fr/count/三?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
+      assert.equal(vm.switchLocalePath('en'), '/en/count/三?foo=b%C3%A4r&foo=bar&four=%E5%9B%9B')
 
       await router.push('/ja/foo')
       assert.equal(vm.switchLocalePath('ja'), '/ja/not-found-japanese')

@@ -1,4 +1,4 @@
-import { assign, isArray } from '@intlify/shared'
+import { assign } from '@intlify/shared'
 import { isVue3 } from 'vue-demi'
 
 import {
@@ -18,7 +18,13 @@ import type { RoutingProxy } from './types'
 import type { I18nRoutingGlobalOptions } from '../extends/router'
 import type { Strategies } from '../types'
 import type { Locale } from '@intlify/vue-i18n-bridge'
-import type { VueRouter, Router, Route, RouteLocationNormalizedLoaded } from '@intlify/vue-router-bridge'
+import type {
+  VueRouter,
+  Router,
+  Route,
+  RouteLocationNormalizedLoaded,
+  RouteLocationPathRaw
+} from '@intlify/vue-router-bridge'
 
 export function getI18nRoutingOptions(
   router: Router | VueRouter,
@@ -78,43 +84,18 @@ export function routeToObject(route: Route | RouteLocationNormalizedLoaded) {
   }
 }
 
-/**
- * This function maps the response of `router.resolve` to properly encode the path.
- *
- * @param route - the {@link RouteLocation} provided by `router.resolve`.
- * @returns a {@link RouteLocation} with URL encoded `fullPath`, `path` and `href` properties.
- */
-type ResolvedRoute = ReturnType<Router['resolve']> | ReturnType<VueRouter['resolve']>['route']
-type BridgeRoute = ResolvedRoute | { route: ResolvedRoute }
+export type ResolveV3 = ReturnType<VueRouter['resolve']>
+export type ResolveV4 = ReturnType<Router['resolve']>
+type ResolvedRoute = ResolveV3 | ResolveV4
 
-export function isV4Route(val: BridgeRoute): val is ResolvedRoute {
+export function isV4Route(val: ResolvedRoute): val is ReturnType<Router['resolve']> {
   return isVue3
 }
 
-export function resolveBridgeRoute(val: BridgeRoute) {
-  return isV4Route(val) ? val : val.route
+export function isV4Router(val: Router | VueRouter): val is Router {
+  return isVue3
 }
 
-/**
- * This function maps the response of `router.resolve` to properly encode the path.
- *
- * @param route - the {@link BridgeRoute} provided by `router.resolve`.
- * @returns a {@link BridgeRoute} with URL encoded `fullPath`, `path` and `href` properties.
- */
-export function resolvedRouteToObject(route: BridgeRoute): BridgeRoute {
-  const r = resolveBridgeRoute(route)
-
-  const encodedPath = encodeURI(r.path)
-  const queryString = r.fullPath.indexOf('?') >= 0 ? r.fullPath.substring(r.fullPath.indexOf('?')) : ''
-  const resolvedObject = {
-    ...r,
-    fullPath: encodedPath + queryString,
-    path: encodedPath,
-    href: encodedPath + queryString
-  }
-
-  return isVue3 ? resolvedObject : { ...route, route: resolvedObject }
-}
 /**
  * NOTE:
  * vue-router v4.x `router.resolve` for a non exists path will output a warning.
@@ -122,25 +103,28 @@ export function resolvedRouteToObject(route: BridgeRoute): BridgeRoute {
  * When using the `prefix` strategy, the path specified by `localePath` is specified as a path not prefixed with a locale.
  * This will cause vue-router to issue a warning, so we can work-around by using `router.options.routes`.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function resolve(router: Router | VueRouter, route: any, strategy: Strategies, locale: Locale): any {
-  if (isVue3 && strategy === 'prefix') {
-    if (isArray(route.matched) && route.matched.length > 0) {
-      return route.matched[0]
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [rootSlash, restPath] = split(route.path, 1)
-    const targetPath = `${rootSlash}${locale}${restPath === '' ? restPath : `/${restPath}`}`
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const _route = (router as any).options.routes.find((r: any) => r.path === targetPath)
-    if (_route == null) {
-      return route
-    } else {
-      const _resolvableRoute = assign({}, route, _route)
-      _resolvableRoute.path = targetPath
-      return router.resolve(_resolvableRoute)
-    }
-  } else {
+export function resolve(router: Router | VueRouter, route: RouteLocationPathRaw, strategy: Strategies, locale: Locale) {
+  if (isV4Router(router)) {
     return router.resolve(route)
   }
+
+  if (strategy !== 'prefix') {
+    return router.resolve(route)
+  }
+
+  // if (isArray(route.matched) && route.matched.length > 0) {
+  //   return route.matched[0]
+  // }
+
+  const [rootSlash, restPath] = split(route.path, 1)
+  const targetPath = `${rootSlash}${locale}${restPath === '' ? restPath : `/${restPath}`}`
+  const _route = router.options?.routes?.find(r => r.path === targetPath)
+
+  if (_route == null) {
+    return router.resolve(route)
+  }
+
+  const _resolvableRoute = assign({}, route, _route)
+  _resolvableRoute.path = targetPath
+  return router.resolve(_resolvableRoute)
 }
