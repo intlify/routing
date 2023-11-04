@@ -104,7 +104,7 @@ export function isV4Router(val: Router | VueRouter): val is Router {
  * This will cause vue-router to issue a warning, so we can work-around by using `router.options.routes`.
  */
 export function resolve(router: Router | VueRouter, route: RouteLocationPathRaw, strategy: Strategies, locale: Locale) {
-  if (isV4Router(router)) {
+  if (!isV4Router(router)) {
     return router.resolve(route)
   }
 
@@ -121,7 +121,7 @@ export function resolve(router: Router | VueRouter, route: RouteLocationPathRaw,
   const _route = router.options?.routes?.find(r => r.path === targetPath)
 
   if (_route == null) {
-    return router.resolve(route)
+    return route
   }
 
   const _resolvableRoute = assign({}, route, _route)
