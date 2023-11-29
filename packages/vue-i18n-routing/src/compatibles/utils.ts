@@ -41,7 +41,8 @@ export function getI18nRoutingOptions(
     switchLocalePathIntercepter = DefaultSwitchLocalePathIntercepter,
     dynamicRouteParamsKey = DEFAULT_DYNAMIC_PARAMS_KEY
   }: I18nRoutingGlobalOptions = {}
-): Required<I18nRoutingGlobalOptions> {
+): Required<Omit<I18nRoutingGlobalOptions, 'dynamicParamsInterceptor'>> &
+  Pick<I18nRoutingGlobalOptions, 'dynamicParamsInterceptor'> {
   const options = getGlobalOptions(router)
   return {
     defaultLocale: proxy.defaultLocale || options.defaultLocale || defaultLocale,
@@ -55,7 +56,8 @@ export function getI18nRoutingOptions(
     prefixable: proxy.prefixable || options.prefixable || prefixable,
     switchLocalePathIntercepter:
       proxy.switchLocalePathIntercepter || options.switchLocalePathIntercepter || switchLocalePathIntercepter,
-    dynamicRouteParamsKey: proxy.dynamicRouteParamsKey || options.dynamicRouteParamsKey || dynamicRouteParamsKey
+    dynamicRouteParamsKey: proxy.dynamicRouteParamsKey || options.dynamicRouteParamsKey || dynamicRouteParamsKey,
+    dynamicParamsInterceptor: options.dynamicParamsInterceptor || undefined
   }
 }
 
