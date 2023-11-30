@@ -108,8 +108,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       vue-demi:
-        specifier: ^0.14.5
-        version: 0.14.5(@vue/composition-api@1.7.1)(vue@3.3.4)
+        specifier: '>=0.13.5 < 1.0.0'
+        version: 0.14.6(@vue/composition-api@1.7.1)(vue@3.3.4)
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.31.1
@@ -572,8 +572,8 @@ packages:
     resolution: {integrity: sha512-A51elBmZWf1FS80inf/32diO9DeXoqg9GR9aUDHFcfHoNDuT46Q+fpPOdj8jiJnSHSBh8E1E+6qWRhAZXdK3Ng==}
     engines: {node: '>= 16'}
 
-  /@intlify/shared@9.5.0:
-    resolution: {integrity: sha512-tAxV14LMXZDZbu32XzLMTsowNlgJNmLwWHYzvMUl6L8gvQeoYiZONjY7AUsqZW8TOZDX9lfvF6adPkk9FSRdDA==}
+  /@intlify/shared@9.8.0:
+    resolution: {integrity: sha512-TmgR0RCLjzrSo+W3wT0ALf9851iFMlVI9EYNGeWvZFUQTAJx0bvfsMlPdgVtV1tDNRiAfhkFsMKu6jtUY1ZLKQ==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -1256,7 +1256,7 @@ packages:
     engines: {node: '>= 12'}
     hasBin: true
     dependencies:
-      '@intlify/shared': 9.5.0
+      '@intlify/shared': 9.8.0
       '@microsoft/api-extractor-model': 7.27.6(@types/node@18.17.4)
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
@@ -4541,8 +4541,8 @@ packages:
       vue: 3.3.4
     dev: false
 
-  /vue-demi@0.14.5(@vue/composition-api@1.7.1)(vue@3.3.4):
-    resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==}
+  /vue-demi@0.14.6(@vue/composition-api@1.7.1)(vue@3.3.4):
+    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
@@ -4588,7 +4588,7 @@ packages:
       '@intlify/vue-devtools': 9.4.1
       '@vue/composition-api': 1.7.1(vue@3.3.4)
       '@vue/devtools-api': 6.5.0
-      vue-demi: 0.14.5(@vue/composition-api@1.7.1)(vue@3.3.4)
+      vue-demi: 0.14.6(@vue/composition-api@1.7.1)(vue@3.3.4)
     transitivePeerDependencies:
       - vue
 
