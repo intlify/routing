@@ -292,6 +292,11 @@ function getLocalizableMetaFromDynamicParams(
   }
 }
 
+export type MetaDynamicParamsInterceptor = (
+  route: Route | RouteLocationNormalizedLoaded,
+  key: Required<I18nRoutingOptions>['dynamicRouteParamsKey']
+) => Record<Locale, unknown>
+
 /**
  * Returns path of the current route for specified locale.
  *
@@ -309,7 +314,10 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
     return ''
   }
 
-  const { switchLocalePathIntercepter, dynamicRouteParamsKey } = getI18nRoutingOptions(this.router, this)
+  const { switchLocalePathIntercepter, dynamicRouteParamsKey, dynamicParamsInterceptor } = getI18nRoutingOptions(
+    this.router,
+    this
+  )
 
   // prettier-ignore
   const routeValue = isVue3
@@ -318,14 +326,17 @@ export function switchLocalePath(this: RoutingProxy, locale: Locale): string {
       ? route.value
       : route
   const routeCopy = routeToObject(routeValue)
+  const langSwitchParamsIntercepted = dynamicParamsInterceptor?.()?.value?.[locale]
   const langSwitchParams = getLocalizableMetaFromDynamicParams(route, dynamicRouteParamsKey)[locale] || {}
+
+  const resolvedParams = langSwitchParamsIntercepted ?? langSwitchParams ?? {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _baseRoute: any = {
     name,
     params: {
       ...routeCopy.params,
-      ...langSwitchParams
+      ...resolvedParams
     }
   }
   if (isVue2) {

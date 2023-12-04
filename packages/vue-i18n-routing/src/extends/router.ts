@@ -27,6 +27,8 @@ import type {
   RouteLocationNormalizedLoaded,
   RouteLocationNormalized
 } from '@intlify/vue-router-bridge'
+import type { Ref } from 'vue-demi'
+import type { Locale } from 'vue-i18n'
 
 /**
  * Global options for i18n routing
@@ -42,8 +44,9 @@ export type I18nRoutingGlobalOptions<Context = unknown> = Pick<
   | 'prefixable'
   | 'switchLocalePathIntercepter'
   | 'dynamicRouteParamsKey'
-> & { localeCodes?: string[] }
+> & { localeCodes?: string[]; dynamicParamsInterceptor?: DynamicParamsInterceptor }
 
+export type DynamicParamsInterceptor = () => Ref<Record<Locale, unknown>>
 const GlobalOptionsRegistory = makeSymbol('vue-i18n-routing-gor')
 
 /**
