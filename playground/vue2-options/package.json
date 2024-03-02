@@ -23,7 +23,7 @@
     "@vue/runtime-dom": "3.2.31",
     "typescript": "^4.7.4",
     "unplugin-vue2-script-setup": "0.11.4",
-    "vite": "2.9.16",
+    "vite": "2.9.17",
     "playwright": "1.25.2",
     "vite-test-utils": "0.6.0",
     "vitest": "^0.34.0",
