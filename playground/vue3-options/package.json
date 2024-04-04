@@ -17,7 +17,7 @@
     "vue-i18n-routing": "0.13.4"
   },
   "devDependencies": {
-    "@types/node": "^18.0.4",
+    "@types/node": "^20.0.0",
     "@vitejs/plugin-vue": "3.2.0",
     "@vitejs/plugin-vue-jsx": "2.1.1",
     "@intlify/vite-plugin-vue-i18n": "next",

@@ -18,7 +18,7 @@
     "vue-i18n-routing": "0.13.4"
   },
   "devDependencies": {
-    "@types/node": "^18.0.4",
+    "@types/node": "^20.0.0",
     "@vitejs/plugin-legacy": "1.8.2",
     "@vue/runtime-dom": "3.2.31",
     "typescript": "^4.7.4",
