@@ -67,7 +67,7 @@ declare module 'vue/types/vue' {
   export interface Vue extends I18nMixinAPI {}
 }
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ComponentCustomProperties extends I18nMixinAPI {}
 }
