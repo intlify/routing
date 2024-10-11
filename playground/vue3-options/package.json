@@ -10,7 +10,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "vue": "3.2.31",
+    "vue": "3.5.12",
     "vue-router": "4.1.2",
     "vue-i18n": "^9.3.0",
     "@vueuse/head": "0.9.8",
