@@ -24,7 +24,7 @@
     "@microsoft/api-extractor": "^7.31.1",
     "api-docs-gen": "^0.4.0",
     "typescript": "^5.1.6",
-    "vite": "^4.4.9",
+    "vite": "^6.0.0",
     "vite-plugin-dts": "^3.5.1",
     "vitest": "^0.34.1",
     "vue": "^3.2.27",
